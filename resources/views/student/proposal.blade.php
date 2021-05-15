@@ -14,6 +14,7 @@
                     id="icons" aria-hidden="true"></i>Thesis</a>
         </div>
     </div>
+    <!-- End Of Sidebar -->
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <!-- If Student Hasn't Submitted Proposal Yet -->
