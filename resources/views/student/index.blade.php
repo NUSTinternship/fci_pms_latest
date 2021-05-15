@@ -16,14 +16,9 @@
         </div>
         <!-- Page Content -->
         <div id="page-content-wrapper">
-
             <div class="container-fluid">
- 
-                    
-                        <button class="btn btn-light" id="menu-toggle"><span class="dark-blue-text"><i class="fa fa-bars"
-                                    aria-hidden="true"></i></span></button>
-                    
-               
+                <button class="btn btn-light" id="menu-toggle"><span class="dark-blue-text"><i class="fa fa-bars"
+                            aria-hidden="true"></i></span></button>
                 <div class="row" style="padding-top: 3%;">
                     <div class="col-sm-6">
                         <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-primary">
