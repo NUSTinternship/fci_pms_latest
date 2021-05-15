@@ -29,6 +29,10 @@
     background-color: #1b2d5d;
     color: white;
   }
+
+  .card-title {
+    text-align: center;
+  }
   
   ul {
     list-style-position: inside;
