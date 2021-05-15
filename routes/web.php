@@ -44,7 +44,7 @@ Route::group(['middleware' => ['auth', 'role:hod']], function() {
 // Routes For FHDC
 Route::group(['middleware' => ['auth', 'role:fhdc']], function() {
     Route::get('/fhdc', 'App\Http\Controllers\hdcController@index')->name('fhdc');
-    Route::get('/proposal', 'App\Http\Controllers\hdcController@proposal')->name('fdc-proposal');
-    Route::get('/thesis', 'App\Http\Controllers\hdcController@thesis')->name('fdc-thesis');
+    Route::get('/proposal3', 'App\Http\Controllers\hdcController@proposal')->name('fdc-proposal');
+    Route::get('/thesis3', 'App\Http\Controllers\hdcController@thesis')->name('fdc-thesis');
     Route::get('/application', 'App\Http\Controllers\hdcController@application')->name('fdc-application');
 });
