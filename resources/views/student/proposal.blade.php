@@ -8,8 +8,6 @@
         <div class="list-group list-group-flush">
             <a href="{{route('student')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-home"
                     id="icons" aria-hidden="true"></i>Home</a>
-            <a href="progress.html" class="list-group-item list-group-item-action text-white"><i class="fa fa-tasks"
-                    id="icons" aria-hidden="true"></i>Progress</a>
             <a href="{{route('proposal')}}" class="list-group-item list-group-item-action text-white active"><i
                     class="fa fa-sticky-note" id="icons" aria-hidden="true"></i>Proposal</a>
             <a href="{{route('thesis')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-pencil-alt"
@@ -18,7 +16,6 @@
     </div>
     <!-- Page Content -->
     <div id="page-content-wrapper">
-
         <!-- If Student Hasn't Submitted Proposal Yet -->
         <div class="container-fluid">
             <button class="btn btn-light" id="menu-toggle"><span class="dark-blue-text"><i class="fa fa-bars"
@@ -267,6 +264,6 @@
             </div>
         </div>
     </div>
-    <!-- /#page-content-wrapper -->
+    <!-- End Of Page Content -->
 </div>
 @endsection

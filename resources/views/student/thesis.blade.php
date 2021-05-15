@@ -8,8 +8,6 @@
           <div class="list-group list-group-flush">
               <a href="{{ route('student') }}" class="list-group-item list-group-item-action text-white"><i
                       class="fa fa-home" id="icons" aria-hidden="true"></i>Home</a>
-              <a href="progress.html" class="list-group-item list-group-item-action text-white"><i class="fa fa-bar-chart"
-                      id="icons" aria-hidden="true"></i>Progress</a>
               <a href="{{ route('proposal') }}" class="list-group-item list-group-item-action text-white"><i
                       class="fa fa-table" id="icons" aria-hidden="true"></i>Proposal</a>
               <a href="{{ route('thesis') }}" class="list-group-item list-group-item-action text-white active"><i
