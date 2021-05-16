@@ -6,13 +6,11 @@
         <div class="border-right" id="sidebar-wrapper" style="background-color: #1b2d5d; color: white;">
             <div class="sidebar-heading">Supervisor Portal</div>
             <div class="list-group list-group-flush">
-                <a href="{{route('supervisor')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-home"
+                <a href="{{route('supervisor-home')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-home"
                         id="icons" aria-hidden="true"></i>Home</a>
-                <a href="progress.html" class="list-group-item list-group-item-action text-white"><i class="fa fa-tasks"
-                        id="icons" aria-hidden="true"></i>Progress</a>
-                <a href="{{route('superProposal')}}" class="list-group-item list-group-item-action text-white active"><i class="fa fa-sticky-note"
+                <a href="{{route('supervisor-proposal')}}" class="list-group-item list-group-item-action text-white active"><i class="fa fa-sticky-note"
                         id="icons" aria-hidden="true"></i>Proposal</a>
-                <a href="{{route('superThesis')}}" class="list-group-item list-group-item-action text-white"><i
+                <a href="{{route('supervisor-thesis')}}" class="list-group-item list-group-item-action text-white"><i
                         class="fa fa-pencil-alt" id="icons" aria-hidden="true"></i>Thesis</a>
             </div>
         </div>

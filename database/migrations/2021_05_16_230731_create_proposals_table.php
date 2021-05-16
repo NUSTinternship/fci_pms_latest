@@ -15,6 +15,11 @@ class CreateProposalsTable extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('student_id');
+            $table->string('name');
+            $table->dateTime('submission_date');
+            $table->string('supervisor_approval');
+            $table->string('file_path');
             $table->timestamps();
         });
     }
