@@ -7,11 +7,11 @@
     <div class="border-right" id="sidebar-wrapper" style="background-color: #1b2d5d; color: white;">
         <div class="sidebar-heading">HOD Portal</div>
         <div class="list-group list-group-flush">
-          <a href="{{route('hod')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-home" id="icons"
+          <a href="{{route('hod-home')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-home" id="icons"
               aria-hidden="true"></i>Home</a>
-          <a href="{{route('hodProposal')}}" class="list-group-item list-group-item-action text-white active"><i class="fa fa-sticky-note"
+          <a href="{{route('hod-proposal')}}" class="list-group-item list-group-item-action text-white active"><i class="fa fa-sticky-note"
               id="icons" aria-hidden="true"></i>Proposal</a>
-          <a href="{{route('hodThesis')}}" class="list-group-item list-group-item-action text-white"><i
+          <a href="{{route('hod-thesis')}}" class="list-group-item list-group-item-action text-white"><i
               class="fa fa-pencil-alt" id="icons" aria-hidden="true"></i>Thesis</a>
         </div>
     </div>
