@@ -33,19 +33,19 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ($user->hasRole('student')) {
-            return redirect('/student');
+            return redirect('/student/home');
         }
 
         if ($user->hasRole('supervisor')) {
-            return redirect('/supervisor');
+            return redirect('/supervisor/home');
         }
 
         if ($user->hasRole('hod')) {
-            return redirect('/hod');
+            return redirect('/hod/home');
         }
 
         if ($user->hasRole('fhdc')) {
-            return redirect('/fhdc');
+            return redirect('/fhdc/home');
         }
     }
     /**
@@ -63,17 +63,17 @@ class LoginController extends Controller
         $role = Auth::user()->user_type;
         switch ($role) {
             case 'Student':
-                return '/student';
+                return '/student/home';
                 break;
             case 'Supervisor':
-                return '/supervisor';
+                return '/supervisor/home';
                 break;
             case 'HOD':
-                return '/hod';
+                return '/hod/home';
                 break;
 
             default:
-                return '/fhdc';
+                return '/fhdc/home';
                 break;
         }
     }

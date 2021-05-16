@@ -23,17 +23,17 @@ class RedirectIfAuthenticated
             $role = Auth::user()->user_type;
             switch ($role) {
                 case 'Student':
-                    return redirect('/student');
+                    return redirect('/student/home');
                     break;
                 case 'Supervisor':
-                    return redirect('/supervisor');
+                    return redirect('/supervisor/home');
                     break;
                 case 'HOD':
-                    return redirect('/hod');
+                    return redirect('/hod/home');
                     break;
 
                 default:
-                    return redirect('/fhdc');
+                    return redirect('/fhdc/home');
                     break;
             }
         }
