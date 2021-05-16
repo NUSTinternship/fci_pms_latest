@@ -18,6 +18,7 @@ class CreateProposalsTable extends Migration
             $table->unsignedInteger('student_id');
             $table->string('name');
             $table->dateTime('submission_date');
+            $table->string('submission_status');
             $table->string('supervisor_approval');
             $table->string('file_path');
             $table->timestamps();
