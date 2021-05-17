@@ -71,6 +71,9 @@ class LoginController extends Controller
             case 'HOD':
                 return '/hod/home';
                 break;
+            case 'Administrator':
+                return '/admin/home';
+                break;
 
             default:
                 return '/fhdc/home';

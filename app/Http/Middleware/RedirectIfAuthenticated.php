@@ -31,6 +31,9 @@ class RedirectIfAuthenticated
                 case 'HOD':
                     return redirect('/hod/home');
                     break;
+                case 'Admininstrator':
+                    return redirect('/admin/home');
+                    break;
 
                 default:
                     return redirect('/fhdc/home');

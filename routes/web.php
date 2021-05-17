@@ -76,5 +76,5 @@ Route::group([
     'namespace' => 'App\Http\Controllers',
     'middleware' => ['auth', 'role:administrator']
 ], function () {
-    Route::get('home', 'adminController@index')->name('hdc-home');
+    Route::get('home', 'adminController@index')->name('admin-home');
 });
