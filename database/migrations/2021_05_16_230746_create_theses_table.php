@@ -13,10 +13,18 @@ class CreateThesesTable extends Migration
      */
     public function up()
     {
-        Schema::create('theses', function (Blueprint $table) {
+        Schema::create('thesis', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('student_id');
+            $table->string('name');
+            $table->dateTime('submission_date');
+            $table->string('supervisor_approval');
+            $table->string('hod_approval');
+            $table->string('hdc_approval');
+            $table->string('file_path');
             $table->timestamps();
         });
+
     }
 
     /**
