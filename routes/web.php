@@ -68,3 +68,13 @@ Route::group([
     Route::get('proposal', 'hdcController@proposal')->name('hdc-proposal');
     Route::get('thesis', 'hdcController@thesis')->name('hdc-thesis');
 });
+
+// Routes For Admin
+Route::group([
+    'name' => 'admin.',
+    'prefix' => 'admin',
+    'namespace' => 'App\Http\Controllers',
+    'middleware' => ['auth', 'role:administrator']
+], function () {
+    Route::get('home', 'adminController@index')->name('hdc-home');
+});

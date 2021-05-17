@@ -99,6 +99,16 @@ class RegisterController extends Controller
         // Attach User Role Based On Submitted User Type
         $user->attachRole($data['user_type']);
         return $user;
-
     }
+
+   /* protected function createStudent(array $data)
+    //{
+        $user = Auth::id();
+
+        return Student::create([
+            'user_id' => $user,
+            'program' => $data['program'],
+            'user_type' => $data['department'],
+        ]);
+    } */
 }
