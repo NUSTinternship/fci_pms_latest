@@ -23,6 +23,7 @@ class CreateThesesTable extends Migration
             $table->string('hdc_approval');
             $table->string('file_path');
             $table->timestamps();
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
         });
 
     }

@@ -22,6 +22,7 @@ class CreateProgressReportsTable extends Migration
             $table->string('submission_status');
             $table->string('file_path');
             $table->timestamps();
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
         });
     }
 

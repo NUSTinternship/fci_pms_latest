@@ -14,7 +14,7 @@ class CreateStudentsTable extends Migration
     public function up()
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->unsignedInteger('user_id'); // Foreign Key From User Table
             $table->string('name');
             $table->string('program');
@@ -26,6 +26,11 @@ class CreateStudentsTable extends Migration
             $table->unsignedInteger('thesis_id'); // Foreign Key From Thesis Table
             $table->unsignedInteger('progress_id'); // Foreign Key From Progress Table
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            //$table->foreign('supervisor_id')->references('id')->on('supervisor')->onDelete('cascade');
+            //$table->foreign('proposal_id')->references('id')->on('proposals')->onDelete('cascade');
+            //$table->foreign('thesis_id')->references('id')->on('thesis')->onDelete('cascade');
+            //$table->foreign('progress_id')->references('id')->on('progress_reports')->onDelete('cascade');
         });
     }
 

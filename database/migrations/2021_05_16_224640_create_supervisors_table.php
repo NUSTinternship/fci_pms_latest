@@ -23,6 +23,8 @@ class CreateSupervisorsTable extends Migration
             $table->unsignedInteger('workload');
             $table->unsignedInteger('hod_id'); // Foreign Key From HOD Table
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            //$table->foreign('hod_id')->references('id')->on('hod')->onDelete('cascade');
         });
     }
 

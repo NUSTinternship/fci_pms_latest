@@ -23,60 +23,104 @@
                     <div class="col-sm-6">
                         <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-primary">
                             <div class="card-body">
-                                <h5 class="card-title font-weight-bold">CREATE USER</h5>
-                                <table class="table">
-                                    <thead class="thead-blue">
-                                        <tr>
-                                            <th scope="col" style="color: white;">Stage</th>
-                                            <th scope="col" style="color: white;">Progress</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Proposal</td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-success" role="progressbar"
-                                                                style="width: 100%" aria-valuenow="25" aria-valuemin="0"
-                                                                aria-valuemax="100">Completed</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
+                                <h5 class="card-title font-weight-bold">CREATE STUDENT</h5>
+                                    <form method="POST" action="{{ route('register') }}">
+                                        @csrf
+                
+                                        <div class="form-group row">
+                                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                
+                                            <div class="col-md-6">
+                                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                
+                                                @error('name')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                
+                                        <div class="form-group row">
+                                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                
+                                            <div class="col-md-6">
+                                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                
+                                                @error('email')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                
+                                        <div class="form-group row">
+                                            <label for="program" class="col-md-4 col-form-label text-md-right">{{ __('Program') }}</label>
+                
+                                            <div class="col-md-6">
+                                                <select class="form-control" id="program" name="program">
+                                                    <option value="Masters" selected>Masters</option>
+                                                    <option value="PhD">PhD</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
-                                            <td>Thesis</td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-warning" role="progressbar"
-                                                                style="width: 100%" aria-valuenow="25" aria-valuemin="0"
-                                                                aria-valuemax="100">In Progress</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Exam</td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-danger" role="progressbar"
-                                                                style="width: 100%" aria-valuenow="25" aria-valuemin="0"
-                                                                aria-valuemax="100">Blocked</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                        <div class="form-group row">
+                                            <label for="department" class="col-md-4 col-form-label text-md-right">{{ __('Department') }}</label>
+                
+                                            <div class="col-md-6">
+                                                <select class="form-control" id="department" name="department">
+                                                    <option value="Masters" selected>Computer Science</option>
+                                                    <option value="PhD">Informatics</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                            <!--<div class="form-group row">
+                                            <label for="user_type" class="col-md-4 col-form-label text-md-right">{{ __('User Type') }}</label>
+                
+                                            <div class="col-md-6">
+                                                <select class="form-control" id="user_type" name="user_type">
+                                                    <option value="Student" selected>Student</option>
+                                                    <option value="Supervisor">Superviser</option>
+                                                    <option value="HOD">Head of Department</option>
+                                                    <option value="Administrator">Administrator</option>
+                                                    <option value="FHDC">FHDC</option>
+                                                </select>
+                                            </div>
+                                        </div>-->
+                
+                                        <div class="form-group row">
+                                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+                
+                                            <div class="col-md-6">
+                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                
+                                                @error('password')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                
+                                        <div class="form-group row">
+                                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                
+                                            <div class="col-md-6">
+                                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                            </div>
+                                        </div>
+                
+                                        <div class="form-group row mb-0">
+                                            <div class="col-md-6 offset-md-4">
+                                                <button type="submit" class="btn btn-primary">
+                                                    {{ __('Register') }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                             </div>
                         </div>
                     </div>
