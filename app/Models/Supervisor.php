@@ -12,6 +12,6 @@ class Supervisor extends Model
     // A Supervisor Belongs To A Student
     public function Student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsToMany(Student::class);
     }
 }
