@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Supervisor extends Model
+class ProgressReports extends Model
 {
     use HasFactory;
 
-    // A Supervisor Belongs To A Student
+    // A Specific Progress Report Belongs To One Student
     public function Student()
     {
         return $this->belongsTo(Student::class);

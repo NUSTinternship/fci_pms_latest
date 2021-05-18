@@ -18,9 +18,30 @@ class Student extends Model
         'progress',
         'department',
         'supervisor_id',
-        'co-supervisor_id',
-        'proposal_id',
-        'thesis_id',
         'progress_id'
     ];
+
+    // Defining Relationship Between Student & Supervisor
+    public function studentSupervisor()
+    {
+        return $this->hasMany(Supervisor::class);
+    }
+
+    // Defining Relationship Between Student & Proposal
+    public function studentProposal()
+    {
+        return $this->hasOne(Proposal::class);
+    }
+
+    // Defining Relationship Between Student & Progress Report
+    public function studentProgressReport()
+    {
+        return $this->hasMany(ProgressReports::class);
+    }
+
+    // Defining Relationship Between Student & Thesis
+    public function studentThesis()
+    {
+        return $this->hasOne(Thesis::class);
+    }
 }
