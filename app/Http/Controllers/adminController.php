@@ -17,4 +17,10 @@ class adminController extends Controller
     {
         return view('admin.index');
     } 
+
+    // Create Users & Add Them To The Database
+    public function create()
+    {
+        return view();
+    }
 }
