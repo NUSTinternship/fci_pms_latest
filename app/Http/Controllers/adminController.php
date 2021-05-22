@@ -21,6 +21,6 @@ class adminController extends Controller
     // Create Users & Add Them To The Database
     public function create()
     {
-        return view();
+        return view('admin.index');
     }
 }
