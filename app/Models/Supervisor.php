@@ -9,6 +9,18 @@ class Supervisor extends Model
 {
     use HasFactory;
 
+    protected $table = 'supervisors';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'department',
+        'office',
+        'phone',
+        'workload',
+        'hod_id'
+    ];
+
     // A Supervisor Belongs To A Student
     public function Student()
     {

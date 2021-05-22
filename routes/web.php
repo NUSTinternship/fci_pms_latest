@@ -80,4 +80,5 @@ Route::group([
     Route::get('home', 'adminController@index')->name('admin-home');
     Route::get('create', 'adminController@create')->name('admin-create');
     Route::post('createStudent', 'adminController@createStudent');
+    Route::post('createSupervisor', 'adminController@createSupervisor');
 });
