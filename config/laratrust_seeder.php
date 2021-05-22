@@ -14,8 +14,7 @@ return [
     'roles_structure' => [
         'administrator' => [
             'users' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
-            'profile' => 'r,u'
+            'profile' => 'c,r,u,d'
         ],
         'student' => [
             'profile' => 'r,u'
