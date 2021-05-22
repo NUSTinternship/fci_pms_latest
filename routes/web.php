@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\adminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -78,4 +79,5 @@ Route::group([
 ], function () {
     Route::get('home', 'adminController@index')->name('admin-home');
     Route::get('create', 'adminController@create')->name('admin-create');
+    Route::post('createStudent', 'adminController@createStudent');
 });

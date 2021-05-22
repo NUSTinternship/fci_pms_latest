@@ -18,7 +18,7 @@ class Student extends Model
         'progress',
         'department',
         'supervisor_id',
-        'progress_id'
+        'co-supervisor'
     ];
 
     // Defining Relationship Between Student & Supervisor
