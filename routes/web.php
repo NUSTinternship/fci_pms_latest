@@ -77,4 +77,5 @@ Route::group([
     'middleware' => ['auth', 'role:administrator']
 ], function () {
     Route::get('home', 'adminController@index')->name('admin-home');
+    Route::get('create', 'adminController@create')->name('admin-create');
 });

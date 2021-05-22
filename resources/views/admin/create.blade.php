@@ -8,8 +8,8 @@
             <div class="list-group list-group-flush">
                 <a href="{{route('student-home')}}" class="list-group-item list-group-item-action text-white active"><i class="fa fa-home"
                         id="icons" aria-hidden="true"></i>Home</a>
-                <a href="{{route('admin-create')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-users"
-                        id="icons" aria-hidden="true"></i>Create Users</a>
+                <a href="{{route('student-proposal')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-sticky-note"
+                        id="icons" aria-hidden="true"></i>Proposal</a>
                 <a href="{{route('student-thesis')}}" class="list-group-item list-group-item-action text-white"><i
                         class="fa fa-pencil-alt" id="icons" aria-hidden="true"></i>Thesis</a>
             </div>
@@ -20,7 +20,7 @@
                 <button class="btn btn-light" id="menu-toggle"><span class="dark-blue-text"><i class="fa fa-bars"
                             aria-hidden="true"></i></span></button>
                 <div class="row" style="padding-top: 3%;">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-primary">
                             <div class="card-body">
                                 <h5 class="card-title font-weight-bold">CREATE STUDENT</h5>
@@ -121,21 +121,6 @@
                                             </div>
                                         </div>
                                     </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-secondary">
-                            <div class="card-body">
-                                <h5 class="card-title font-weight-bold">SUPERVISOR DETAILS</h5>
-                                <p>Name: Nasimane Ekandjo</p>
-                                <hr>
-                                <p>Email: nekandjo@nust.na</p>
-                                <hr>
-                                <p>Office: Poly Heights Room 508</p>
-                                <hr>
-                                <p>Phone: +264 61 12345</p>
-                                <!--<a href="#" class="btn btn-primary">Contact Supervisor</a>-->
                             </div>
                         </div>
                     </div>
