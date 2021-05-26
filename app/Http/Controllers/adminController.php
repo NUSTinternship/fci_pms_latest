@@ -27,7 +27,8 @@ class adminController extends Controller
     // Return Create Users View
     public function create()
     {
-        return view('admin.create');
+        $users = User::paginate(5);
+        return view('admin.create', compact('users'));
     }
 
     // Store Created Students In The Database

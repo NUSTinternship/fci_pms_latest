@@ -19,6 +19,46 @@
             <div class="container-fluid">
                 <button class="btn btn-light" id="menu-toggle"><span class="dark-blue-text"><i class="fa fa-bars"
                             aria-hidden="true"></i></span></button>
+                
+                <div class="row" style="padding-top: 3%;">
+                    <div class="col-sm-12">
+                        <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-primary">
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold">USERS</h5>
+                                <table class="table table-hover">
+                                    <thead class="thead-blue">
+                                      <tr>
+                                        <th scope="col" style="color: white;">Name</th>
+                                        <th scope="col" style="color: white;">User Type</th>
+                                        <th scope="col" style="color: white;">Edit</th>
+                                        <th scope="col" style="color: white;">Delete</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($users as $user)
+                                            
+                                      <tr>
+                                        <td> {{ $user->name }} </td>
+                                        <td> {{ $user->user_type }} </td>
+                                        <td>
+                                            <a href='#' class="btn btn-success">EDIT</a>
+                                        </td>
+                                        <td>
+                                            <a href='#' class="btn btn-danger">DELETE</a>
+                                        </td>
+                                      </tr>
+
+                                      @endforeach
+                                    </tbody>
+                                  </table>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-center">
+                                {{ $users->links() }}
+                              </div>
+                        </div>
+                    </div>
+                </div>            
                 <div class="row" style="padding-top: 3%;">
                     <div class="col-sm-12">
                         <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-primary">
