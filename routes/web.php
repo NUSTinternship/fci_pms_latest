@@ -78,7 +78,12 @@ Route::group([
     'middleware' => ['auth', 'role:administrator']
 ], function () {
     Route::get('home', 'adminController@index')->name('admin-home');
-    Route::get('create', 'adminController@create')->name('admin-create');
+    Route::get('users', 'adminController@users')->name('admin-create');
+    Route::get('/edit/{id}', 'adminController@edit')->name('admin-edit');
     Route::post('createStudent', 'adminController@createStudent');
+    Route::post('/edit/{id}', 'adminController@editUser');
     Route::post('createSupervisor', 'adminController@createSupervisor');
 });
+
+Route::post('/admin/edit/{id}', 'App\Http\Controllers\adminController@editUser');
+Route::post('/admin/editPassword/{id}', 'App\Http\Controllers\adminController@editPassword');

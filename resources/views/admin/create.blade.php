@@ -9,7 +9,7 @@
                 <a href="{{route('admin-home')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-home"
                         id="icons" aria-hidden="true"></i>Home</a>
                 <a href="{{route('admin-create')}}" class="list-group-item list-group-item-action text-white active"><i class="fa fa-users"
-                        id="icons" aria-hidden="true"></i>Create Users</a>
+                        id="icons" aria-hidden="true"></i>Users</a>
                 <a href="{{route('student-thesis')}}" class="list-group-item list-group-item-action text-white"><i
                         class="fa fa-pencil-alt" id="icons" aria-hidden="true"></i>Thesis</a>
             </div>
@@ -41,10 +41,10 @@
                                         <td> {{ $user->name }} </td>
                                         <td> {{ $user->user_type }} </td>
                                         <td>
-                                            <a href='#' class="btn btn-success">EDIT</a>
+                                            <a href='/admin/edit/{{ $user->id }}' class="btn btn-success">EDIT</a>
                                         </td>
                                         <td>
-                                            <a href='#' class="btn btn-danger">DELETE</a>
+                                            <a href='/admin/delete/{{ $user->id }}' class="btn btn-danger">DELETE</a>
                                         </td>
                                       </tr>
 
