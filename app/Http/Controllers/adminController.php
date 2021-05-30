@@ -155,8 +155,8 @@ class adminController extends Controller
             } else {
                 $output .= '
                 <tr>
-                    <td align="center" colspan="4">
-                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <td align="center" colspan="4" class="text-danger">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true" class="text-danger"></i>
                         No Users Found
                     </td>
                 </tr>
@@ -165,93 +165,7 @@ class adminController extends Controller
 
             return Response($output);
         }
-        // if ($request->ajax()) {
-        //     $output = '';
-        //     $query = $request->get('search');
-
-        //     $data = DB::table('users')
-        //         ->where('name','LIKE','%'.$query."%")
-        //         ->orWhere('user_type', 'LIKE', '%'.$query.'%')
-        //         ->get();
-
-        //     if ($data) {
-        //         foreach ($data as $key => $row) {
-        //             $output = '
-        //                 <tr>
-        //                     <td>'.$row->name.'</td>
-        //                     <td>'.$row->user_type.'</td>
-        //                     <td>
-        //                         <a href="/admin/edit/{{ '.$row->id.' }}" class="btn btn-success">
-        //                             <i class="fa fa-pencil-alt"></i>
-        //                             EDIT
-        //                         </a>
-        //                     </td>
-        //                     <td>
-        //                         <a href="/admin/delete/{{ '.$row->id.' }}" class="btn btn-danger">
-        //                             <i class="fa fa-trash"></i>
-        //                             DELETE
-        //                         </a>
-        //                     </td>
-        //                 </tr>
-        //             ';
-        //         }
-        //     } else {
-        //         $output = '
-        //         <tr>
-        //             <td align="center" colspan="4">
-        //                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-        //                 No Users Found
-        //             </td>
-        //         </tr>
-        //     ';
-        //     }
-
-            // if ($query != '') {
-            //     $data = DB::table('users')
-            //     ->where('name','LIKE','%'.$query."%")
-            //     ->orWhere('user_type', 'LIKE', '%'.$query.'%')
-            //     ->get();
-            // } else {
-            //     $data = User::paginate(5);
-            // }
-
-            // $results = $data->count();
-
-            // if ($results > 0) {
-            //     foreach ($data as $row) {
-            //         $output .= '
-            //             <tr>
-            //                 <td>'.$row->name.'</td>
-            //                 <td>'.$row->user_type.'</td>
-            //                 <td>
-            //                     <a href="/admin/edit/{{ '.$row->id.' }}" class="btn btn-success">
-            //                         <i class="fa fa-pencil-alt"></i>
-            //                         EDIT
-            //                     </a>
-            //                 </td>
-            //                 <td>
-            //                     <a href="/admin/delete/{{ '.$row->id.' }}" class="btn btn-danger">
-            //                         <i class="fa fa-trash"></i>
-            //                         DELETE
-            //                     </a>
-            //                 </td>
-            //             </tr>
-            //         ';
-            //     }
-            // } else {
-            //     $output .= '
-            //         <tr>
-            //             <td align="center" colspan="4">
-            //                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-            //                 No Users Found
-            //             </td>
-            //         </tr>
-            //     ';
-            // }
-            // return Response($output);
-        }
-
-    
+    }
 
     // Store Created Students In The Database
     public function createStudent(Request $request)
@@ -283,7 +197,7 @@ class adminController extends Controller
         $student->department = $request->input('department');
         $student->save();
 
-        return redirect('/admin/create');
+        return redirect('/admin/create')->with('student_created', 'Student Created Successfully');
     }
 
     // Store Created Supervisors In The Database
