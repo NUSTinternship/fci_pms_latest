@@ -25,6 +25,14 @@
                         <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-primary">
                             <div class="card-body">
                                 <h5 class="card-title font-weight-bold">USERS</h5>
+                                <div class="input-group rounded">
+                                    <input type="search" id="search" class="form-control rounded" placeholder="Search" aria-label="Search"
+                                      aria-describedby="search-addon" />
+                                    <span class="input-group-text border-0" id="search-addon">
+                                      <i class="fa fa-search"></i>
+                                    </span>
+                                </div>
+                                <br>
                                 <table class="table table-hover">
                                     <thead class="thead-blue">
                                       <tr>
@@ -35,27 +43,10 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($users as $user)
-                                            
-                                      <tr>
-                                        <td> {{ $user->name }} </td>
-                                        <td> {{ $user->user_type }} </td>
-                                        <td>
-                                            <a href='/admin/edit/{{ $user->id }}' class="btn btn-success">EDIT</a>
-                                        </td>
-                                        <td>
-                                            <a href='/admin/delete/{{ $user->id }}' class="btn btn-danger">DELETE</a>
-                                        </td>
-                                      </tr>
-
-                                      @endforeach
                                     </tbody>
                                   </table>
                             </div>
                             <hr>
-                            <div class="d-flex justify-content-center">
-                                {{ $users->links() }}
-                              </div>
                         </div>
                     </div>
                 </div>            
@@ -232,4 +223,4 @@
             </div>
         </div>
     </div>
-    @endsection
+@endsection

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Post;
 use Illuminate\Support\Facades\DB;
 use App\Models\Student;
 use App\Models\Supervisor;
 use App\Models\User;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -23,7 +25,7 @@ class adminController extends Controller
     public function index()
     {
         return view('admin.index');
-    } 
+    }
 
     // Return Edit User View
     public function edit($id, Request $request)
@@ -104,11 +106,152 @@ class adminController extends Controller
     }
 
     // Return Create Users View
-    public function users()
+    public function users(Request $request)
     {
         $users = User::paginate(5);
         return view('admin.create', compact('users'));
     }
+
+    public function action(Request $request)
+    {
+        // Check Whether AJAX Call/Request Is Received
+        if ($request->ajax()){
+            $query = $request->get('search');
+
+            if ($query != '') {
+                $output = '';
+
+                $data = DB::table('users')
+                ->where('name','LIKE','%'.$query."%")
+                ->orWhere('user_type', 'LIKE', '%'.$query.'%')
+                ->get();
+            } else {
+                $data = DB::table('users')->where('name', 'LIKE', ' ')->get();
+            }
+
+            $results = $data->count();
+
+            if ($results > 0) {
+                foreach ($data as $key => $row) {
+                    $output .= '
+                        <tr>
+                            <td>'.$row->name.'</td>
+                            <td>'.$row->user_type.'</td>
+                            <td>
+                                <a href="/admin/edit/'.$row->id.'" class="btn btn-success btn-sm style="border-radius: 25px;"">
+                                    <i class="fa fa-pencil-alt"></i>
+                                    EDIT
+                                </a>
+                            </td>
+                            <td>
+                                <a href="/admin/delete/{{ '.$row->id.' }}" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash"></i>
+                                    DELETE
+                                </a>
+                            </td>
+                        </tr>
+                    ';
+                }
+            } else {
+                $output .= '
+                <tr>
+                    <td align="center" colspan="4">
+                        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                        No Users Found
+                    </td>
+                </tr>
+            ';
+            }
+
+            return Response($output);
+        }
+        // if ($request->ajax()) {
+        //     $output = '';
+        //     $query = $request->get('search');
+
+        //     $data = DB::table('users')
+        //         ->where('name','LIKE','%'.$query."%")
+        //         ->orWhere('user_type', 'LIKE', '%'.$query.'%')
+        //         ->get();
+
+        //     if ($data) {
+        //         foreach ($data as $key => $row) {
+        //             $output = '
+        //                 <tr>
+        //                     <td>'.$row->name.'</td>
+        //                     <td>'.$row->user_type.'</td>
+        //                     <td>
+        //                         <a href="/admin/edit/{{ '.$row->id.' }}" class="btn btn-success">
+        //                             <i class="fa fa-pencil-alt"></i>
+        //                             EDIT
+        //                         </a>
+        //                     </td>
+        //                     <td>
+        //                         <a href="/admin/delete/{{ '.$row->id.' }}" class="btn btn-danger">
+        //                             <i class="fa fa-trash"></i>
+        //                             DELETE
+        //                         </a>
+        //                     </td>
+        //                 </tr>
+        //             ';
+        //         }
+        //     } else {
+        //         $output = '
+        //         <tr>
+        //             <td align="center" colspan="4">
+        //                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        //                 No Users Found
+        //             </td>
+        //         </tr>
+        //     ';
+        //     }
+
+            // if ($query != '') {
+            //     $data = DB::table('users')
+            //     ->where('name','LIKE','%'.$query."%")
+            //     ->orWhere('user_type', 'LIKE', '%'.$query.'%')
+            //     ->get();
+            // } else {
+            //     $data = User::paginate(5);
+            // }
+
+            // $results = $data->count();
+
+            // if ($results > 0) {
+            //     foreach ($data as $row) {
+            //         $output .= '
+            //             <tr>
+            //                 <td>'.$row->name.'</td>
+            //                 <td>'.$row->user_type.'</td>
+            //                 <td>
+            //                     <a href="/admin/edit/{{ '.$row->id.' }}" class="btn btn-success">
+            //                         <i class="fa fa-pencil-alt"></i>
+            //                         EDIT
+            //                     </a>
+            //                 </td>
+            //                 <td>
+            //                     <a href="/admin/delete/{{ '.$row->id.' }}" class="btn btn-danger">
+            //                         <i class="fa fa-trash"></i>
+            //                         DELETE
+            //                     </a>
+            //                 </td>
+            //             </tr>
+            //         ';
+            //     }
+            // } else {
+            //     $output .= '
+            //         <tr>
+            //             <td align="center" colspan="4">
+            //                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            //                 No Users Found
+            //             </td>
+            //         </tr>
+            //     ';
+            // }
+            // return Response($output);
+        }
+
+    
 
     // Store Created Students In The Database
     public function createStudent(Request $request)

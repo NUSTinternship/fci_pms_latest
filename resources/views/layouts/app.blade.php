@@ -21,6 +21,14 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
 
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    </script>
+
     <!-- Menu Toggle Script -->
     <script>
         jQuery(document).ready(function($){
@@ -28,8 +36,52 @@
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
             });
+
+            // fetch_users();
+
+            // function fetch_users(query='') {
+            //     $.ajax({
+            //         type : 'get',
+            //         url : '{{ route('search') }}',
+            //         data:{query:query},
+            //         success:function(data){
+            //         $('tbody').html(data);
+            //         }
+            //     })
+            // }
+
+            // $('#search').on('keyup', function() {
+            //     $query = $(this).val();
+            //     fetch_users($query);
+            // });
+
+            $('#search').on('keyup',function(){
+                $value=$(this).val();
+                if ($value == '') {
+                    $value = '';
+                    $.ajax({
+                        type : 'get',
+                        url : '{{ route('search') }}',
+                        data:{'search':$value},
+                        success:function(data){
+                        $('tbody').html(data);
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type : 'get',
+                        url : '{{ route('search') }}',
+                        data:{'search':$value},
+                        success:function(data){
+                        $('tbody').html(data);
+                        }
+                    });
+                    }
+            })
+
         })
     </script>
+
 </head>
 <body>
     <div id="app">
