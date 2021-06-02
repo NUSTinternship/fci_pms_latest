@@ -171,34 +171,42 @@ class adminController extends Controller
     // Store Created Students In The Database
     public function createStudent(Request $request)
     {
-        // Validating Form Input
-        $request->validate([
+        // Validating Form Inputs
+        $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,except,id',
             'password' => 'required|string|min:8|confirmed',
-            'program' => 'required|string',
-            'department' => 'required|string'
-         ]);
-
-        // Creating User    
-        $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'user_type' => "Student"
+            'department' => 'required|string',
+            'program' => 'required|string'
         ]);
-        
-        // Attaching 'Student' Role To User
-        $user->attachRole('Student');
 
-        // Adding The User To The Student's Table
-        $student = new Student;
-        $student->user_id = $user->id;
-        $student->program = $request->input('program');
-        $student->department = $request->input('department');
-        $student->save();
+        // If Validation Is Successful
+        if (!$validator->fails()) {
+            // Creating User    
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'user_type' => "Student"
+            ]);
+            
+            // Attaching 'Student' Role To User
+            $user->attachRole('Student');
 
-        return redirect('/admin/create')->with('student_created', 'Student Created Successfully');
+            // Adding The User To The Student's Table
+            $student = new Student;
+            $student->user_id = $user->id;
+            $student->program = $request->input('program');
+            $student->department = $request->input('department');
+            $student->save();
+
+            return response()->json(['success'=>'Supervisor Successfully Created.']);
+        } else {
+            // Return Error Messages
+            return response()->json(['error'=>$validator->errors()->all()]);
+        }
+
+        // return redirect('/admin/create')->with('student_created', 'Student Created Successfully');
     }
 
     // Store Created Supervisors In The Database

@@ -77,17 +77,45 @@
                     }
                 });
             }); 
+
+            $("#studentSubmit").click(function(e){
+                e.preventDefault();
+        
+                var _token = $("input[name=_token]").val();
+                var name = $("input[name=student_name]").val();
+                var email = $("input[name=student_email]").val();
+                var program = $("select[name=student_program]").val();
+                var department = $("select[name=student_department]").val();
+                var password = $("input[name=student_password]").val();
+                var password_confirmation = $("input[name=student_confirmation]").val();
+
+                $.ajax({
+                    url: "{{ route('createStudent') }}",
+                    type:'POST',
+                    data: {_token:_token, name:name, email:email, department:department, program:program, password:password, password_confirmation:password_confirmation},
+                    success: function(data) {
+                        if($.isEmptyObject(data.error)){
+                            $("#studentForm")[0].reset();
+                            $(".print-std-error-msg").find("ul").html('');
+                            $(".print-std-error-msg").css('display','none');
+                            printSuccessMsg();
+                        }else{
+                            printErrorMsg(data.error);
+                        }
+                    }
+                });
+            }); 
         
             function printErrorMsg (msg) {
-                $(".print-error-msg").find("ul").html('');
-                $(".print-error-msg").css('display','block');
+                $(".print-std-error-msg").find("ul").html('');
+                $(".print-std-error-msg").css('display','block');
                 $.each( msg, function( key, value ) {
-                    $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+                    $(".print-std-error-msg").find("ul").append('<li>'+value+'</li>');
                 });
             }
 
             function printSuccessMsg () {
-                $(".print-success-msg").show();
+                $(".print-std-success-msg").show();
             }
 
             

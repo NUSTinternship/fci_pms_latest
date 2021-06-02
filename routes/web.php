@@ -80,7 +80,7 @@ Route::group([
     Route::get('home', 'adminController@index')->name('admin-home');
     Route::get('users', 'adminController@users')->name('admin-create');
     Route::get('/edit/{id}', 'adminController@edit')->name('admin-edit');
-    Route::post('createStudent', 'adminController@createStudent');
+    Route::post('createStudent', 'adminController@createStudent')->name('createStudent');
     Route::post('/edit/{id}', 'adminController@editUser');
     Route::post('createSupervisor', 'adminController@createSupervisor')->name('createSupervisor');
 });

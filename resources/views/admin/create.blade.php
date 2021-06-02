@@ -96,11 +96,23 @@
                                         <br>
                                         <hr>
                                         <h5 style="text-align: center">Create Student</h5>
-                                            @if (session('student_created'))
-                                                <div class="alert alert-success">
-                                                   <li> {{ session('student_created') }} </li>
-                                                </div>
-                                            @endif
+                                        <div class="alert alert-danger print-std-error-msg alert-dismissible fade show" role="alert" style="display:none">
+                                            <strong>
+                                                <ul></ul>
+                                            </strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="alert alert-success print-std-success-msg alert-dismissible fade show" role="alert" style="display:none">
+                                            <strong>
+                                                Student Successfully Added.
+                                            </strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
                                             {{-- @if ($errors->any())
                                                 <div class="alert alert-danger">
                                                     <ul>
@@ -110,13 +122,13 @@
                                                     </ul>
                                                 </div>
                                             @endif --}}
-                                            <form method="POST" action="createStudent" enctype="multipart/form-data">
+                                            <form id="studentForm">
                                                 @csrf
                                                 <div class="form-group row">
                                                     <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
     
                                                     <div class="col-md-6">
-                                                        <input id="name" type="text" class="form-control" name="name" required
+                                                        <input id="name" type="text" class="form-control" name="student_name" required
                                                             autocomplete="name" autofocus>
                                                     </div>
                                                 </div>
@@ -126,7 +138,7 @@
                                                         Address</label>
     
                                                     <div class="col-md-6">
-                                                        <input id="email" type="email" class="form-control" name="email"
+                                                        <input id="email" type="email" class="form-control" name="student_email"
                                                             required autocomplete="email">
                                                     </div>
                                                 </div>
@@ -136,7 +148,7 @@
                                                         class="col-md-4 col-form-label text-md-right">Program</label>
     
                                                     <div class="col-md-6">
-                                                        <select class="form-control" id="program" name="program">
+                                                        <select class="form-control" id="program" name="student_program">
                                                             <option value="Masters" selected>Masters</option>
                                                             <option value="PhD">PhD</option>
                                                         </select>
@@ -148,7 +160,7 @@
                                                         class="col-md-4 col-form-label text-md-right">Department</label>
     
                                                     <div class="col-md-6">
-                                                        <select class="form-control" id="department" name="department">
+                                                        <select class="form-control" id="department" name="student_department">
                                                             <option value="Masters" selected>Computer Science
                                                             </option>
                                                             <option value="PhD">Informatics</option>
@@ -161,7 +173,7 @@
     
                                                     <div class="col-md-6">
                                                         <input id="password" type="password" class="form-control"
-                                                            name="password" required autocomplete="new-password">
+                                                            name="student_password" required autocomplete="new-password">
                                                     </div>
                                                 </div>
     
@@ -172,12 +184,12 @@
     
                                                     <div class="col-md-6">
                                                         <input id="password-confirm" type="password" class="form-control"
-                                                            name="password_confirmation" required autocomplete="new-password">
+                                                            name="student_confirmation" required autocomplete="new-password">
                                                     </div>
                                                 </div>
                                                 <div class="row text center" style="text-align: center">
                                                     <div class="col-sm-12">
-                                                        <button type="submit" id="create-student" class="btn btn-primary">
+                                                        <button type="submit" id="studentSubmit" class="btn btn-primary">
                                                             Create Student
                                                         </button>
                                                     </div>
