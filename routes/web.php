@@ -82,7 +82,7 @@ Route::group([
     Route::get('/edit/{id}', 'adminController@edit')->name('admin-edit');
     Route::post('createStudent', 'adminController@createStudent');
     Route::post('/edit/{id}', 'adminController@editUser');
-    Route::post('createSupervisor', 'adminController@createSupervisor');
+    Route::post('createSupervisor', 'adminController@createSupervisor')->name('createSupervisor');
 });
 
 Route::post('/admin/edit/{id}', 'App\Http\Controllers\adminController@editUser');

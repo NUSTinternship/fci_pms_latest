@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Student;
 use App\Models\Supervisor;
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
@@ -203,35 +204,44 @@ class adminController extends Controller
     // Store Created Supervisors In The Database
     public function createSupervisor(Request $request)
     {
-        // Validating Form Input
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,except,id',
             'password' => 'required|string|min:8|confirmed',
             'office' => 'required|string',
             'phone' => 'required|regex:/^\+26461[0-9]{7}$/|min:13|max:13',
             'department' => 'required|string'
-         ]);
-
-        // Creating User    
-        $user = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'user_type' => "Supervisor"
         ]);
-        
-        // Attaching 'Student' Role To User
-        $user->attachRole('Supervisor');
 
-        // Adding The User To The Student's Table
-        $supervisor = new Supervisor;
-        $supervisor->user_id = $user->id;
-        $supervisor->office = $request->input('office');
-        $supervisor->phone = $request->input('phone');
-        $supervisor->department = $request->input('department');
-        $supervisor->save();
+        // If Validation Is Successful
+        if (!$validator->fails()) {
 
-        return redirect('/admin/create')->with('success', 'Supervisor Created Successfully.');
+            // Creating User    
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'user_type' => "Supervisor"
+            ]);
+            
+            // Attaching 'Student' Role To User
+            $user->attachRole('Supervisor');
+
+            // Adding The User To The Student's Table
+            $supervisor = new Supervisor;
+            $supervisor->user_id = $user->id;
+            $supervisor->office = $request->input('office');
+            $supervisor->phone = $request->input('phone');
+            $supervisor->department = $request->input('department');
+            $supervisor->save();
+
+            return response()->json(['success'=>'Supervisor Successfully Created.']);
+
+        } else {
+            // Return Error Messages
+            return response()->json(['error'=>$validator->errors()->all()]);
+        }
+
+        // return redirect('/admin/create')->with('supervisor', 'Supervisor Created Successfully.');
     }
 }

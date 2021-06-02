@@ -21,6 +21,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
 
+    <!-- Script To Setup AJAX -->
     <script>
         $.ajaxSetup({
             headers: {
@@ -36,6 +37,60 @@
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
             });
+
+            // Show Create User Form Depending On Radio Value
+            $("#student").prop("checked", true);
+            $(".form").not("." + "student").hide();
+
+            $('input[type="radio"]').click(function () {
+                var inputValue = $(this).attr('value');
+                var targetDiv = $("." + inputValue);
+                $(".form").not(targetDiv).hide();
+                $(targetDiv).show();
+            })
+
+            $("#supervisorSubmit").click(function(e){
+                e.preventDefault();
+        
+                var _token = $("input[name=_token]").val();
+                var name = $("input[name=supervisor_name]").val();
+                var email = $("input[name=supervisor_email]").val();
+                var department = $("select[name=supervisor_department]").val();
+                var phone = $("input[name=supervisor_phone]").val();
+                var office = $("input[name=supervisor_office]").val();
+                var password = $("input[name=supervisor_password]").val();
+                var password_confirmation = $("input[name=supervisor_confirmation]").val();
+
+                $.ajax({
+                    url: "{{ route('createSupervisor') }}",
+                    type:'POST',
+                    data: {_token:_token, name:name, email:email, department:department, phone:phone, office:office, password:password, password_confirmation:password_confirmation},
+                    success: function(data) {
+                        if($.isEmptyObject(data.error)){
+                            $("#supervisorForm")[0].reset();
+                            $(".print-error-msg").find("ul").html('');
+                            $(".print-error-msg").css('display','none');
+                            printSuccessMsg();
+                        }else{
+                            printErrorMsg(data.error);
+                        }
+                    }
+                });
+            }); 
+        
+            function printErrorMsg (msg) {
+                $(".print-error-msg").find("ul").html('');
+                $(".print-error-msg").css('display','block');
+                $.each( msg, function( key, value ) {
+                    $(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+                });
+            }
+
+            function printSuccessMsg () {
+                $(".print-success-msg").show();
+            }
+
+            
 
             // fetch_users();
 
