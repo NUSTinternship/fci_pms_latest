@@ -38,6 +38,18 @@
             $("#wrapper").toggleClass("toggled");
             });
 
+            $('.count').each(function () {
+                $(this).prop('Counter', 0).animate({
+                        Counter: $(this).data('value')
+                    }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function (now) {                      
+                        $(this).text(this.Counter.toFixed(0));
+                    }
+                });
+            });
+
             // Show Create User Form Depending On Radio Value
             $("#student").prop("checked", true);
             $(".form").not("." + "student").hide();

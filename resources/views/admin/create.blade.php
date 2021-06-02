@@ -125,27 +125,27 @@
                                             <form id="studentForm">
                                                 @csrf
                                                 <div class="form-group row">
-                                                    <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                                                    <label for="name" class="col-md-4 col-form-label text-md-right">Name <span id="required">*</span></label>
     
                                                     <div class="col-md-6">
                                                         <input id="name" type="text" class="form-control" name="student_name" required
-                                                            autocomplete="name" autofocus>
+                                                            autofocus>
                                                     </div>
                                                 </div>
     
                                                 <div class="form-group row">
                                                     <label for="email" class="col-md-4 col-form-label text-md-right">E-mail
-                                                        Address</label>
+                                                        Address <span id="required">*</span></label>
     
                                                     <div class="col-md-6">
                                                         <input id="email" type="email" class="form-control" name="student_email"
-                                                            required autocomplete="email">
+                                                            required>
                                                     </div>
                                                 </div>
     
                                                 <div class="form-group row">
                                                     <label for="program"
-                                                        class="col-md-4 col-form-label text-md-right">Program</label>
+                                                        class="col-md-4 col-form-label text-md-right">Program <span id="required">*</span></label>
     
                                                     <div class="col-md-6">
                                                         <select class="form-control" id="program" name="student_program">
@@ -157,7 +157,7 @@
     
                                                 <div class="form-group row">
                                                     <label for="department"
-                                                        class="col-md-4 col-form-label text-md-right">Department</label>
+                                                        class="col-md-4 col-form-label text-md-right">Department <span id="required">*</span></label>
     
                                                     <div class="col-md-6">
                                                         <select class="form-control" id="department" name="student_department">
@@ -169,22 +169,22 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <label for="password"
-                                                        class="col-md-4 col-form-label text-md-right">Password</label>
+                                                        class="col-md-4 col-form-label text-md-right">Password <span id="required">*</span></label>
     
                                                     <div class="col-md-6">
                                                         <input id="password" type="password" class="form-control"
-                                                            name="student_password" required autocomplete="new-password">
+                                                            name="student_password" required>
                                                     </div>
                                                 </div>
     
                                                 <div class="form-group row">
                                                     <label for="password-confirm"
                                                         class="col-md-4 col-form-label text-md-right">Confirm
-                                                        Password</label>
+                                                        Password <span id="required">*</span></label>
     
                                                     <div class="col-md-6">
                                                         <input id="password-confirm" type="password" class="form-control"
-                                                            name="student_confirmation" required autocomplete="new-password">
+                                                            name="student_confirmation" required>
                                                     </div>
                                                 </div>
                                                 <div class="row text center" style="text-align: center">
@@ -233,24 +233,24 @@
 
                                         <form id="supervisorForm">
                                             @csrf
-                                            <div class="form-group row">
-                                                <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+                                            <div class="form-group row required">
+                                                <label for="name" class="col-md-4 col-form-label text-md-right">Name <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
                                                     <input id="name" type="text" class="form-control" name="supervisor_name" required autofocus>
                                                 </div>
                                             </div>
                     
-                                            <div class="form-group row">
-                                                <label for="email" class="col-md-4 col-form-label text-md-right">E-mail Address</label>
+                                            <div class="form-group row required">
+                                                <label for="email" class="col-md-4 col-form-label text-md-right">E-mail Address <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
                                                     <input id="email" type="email" class="form-control" name="supervisor_email" required>
                                                 </div>
                                             </div>
         
-                                            <div class="form-group row">
-                                                <label for="department" class="col-md-4 col-form-label text-md-right">Department</label>
+                                            <div class="form-group row required">
+                                                <label for="department" class="col-md-4 col-form-label text-md-right">Department <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
                                                     <select class="form-control" id="department" name="supervisor_department" required>
@@ -260,16 +260,16 @@
                                                 </div>
                                             </div>
         
-                                            <div class="form-group row">
-                                                <label for="office" class="col-md-4 col-form-label text-md-right">Office Location</label>
+                                            <div class="form-group row required">
+                                                <label for="office" class="col-md-4 col-form-label text-md-right">Office Location <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
                                                     <input id="office" type="text" class="form-control" name="supervisor_office" required autofocus>
                                                 </div>
                                             </div>
         
-                                            <div class="form-group row">
-                                                <label for="phone" class="col-md-4 col-form-label text-md-right">Phone</label>
+                                            <div class="form-group row required">
+                                                <label for="phone" class="col-md-4 col-form-label text-md-right">Phone <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
                                                     <input id="phone" type="tel" placeholder="E.g +264611234567" class="form-control" name="supervisor_phone" required autofocus>
@@ -277,16 +277,16 @@
                                                 </div>
                                             </div>
         
-                                            <div class="form-group row">
-                                                <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                                            <div class="form-group row required">
+                                                <label for="password" class="col-md-4 col-form-label text-md-right">Password <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
                                                     <input id="password" type="password" class="form-control" name="supervisor_password" required>
                                                 </div>
                                             </div>
                     
-                                            <div class="form-group row">
-                                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+                                            <div class="form-group row required">
+                                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
                                                     <input id="password-confirm" type="password" class="form-control" name="supervisor_confirmation" required>

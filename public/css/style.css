@@ -24,6 +24,14 @@
     color: black;
     font-size: 50%;
   }
+
+  #required {
+    color:red;
+  }
+
+  .count {
+    font-size: 70px;
+  }
   
   .card-header {
     background-color: #1b2d5d;

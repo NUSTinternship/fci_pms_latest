@@ -25,7 +25,10 @@ class adminController extends Controller
 
     public function index()
     {
-        return view('admin.index');
+        $users = User::all()->count();
+        $students = Student::all()->count();
+        $supervisors = Supervisor::all()->count();
+        return view('admin.index', compact('users', 'students', 'supervisors'));
     }
 
     // Return Edit User View
