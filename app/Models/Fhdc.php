@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Fhdc extends Model
 {
     use HasFactory;
+
+    protected $table = 'fhdc';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = ['user_id'];
 }
