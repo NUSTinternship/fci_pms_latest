@@ -133,6 +133,38 @@
                 });
             });
 
+            $("#fhdcSubmit").click(function(e) {
+                e.preventDefault();
+
+                var _token = $("input[name=_token]").val();
+                var name = $("input[name=fhdc_name]").val();
+                var email = $("input[name=fhdc_email]").val();
+                var password = $("input[name=fhdc_password]").val();
+                var password_confirmation = $("input[name=fhdc_confirmation]").val();
+
+                $.ajax({
+                    url: "{{ route('createFHDC') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        name: name,
+                        email: email,
+                        password: password,
+                        password_confirmation: password_confirmation
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#fhdcForm")[0].reset();
+                            // $(".print-hod-error-msg").find("ul").html('');
+                            // $(".print-hod-error-msg").css('display', 'none');
+                            printSuccessMsg("fhdc");
+                        } else {
+                            printErrorMsg(data.error, "fhdc");
+                        }
+                    }
+                });
+            });
+
             $("#studentSubmit").click(function(e) {
                 e.preventDefault();
 
@@ -190,6 +222,13 @@
                         $(".print-hod-error-msg").css('display', 'block');
                         $.each(msg, function(key, value) {
                             $(".print-hod-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "fhdc":
+                        $(".print-fhdc-error-msg").find("ul").html('');
+                        $(".print-fhdc-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-fhdc-error-msg").find("ul").append('<li>' + value + '</li>');
                         });
                         break;
                     default:

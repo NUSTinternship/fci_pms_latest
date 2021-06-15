@@ -379,6 +379,83 @@
                                         </form>
                                     </div>
                                 </div>
+                                <div class="row FHDC form">
+                                    <div class="col-sm-12">
+                                        <br>
+                                        <hr>
+                                        <h5 class="card-title">Create FHDC</h5>
+
+                                        <div class="alert alert-danger print-fhdc-error-msg alert-dismissible fade show" role="alert" style="display:none">
+                                            <strong>
+                                                <ul></ul>
+                                            </strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="alert alert-success print-fhdc-success-msg alert-dismissible fade show" role="alert" style="display:none">
+                                            <strong>
+                                                HOD Successfully Added.
+                                            </strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        {{-- @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif --}}
+                                        <!--<span class="alert a success-text"></span>-->
+
+                                        <form id="hodForm">
+                                            @csrf
+                                            <div class="form-group row required">
+                                                <label for="name" class="col-md-4 col-form-label text-md-right">Name <span id="required">*</span></label>
+                    
+                                                <div class="col-md-6">
+                                                    <input id="name" type="text" class="form-control" name="fhdc_name" required autofocus>
+                                                </div>
+                                            </div>
+                    
+                                            <div class="form-group row required">
+                                                <label for="email" class="col-md-4 col-form-label text-md-right">E-mail Address <span id="required">*</span></label>
+                    
+                                                <div class="col-md-6">
+                                                    <input id="email" type="email" class="form-control" name="fhdc_email" required>
+                                                </div>
+                                            </div>
+        
+                                            <div class="form-group row required">
+                                                <label for="password" class="col-md-4 col-form-label text-md-right">Password <span id="required">*</span></label>
+                    
+                                                <div class="col-md-6">
+                                                    <input id="password" type="password" class="form-control" name="fhdc_password" required>
+                                                </div>
+                                            </div>
+                    
+                                            <div class="form-group row required">
+                                                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password <span id="required">*</span></label>
+                    
+                                                <div class="col-md-6">
+                                                    <input id="password-confirm" type="password" class="form-control" name="fhdc_confirmation" required>
+                                                </div>
+                                            </div>          
+                                            <div class="row text center" style="text-align: center">
+                                                <div class="col-sm-12">
+                                                    <button type="submit" id="fhdcSubmit" class="btn btn-primary">
+                                                        Create FHDC
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                             <hr>
                         </div>

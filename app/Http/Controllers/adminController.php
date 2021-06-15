@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Post;
+use App\Models\Fhdc;
 use App\Models\HOD;
 use App\Models\Hod as ModelsHod;
 use Illuminate\Support\Facades\DB;
@@ -324,12 +325,12 @@ class adminController extends Controller
             $user->attachRole('FHDC');
 
             // Adding The User To The HOD Table NOT WORKING
-            $hod = new Hod();
-            $hod->user_id = $user->id;
-            $hod->save();
+            $fhdc = new Fhdc;
+            $fhdc->user_id = $user->id;
+            $fhdc->save();
 
             // TRIED THIS TOO, ALSO NOT WORKING
-            DB::table('hods')->insert(
+            DB::table('fhdc')->insert(
                 ['user_id' => $user->id],
             );
 
