@@ -91,9 +91,9 @@
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
                             $("#supervisorForm")[0].reset();
-                            // $(".print-error-msg").find("ul").html('');
-                            // $(".print-error-msg").css('display', 'none');
-                            printSuccessMsg("student");
+                            $(".print-super-error-msg").find("ul").html('');
+                            $(".print-super-error-msg").css('display', 'none');
+                            printSuccessMsg("supervisor");
                         } else {
                             printErrorMsg(data.error, "supervisor")
                         }
@@ -123,8 +123,8 @@
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
                             $("#hodForm")[0].reset();
-                            // $(".print-hod-error-msg").find("ul").html('');
-                            // $(".print-hod-error-msg").css('display', 'none');
+                            $(".print-hod-error-msg").find("ul").html('');
+                            $(".print-hod-error-msg").css('display', 'none');
                             printSuccessMsg("hod");
                         } else {
                             printErrorMsg(data.error, "hod");
@@ -155,8 +155,8 @@
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
                             $("#fhdcForm")[0].reset();
-                            // $(".print-hod-error-msg").find("ul").html('');
-                            // $(".print-hod-error-msg").css('display', 'none');
+                            $(".print-fhdc-error-msg").find("ul").html('');
+                            $(".print-fhdc-error-msg").css('display', 'none');
                             printSuccessMsg("fhdc");
                         } else {
                             printErrorMsg(data.error, "fhdc");
@@ -191,8 +191,8 @@
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
                             $("#studentForm")[0].reset();
-                            // $(".print-std-error-msg").find("ul").html('');
-                            // $(".print-std-error-msg").css('display', 'none');
+                            $(".print-std-error-msg").find("ul").html('');
+                            $(".print-std-error-msg").css('display', 'none');
                             printSuccessMsg("student");
                         } else {
                             printErrorMsg(data.error, "student");
@@ -211,10 +211,10 @@
                         });
                         break;
                     case "supervisor":
-                        $(".print-error-msg").find("ul").html('');
-                        $(".print-error-msg").css('display', 'block');
+                        $(".print-super-error-msg").find("ul").html('');
+                        $(".print-super-error-msg").css('display', 'block');
                         $.each(msg, function(key, value) {
-                            $(".print-hod-error-msg").find("ul").append('<li>' + value + '</li>');
+                            $(".print-super-error-msg").find("ul").append('<li>' + value + '</li>');
                         });
                         break;
                     case "hod":

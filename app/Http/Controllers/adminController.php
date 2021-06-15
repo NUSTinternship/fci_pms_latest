@@ -318,7 +318,7 @@ class adminController extends Controller
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
-                'user_type' => "HOD"
+                'user_type' => "FHDC"
             ]);
 
             // Attaching 'HOD' Role To User

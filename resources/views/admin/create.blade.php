@@ -203,13 +203,10 @@
                                         <hr>
                                         <h5 class="card-title">Create Supervisor</h5>
 
-                                        <div class="alert alert-danger print-error-msg alert-dismissible fade show" role="alert" style="display:none">
+                                        <div class="alert alert-danger print-super-error-msg" role="alert" style="display:none">
                                             <strong>
                                                 <ul></ul>
                                             </strong>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
                                         </div>
 
                                         <div class="alert alert-success print-super-success-msg alert-dismissible fade show" role="alert" style="display:none">
@@ -396,7 +393,7 @@
 
                                         <div class="alert alert-success print-fhdc-success-msg alert-dismissible fade show" role="alert" style="display:none">
                                             <strong>
-                                                HOD Successfully Added.
+                                                FHDC Successfully Added.
                                             </strong>
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                               <span aria-hidden="true">&times;</span>
