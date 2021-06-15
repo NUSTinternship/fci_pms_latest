@@ -83,6 +83,7 @@ Route::group([
     Route::post('createStudent', 'adminController@createStudent')->name('createStudent');
     Route::post('/edit/{id}', 'adminController@editUser');
     Route::post('createSupervisor', 'adminController@createSupervisor')->name('createSupervisor');
+    Route::post('createHOD', 'adminController@createHOD')->name('createHOD');
 });
 
 Route::post('/admin/edit/{id}', 'App\Http\Controllers\adminController@editUser');

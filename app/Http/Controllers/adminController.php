@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Post;
+use App\Models\HOD;
 use Illuminate\Support\Facades\DB;
 use App\Models\Student;
 use App\Models\Supervisor;
@@ -255,4 +256,42 @@ class adminController extends Controller
 
         // return redirect('/admin/create')->with('supervisor', 'Supervisor Created Successfully.');
     }
+
+        // Store Created Supervisors In The Database
+        public function createHOD(Request $request)
+        {
+            $validator = Validator::make($request->all(),[
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,except,id',
+                'password' => 'required|string|min:8|confirmed',
+            ]);
+    
+            // If Validation Is Successful
+            if (!$validator->fails()) {
+    
+                // Creating User    
+                $user = User::create([
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                    'user_type' => "HOD"
+                ]);
+                
+                // Attaching 'Student' Role To User
+                $user->attachRole('HOD');
+    
+                // Adding The User To The HOD Table
+                $hod = new HOD();
+                $hod->user_id = $user->id;
+                $hod->save();
+    
+                return response()->json(['success'=>'HOD Successfully Created.']);
+    
+            } else {
+                // Return Error Messages
+                return response()->json(['error'=>$validator->errors()->all()]);
+            }
+    
+            // return redirect('/admin/create')->with('supervisor', 'Supervisor Created Successfully.');
+        }
 }

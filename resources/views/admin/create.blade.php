@@ -342,7 +342,7 @@
                                                 <label for="name" class="col-md-4 col-form-label text-md-right">Name <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
-                                                    <input id="name" type="text" class="form-control" name="supervisor_name" required autofocus>
+                                                    <input id="name" type="text" class="form-control" name="hod_name" required autofocus>
                                                 </div>
                                             </div>
                     
@@ -350,7 +350,7 @@
                                                 <label for="email" class="col-md-4 col-form-label text-md-right">E-mail Address <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
-                                                    <input id="email" type="email" class="form-control" name="supervisor_email" required>
+                                                    <input id="email" type="email" class="form-control" name="hod_email" required>
                                                 </div>
                                             </div>
         
@@ -358,7 +358,7 @@
                                                 <label for="password" class="col-md-4 col-form-label text-md-right">Password <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
-                                                    <input id="password" type="password" class="form-control" name="supervisor_password" required>
+                                                    <input id="password" type="password" class="form-control" name="hod_password" required>
                                                 </div>
                                             </div>
                     
@@ -366,12 +366,12 @@
                                                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password <span id="required">*</span></label>
                     
                                                 <div class="col-md-6">
-                                                    <input id="password-confirm" type="password" class="form-control" name="supervisor_confirmation" required>
+                                                    <input id="password-confirm" type="password" class="form-control" name="hod_confirmation" required>
                                                 </div>
                                             </div>          
                                             <div class="row text center" style="text-align: center">
                                                 <div class="col-sm-12">
-                                                    <button type="submit" id="supervisorSubmit" class="btn btn-primary">
+                                                    <button type="submit" id="hodSubmit" class="btn btn-primary">
                                                         Create HOD
                                                     </button>
                                                 </div>

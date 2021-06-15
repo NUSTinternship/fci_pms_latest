@@ -90,6 +90,32 @@
                 });
             }); 
 
+            $("#hodSubmit").click(function(e){
+                e.preventDefault();
+        
+                var _token = $("input[name=_token]").val();
+                var name = $("input[name=hod_name]").val();
+                var email = $("input[name=hod_email]").val();
+                var password = $("input[name=hod_password]").val();
+                var password_confirmation = $("input[name=hod_confirmation]").val();
+
+                $.ajax({
+                    url: "{{ route('createSupervisor') }}",
+                    type:'POST',
+                    data: {_token:_token, name:name, email:email, password:password, password_confirmation:password_confirmation},
+                    success: function(data) {
+                        if($.isEmptyObject(data.error)){
+                            $("#hodForm")[0].reset();
+                            $(".print-hod-error-msg").find("ul").html('');
+                            $(".print-hod-error-msg").css('display','none');
+                            printSuccessMsg();
+                        }else{
+                            printErrorMsg(data.error);
+                        }
+                    }
+                });
+            }); 
+
             $("#studentSubmit").click(function(e){
                 e.preventDefault();
         
