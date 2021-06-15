@@ -157,7 +157,7 @@
                             $("#fhdcForm")[0].reset();
                             $(".print-fhdc-error-msg").find("ul").html('');
                             $(".print-fhdc-error-msg").css('display', 'none');
-                            printSuccessMsg("fhdc");
+                            $(".print-fhdc-success-msg").show();
                         } else {
                             printErrorMsg(data.error, "fhdc");
                         }
@@ -251,6 +251,9 @@
                     break;
                     case "hod":
                     $(".print-hod-success-msg").show();
+                    break;
+                    case "fhdc":
+                    $(".print-fhdc-success-msg").show();
                     break;
                     default:
                         break;

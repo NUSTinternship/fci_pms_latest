@@ -6,12 +6,10 @@
         <div class="border-right" id="sidebar-wrapper" style="background-color: #1b2d5d; color: white;">
             <div class="sidebar-heading">Administrator Portal</div>
             <div class="list-group list-group-flush">
-                <a href="{{route('student-home')}}" class="list-group-item list-group-item-action text-white active"><i class="fa fa-home"
-                        id="icons" aria-hidden="true"></i>Home</a>
-                <a href="{{route('admin-create')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-users"
-                        id="icons" aria-hidden="true"></i>Users</a>
-                <a href="{{route('student-thesis')}}" class="list-group-item list-group-item-action text-white"><i
-                        class="fa fa-pencil-alt" id="icons" aria-hidden="true"></i>Thesis</a>
+                <a href="{{ route('admin-home') }}" class="list-group-item list-group-item-action text-white active"><i
+                        class="fa fa-home" id="icons" aria-hidden="true"></i>Home</a>
+                <a href="{{ route('admin-create') }}" class="list-group-item list-group-item-action text-white"><i
+                        class="fa fa-users" id="icons" aria-hidden="true"></i>Users</a>
             </div>
         </div>
         <!-- Page Content -->
@@ -24,15 +22,15 @@
                         <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-primary">
                             <div class="card-body">
                                 <h5 class="card-header">{{ $user->name }}</h4><br>
-                                    @if ($user->user_type == "Student")
+                                    @if ($user->user_type == 'Student')
                                         @if (session('error'))
-                                        <div class="alert alert-danger">
-                                        <li> {{ session('error') }} </li>
-                                        </div>
+                                            <div class="alert alert-danger">
+                                                <li> {{ session('error') }} </li>
+                                            </div>
                                         @endif
                                         @if (session('success'))
                                             <div class="alert alert-success">
-                                            <li> {{ session('success') }} </li>
+                                                <li> {{ session('success') }} </li>
                                             </div>
                                         @endif
                                         @if ($errors->any())
@@ -44,63 +42,256 @@
                                                 </ul>
                                             </div>
                                         @endif
-                                    <form method="POST" action="/admin/edit/{{ $user->id }}" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="form-group row">
-                                            <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
-                
-                                            <div class="col-md-6">
-                                                <input id="name" value="{{ $user->name }}" type="text" class="form-control" name="name" autocomplete="name" autofocus>
+                                        <form method="POST" action="/admin/edit/{{ $user->id }}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="form-group row">
+                                                <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="name" value="{{ $user->name }}" type="text"
+                                                        class="form-control" name="name" autocomplete="name" autofocus>
+                                                </div>
                                             </div>
-                                        </div>
-                
-                                        <div class="form-group row">
-                                            <label for="email" class="col-md-4 col-form-label text-md-right">E-mail Address</label>
-                
-                                            <div class="col-md-6">
-                                                <input id="email" value="{{ $user->email }}" type="email" class="form-control" name="email" autocomplete="email">
+
+                                            <div class="form-group row">
+                                                <label for="email" class="col-md-4 col-form-label text-md-right">E-mail
+                                                    Address</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="email" value="{{ $user->email }}" type="email"
+                                                        class="form-control" name="email" autocomplete="email">
+                                                </div>
                                             </div>
-                                        </div>
-                
-                                        <div class="form-group row">
-                                            <label for="program" class="col-md-4 col-form-label text-md-right">Program</label>
-                
-                                            <div class="col-md-6">
-                                                <select class="form-control" id="program" name="program">
-                                                    @if ($student->program == "Masters")
-                                                    <option value="Masters" selected>Masters</option>
-                                                    <option value="PhD">PhD</option>
-                                                    @else
-                                                    <option value="Masters">Masters</option>
-                                                    <option value="PhD" selected>PhD</option>
-                                                    @endif
-                                                </select>
+
+                                            <div class="form-group row">
+                                                <label for="program"
+                                                    class="col-md-4 col-form-label text-md-right">Program</label>
+
+                                                <div class="col-md-6">
+                                                    <select class="form-control" id="program" name="program">
+                                                        @if ($student->program == 'Masters')
+                                                            <option value="Masters" selected>Masters</option>
+                                                            <option value="PhD">PhD</option>
+                                                        @else
+                                                            <option value="Masters">Masters</option>
+                                                            <option value="PhD" selected>PhD</option>
+                                                        @endif
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>
-    
-                                        <div class="form-group row">
-                                            <label for="department" class="col-md-4 col-form-label text-md-right">Department</label>
-                
-                                            <div class="col-md-6">
-                                                <select class="form-control" id="department" name="department">
-                                                    @if ($student->department == "Computer Science")
-                                                    <option value="Computer Science" selected>Computer Science</option>
-                                                    <option value="Informatics">Informatics</option>
-                                                    @else
-                                                    <option value="Computer Science">Computer Science</option>
-                                                    <option value="Informatics" selected>Informatics</option>
-                                                    @endif
-                                                </select>
+
+                                            <div class="form-group row">
+                                                <label for="department"
+                                                    class="col-md-4 col-form-label text-md-right">Department</label>
+
+                                                <div class="col-md-6">
+                                                    <select class="form-control" id="department" name="department">
+                                                        @if ($student->department == 'Computer Science')
+                                                            <option value="Computer Science" selected>Computer Science
+                                                            </option>
+                                                            <option value="Informatics">Informatics</option>
+                                                        @else
+                                                            <option value="Computer Science">Computer Science</option>
+                                                            <option value="Informatics" selected>Informatics</option>
+                                                        @endif
+                                                    </select>
+                                                </div>
                                             </div>
-                                        </div>          
-                                        <div class="row text center" style="text-align: center">
-                                            <div class="col-sm-12">
-                                                <button type="submit" class="btn btn-primary">
-                                                    Submit
-                                                </button>
+                                            <div class="row text center" style="text-align: center">
+                                                <div class="col-sm-12">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        Submit
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </form>
+                                        </form>
+                                    @endif
+                                    @if ($user->user_type == 'Supervisor')
+                                        @if (session('error'))
+                                            <div class="alert alert-danger">
+                                                <li> {{ session('error') }} </li>
+                                            </div>
+                                        @endif
+                                        @if (session('success'))
+                                            <div class="alert alert-success">
+                                                <li> {{ session('success') }} </li>
+                                            </div>
+                                        @endif
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                        <form method="POST" action="/admin/edit/{{ $user->id }}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="form-group row">
+                                                <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="name" value="{{ $user->name }}" type="text"
+                                                        class="form-control" name="name" autocomplete="name" autofocus>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="email" class="col-md-4 col-form-label text-md-right">E-mail
+                                                    Address</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="supervisor_email" value="{{ $user->email }}" type="email"
+                                                        class="form-control" name="supervisor_email" autocomplete="email">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="department"
+                                                    class="col-md-4 col-form-label text-md-right">Department</label>
+
+                                                <div class="col-md-6">
+                                                    <select class="form-control" id="department" name="department">
+                                                        @if ($supervisor->department == 'Computer Science')
+                                                            <option value="Computer Science" selected>Computer Science
+                                                            </option>
+                                                            <option value="Informatics">Informatics</option>
+                                                        @else
+                                                            <option value="Computer Science">Computer Science</option>
+                                                            <option value="Informatics" selected>Informatics</option>
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="office" class="col-md-4 col-form-label text-md-right">Office</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="office" value="{{ $supervisor->office }}" type="text"
+                                                        class="form-control" name="office">
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="phone" class="col-md-4 col-form-label text-md-right">Phone</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="supervisor_phone" value="{{ $supervisor->phone }}" type="tel" placeholder="E.g +264611234567"
+                                                        class="form-control" name="supervisor_phone">
+                                                    <small class="form-text text-muted">Must Start With +26461. No Whitespaces</small>
+                                                </div>
+                                            </div>
+                                            <div class="row text center" style="text-align: center">
+                                                <div class="col-sm-12">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    @endif
+                                    @if ($user->user_type == 'HOD')
+                                        @if (session('error'))
+                                            <div class="alert alert-danger">
+                                                <li> {{ session('error') }} </li>
+                                            </div>
+                                        @endif
+                                        @if (session('success'))
+                                            <div class="alert alert-success">
+                                                <li> {{ session('success') }} </li>
+                                            </div>
+                                        @endif
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                        <form method="POST" action="/admin/edit/{{ $user->id }}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="form-group row">
+                                                <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="hod_name" value="{{ $user->name }}" type="text"
+                                                        class="form-control" name="hod_name" autocomplete="name" autofocus>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="email" class="col-md-4 col-form-label text-md-right">E-mail
+                                                    Address</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="hod_email" value="{{ $user->email }}" type="email"
+                                                        class="form-control" name="hod_email" autocomplete="email">
+                                                </div>
+                                            </div>
+                                            <div class="row text center" style="text-align: center">
+                                                <div class="col-sm-12">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    @endif
+                                    @if ($user->user_type == 'FHDC')
+                                        @if (session('error'))
+                                            <div class="alert alert-danger">
+                                                <li> {{ session('error') }} </li>
+                                            </div>
+                                        @endif
+                                        @if (session('success'))
+                                            <div class="alert alert-success">
+                                                <li> {{ session('success') }} </li>
+                                            </div>
+                                        @endif
+                                        @if ($errors->any())
+                                            <div class="alert alert-danger">
+                                                <ul>
+                                                    @foreach ($errors->all() as $error)
+                                                        <li>{{ $error }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                        <form method="POST" action="/admin/edit/{{ $user->id }}"
+                                            enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="form-group row">
+                                                <label for="name" class="col-md-4 col-form-label text-md-right">Name</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="fhdc_name" value="{{ $user->name }}" type="text"
+                                                        class="form-control" name="fhdc_name" autofocus>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label for="email" class="col-md-4 col-form-label text-md-right">E-mail
+                                                    Address</label>
+
+                                                <div class="col-md-6">
+                                                    <input id="fhdc_email" value="{{ $user->email }}" type="email"
+                                                        class="form-control" name="fhdc_email">
+                                                </div>
+                                            </div>
+                                            <div class="row text center" style="text-align: center">
+                                                <div class="col-sm-12">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     @endif
                             </div>
                         </div>
@@ -112,16 +303,17 @@
                         <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-primary">
                             <div class="card-body">
                                 <h5 class="card-header">Change Password</h4><br>
-                                    <form method="POST" action="/admin/editPassword/{{ $user->id }}" enctype="multipart/form-data">
+                                    <form method="POST" action="/admin/editPassword/{{ $user->id }}"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         @if (session('error'))
                                             <div class="alert alert-danger">
-                                               <li> {{ session('error') }} </li>
+                                                <li> {{ session('error') }} </li>
                                             </div>
                                         @endif
                                         @if (session('message'))
                                             <div class="alert alert-success">
-                                               <li> {{ session('message') }} </li>
+                                                <li> {{ session('message') }} </li>
                                             </div>
                                         @endif
                                         @if ($errors->any())
@@ -134,30 +326,36 @@
                                             </div>
                                         @endif
                                         <div class="form-group row">
-                                            <label for="password" class="col-md-4 col-form-label text-md-right">Current Password</label>
-                
+                                            <label for="password" class="col-md-4 col-form-label text-md-right">Current
+                                                Password</label>
+
                                             <div class="col-md-6">
-                                                <input id="current_password" type="password" class="form-control" name="current_password" required autocomplete="new-password">
+                                                <input id="current_password" type="password" class="form-control"
+                                                    name="current_password" required autocomplete="new-password">
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="password" class="col-md-4 col-form-label text-md-right">New Password</label>
-                
+                                            <label for="password" class="col-md-4 col-form-label text-md-right">New
+                                                Password</label>
+
                                             <div class="col-md-6">
-                                                <input id="new_password" type="password" class="form-control" name="new_password" required>
+                                                <input id="new_password" type="password" class="form-control"
+                                                    name="new_password" required>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label for="password" class="col-md-4 col-form-label text-md-right">Confirm New Password</label>
-                
+                                            <label for="password" class="col-md-4 col-form-label text-md-right">Confirm New
+                                                Password</label>
+
                                             <div class="col-md-6">
-                                                <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
+                                                <input id="password_confirmation" type="password" class="form-control"
+                                                    name="password_confirmation" required>
                                             </div>
                                         </div>
-    
-                                            
+
+
                                         <div class="row text center" style="text-align: center">
                                             <div class="col-sm-12">
                                                 <button type="submit" class="btn btn-primary">

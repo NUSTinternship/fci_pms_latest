@@ -6,12 +6,10 @@
         <div class="border-right" id="sidebar-wrapper" style="background-color: #1b2d5d; color: white;">
             <div class="sidebar-heading">Administrator Portal</div>
             <div class="list-group list-group-flush">
-                <a href="{{route('student-home')}}" class="list-group-item list-group-item-action text-white active"><i class="fa fa-home"
+                <a href="{{route('admin-home')}}" class="list-group-item list-group-item-action text-white active"><i class="fa fa-home"
                         id="icons" aria-hidden="true"></i>Home</a>
                 <a href="{{route('admin-create')}}" class="list-group-item list-group-item-action text-white"><i class="fa fa-users"
                         id="icons" aria-hidden="true"></i>Users</a>
-                <a href="{{route('student-thesis')}}" class="list-group-item list-group-item-action text-white"><i
-                        class="fa fa-pencil-alt" id="icons" aria-hidden="true"></i>Thesis</a>
             </div>
         </div>
         <!-- Page Content -->
@@ -50,7 +48,7 @@
                         <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-primary">
                             <div class="card-body text-center">
                                 <h5 class="card-title font-weight-bold">Total HODs</h5>
-                                <p class="count" data-value={{ $users }}></p>
+                                <p class="count" data-value={{ $hod}}></p>
                             </div>
                         </div>
                     </div>
@@ -58,7 +56,7 @@
                         <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-secondary">
                             <div class="card-body text-center">
                                 <h5 class="card-title font-weight-bold">Total FHDCs</h5>
-                                <p class="count" data-value={{ $students }}></p>
+                                <p class="count" data-value={{ $fhdc }}></p>
                             </div>
                         </div>
                     </div>

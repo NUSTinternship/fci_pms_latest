@@ -32,7 +32,9 @@ class adminController extends Controller
         $users = User::all()->count();
         $students = Student::all()->count();
         $supervisors = Supervisor::all()->count();
-        return view('admin.index', compact('users', 'students', 'supervisors'));
+        $hod = Hod::all()->count();
+        $fhdc = Fhdc::all()->count();
+        return view('admin.index', compact('users', 'students', 'supervisors', 'hod', 'fhdc'));
     }
 
     // Return Edit User View
@@ -40,7 +42,8 @@ class adminController extends Controller
     {
         $user = User::findorFail($id);
         $student = DB::table('students')->where('user_id', $id)->first();
-        return view('admin.edit', compact('user', 'student'));
+        $supervisor = DB::table('supervisors')->where('user_id', $id)->first();
+        return view('admin.edit', compact('user', 'student', 'supervisor'));
     }
 
     // Save User Updates To Database
@@ -49,34 +52,105 @@ class adminController extends Controller
         // Find User To Edit In Database
         $user = User::find($id);
 
-        // Find The User In The Student Table
-        if ($user->user_type == "Student") {
-            $student = Student::where('user_id', $id)->first();
+        switch ($user->user_type) {
+            case 'Student':
+                $student = Student::where('user_id', $id)->first();
+
+                // Only Validate Email If It Has Been Altered
+                if (!strcmp($user->email, $request->input('email')) == 0) {
+                    $request->validate([
+                        'email' => 'email|unique:users,email,except,id'
+                    ]);
+                }
+                // Find The User In The Student Table
+                if ($user->user_type == "Student") {
+                    $student = Student::where('user_id', $id)->first();
+                }
+                $request->validate([
+                    'name' => 'string|max:255',
+                    'program' => 'string',
+                    'department' => 'string',
+                ]);
+                // Saving New User Information
+                $user->name = $request->input('name');
+                $user->email = $request->input('email');
+                $user->update();
+
+                // Saving New Student Information
+                $student->department = $request->input('department');
+                $student->program = $request->input('program');
+                $student->update();
+                break;
+
+            case 'Supervisor':
+                // Find The User In The Student Table
+                $supervisor = Supervisor::where('user_id', $id)->first();
+
+                // Only Validate Email If It Has Been Altered
+                if (!strcmp($user->email, $request->input('supervisor_email')) == 0) {
+                    $request->validate([
+                        'supervisor_email' => 'email|unique:users,email,except,id'
+                    ]);
+                }
+
+                $request->validate([
+                    'name' => 'string|max:255',
+                    'program' => 'string',
+                    'department' => 'string',
+                    'office' => 'string',
+                    'supervisor_phone' => 'regex:/^\+26461[0-9]{7}$/|min:13|max:13',
+                ]);
+
+                // Saving New User Information
+                $user->name = $request->input('name');
+                $user->email = $request->input('supervisor_email');
+                $user->update();
+
+                // Saving New Supervisor Information
+                $supervisor->department = $request->input('department');
+                $supervisor->office = $request->input('office');
+                $supervisor->phone = $request->input('supervisor_phone');
+                $supervisor->update();
+                break;
+            case 'FHDC':
+
+                // Only Validate Email If It Has Been Altered
+                if (!strcmp($user->email, $request->input('fhdc_email')) == 0) {
+                    $request->validate([
+                        'fhdc_email' => 'email|unique:users,email,except,id'
+                    ]);
+                }
+
+                $request->validate([
+                    'name' => 'string|max:255',
+                ]);
+
+                // Saving New User Information
+                $user->name = $request->input('fhdc_name');
+                $user->email = $request->input('fhdc_email');
+                $user->update();
+                break;
+            case 'HOD':
+                // Only Validate Email If It Has Been Altered
+                if (!strcmp($user->email, $request->input('hod_email')) == 0) {
+                    $request->validate([
+                        'hod_email' => 'email|unique:users,email,except,id'
+                    ]);
+                }
+
+                $request->validate([
+                    'hod_name' => 'string|max:255',
+                ]);
+
+                // Saving New User Information
+                $user->name = $request->input('hod_name');
+                $user->email = $request->input('hod_email');
+                $user->update();
+                break;
+            default:
+                # code...
+                break;
         }
-
-        // Only Validate Email If It Has Been Altered
-        if (!strcmp($user->email, $request->input('email')) == 0) {
-            $request->validate([
-                'email' => 'email|unique:users,email,except,id'
-            ]);
-        }
-
-        $request->validate([
-            'name' => 'string|max:255',
-            'program' => 'string',
-            'department' => 'string',
-        ]);
-
-        // Saving New User Information
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->update();
-
-        // Saving New Student Information
-        $student->department = $request->input('department');
-        $student->program = $request->input('program');
-        $student->update();
-
         return back()->with('success', 'User Settings Successfully Changed');
     }
 
@@ -152,7 +226,7 @@ class adminController extends Controller
                                 </a>
                             </td>
                             <td>
-                                <a href="/admin/delete/{{ ' . $row->id . ' }}" class="btn btn-danger btn-sm">
+                                <a href="/admin/delete/ ' . $row->id . '" class="btn btn-danger btn-sm">
                                     <i class="fa fa-trash"></i>
                                     DELETE
                                 </a>
@@ -283,12 +357,7 @@ class adminController extends Controller
             // Attaching 'HOD' Role To User
             $user->attachRole('HOD');
 
-            // Adding The User To The HOD Table NOT WORKING
-            $hod = new Hod();
-            $hod->user_id = $user->id;
-            $hod->save();
-
-            // TRIED THIS TOO, ALSO NOT WORKING
+            // Adding The User To The HOD Table
             DB::table('hods')->insert(
                 ['user_id' => $user->id],
             );
@@ -323,11 +392,6 @@ class adminController extends Controller
 
             // Attaching 'HOD' Role To User
             $user->attachRole('FHDC');
-
-            // Adding The User To The HOD Table NOT WORKING
-            $fhdc = new Fhdc;
-            $fhdc->user_id = $user->id;
-            $fhdc->save();
 
             // TRIED THIS TOO, ALSO NOT WORKING
             DB::table('fhdc')->insert(
