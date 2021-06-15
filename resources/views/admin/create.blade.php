@@ -212,7 +212,7 @@
                                             </button>
                                         </div>
 
-                                        <div class="alert alert-success print-success-msg alert-dismissible fade show" role="alert" style="display:none">
+                                        <div class="alert alert-success print-super-success-msg alert-dismissible fade show" role="alert" style="display:none">
                                             <strong>
                                                 Supervisor Successfully Added.
                                             </strong>
@@ -308,7 +308,7 @@
                                         <hr>
                                         <h5 class="card-title">Create HOD</h5>
 
-                                        <div class="alert alert-danger print-error-msg alert-dismissible fade show" role="alert" style="display:none">
+                                        <div class="alert alert-danger print-hod-error-msg alert-dismissible fade show" role="alert" style="display:none">
                                             <strong>
                                                 <ul></ul>
                                             </strong>
@@ -317,7 +317,7 @@
                                             </button>
                                         </div>
 
-                                        <div class="alert alert-success print-success-msg alert-dismissible fade show" role="alert" style="display:none">
+                                        <div class="alert alert-success print-hod-success-msg alert-dismissible fade show" role="alert" style="display:none">
                                             <strong>
                                                 HOD Successfully Added.
                                             </strong>
@@ -336,7 +336,7 @@
                                         @endif --}}
                                         <!--<span class="alert a success-text"></span>-->
 
-                                        <form id="supervisorForm">
+                                        <form id="hodForm">
                                             @csrf
                                             <div class="form-group row required">
                                                 <label for="name" class="col-md-4 col-form-label text-md-right">Name <span id="required">*</span></label>

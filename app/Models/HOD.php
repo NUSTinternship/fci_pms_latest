@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class HOD extends Model
+class Hod extends Model
 {
     use HasFactory;
 
-    protected $table = 'supervisors';
+    protected $table = 'hods';
 
     protected $primaryKey = 'id';
 
+    protected $fillable = [
+        'user_id',
+        'name'
+    ];
 }

@@ -42,6 +42,8 @@
                                 <a href="{{ url('/supervisor') }}" class="text-sm text-gray-700 underline">Home</a>
                             @elseif (Auth::user()->user_type == "HOD")
                                 <a href="{{ url('/hod') }}" class="nav-link">Home</a>
+                            @elseif (Auth::user()->user_type == "Administrator")
+                                <a href="{{ url('/admin/home') }}" class="nav-link">Home</a>
                             @else
                                 <a href="{{ url('/fhdc') }}" class="nav-link">Home</a>
                             @endif

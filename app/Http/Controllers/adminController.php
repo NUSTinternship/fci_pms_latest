@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Post;
 use App\Models\HOD;
+use App\Models\Hod as ModelsHod;
 use Illuminate\Support\Facades\DB;
 use App\Models\Student;
 use App\Models\Supervisor;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Facade\FlareClient\Http\Response;
+use Hod as GlobalHod;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -120,16 +122,16 @@ class adminController extends Controller
     public function action(Request $request)
     {
         // Check Whether AJAX Call/Request Is Received
-        if ($request->ajax()){
+        if ($request->ajax()) {
             $query = $request->get('search');
 
             if ($query != '') {
                 $output = '';
 
                 $data = DB::table('users')
-                ->where('name','LIKE','%'.$query."%")
-                ->orWhere('user_type', 'LIKE', '%'.$query.'%')
-                ->get();
+                    ->where('name', 'LIKE', '%' . $query . "%")
+                    ->orWhere('user_type', 'LIKE', '%' . $query . '%')
+                    ->get();
             } else {
                 $data = DB::table('users')->where('name', 'LIKE', ' ')->get();
             }
@@ -140,16 +142,16 @@ class adminController extends Controller
                 foreach ($data as $key => $row) {
                     $output .= '
                         <tr>
-                            <td>'.$row->name.'</td>
-                            <td>'.$row->user_type.'</td>
+                            <td>' . $row->name . '</td>
+                            <td>' . $row->user_type . '</td>
                             <td>
-                                <a href="/admin/edit/'.$row->id.'" class="btn btn-success btn-sm style="border-radius: 25px;"">
+                                <a href="/admin/edit/' . $row->id . '" class="btn btn-success btn-sm style="border-radius: 25px;"">
                                     <i class="fa fa-pencil-alt"></i>
                                     EDIT
                                 </a>
                             </td>
                             <td>
-                                <a href="/admin/delete/{{ '.$row->id.' }}" class="btn btn-danger btn-sm">
+                                <a href="/admin/delete/{{ ' . $row->id . ' }}" class="btn btn-danger btn-sm">
                                     <i class="fa fa-trash"></i>
                                     DELETE
                                 </a>
@@ -176,7 +178,7 @@ class adminController extends Controller
     public function createStudent(Request $request)
     {
         // Validating Form Inputs
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,except,id',
             'password' => 'required|string|min:8|confirmed',
@@ -193,7 +195,7 @@ class adminController extends Controller
                 'password' => Hash::make($request->input('password')),
                 'user_type' => "Student"
             ]);
-            
+
             // Attaching 'Student' Role To User
             $user->attachRole('Student');
 
@@ -204,10 +206,10 @@ class adminController extends Controller
             $student->department = $request->input('department');
             $student->save();
 
-            return response()->json(['success'=>'Supervisor Successfully Created.']);
+            return response()->json(['success' => 'Student Successfully Created.']);
         } else {
             // Return Error Messages
-            return response()->json(['error'=>$validator->errors()->all()]);
+            return response()->json(['error' => $validator->errors()->all()]);
         }
 
         // return redirect('/admin/create')->with('student_created', 'Student Created Successfully');
@@ -216,7 +218,7 @@ class adminController extends Controller
     // Store Created Supervisors In The Database
     public function createSupervisor(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,except,id',
             'password' => 'required|string|min:8|confirmed',
@@ -235,7 +237,7 @@ class adminController extends Controller
                 'password' => Hash::make($request->input('password')),
                 'user_type' => "Supervisor"
             ]);
-            
+
             // Attaching 'Student' Role To User
             $user->attachRole('Supervisor');
 
@@ -247,51 +249,51 @@ class adminController extends Controller
             $supervisor->department = $request->input('department');
             $supervisor->save();
 
-            return response()->json(['success'=>'Supervisor Successfully Created.']);
-
+            return response()->json(['success' => 'Supervisor Successfully Created.']);
         } else {
             // Return Error Messages
-            return response()->json(['error'=>$validator->errors()->all()]);
+            return response()->json(['error' => $validator->errors()->all()]);
         }
 
         // return redirect('/admin/create')->with('supervisor', 'Supervisor Created Successfully.');
     }
 
-        // Store Created Supervisors In The Database
-        public function createHOD(Request $request)
-        {
-            $validator = Validator::make($request->all(),[
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,except,id',
-                'password' => 'required|string|min:8|confirmed',
+    // Store Created Supervisors In The Database
+    public function createHOD(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,except,id',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        // If Validation Is Successful
+        if (!$validator->fails()) {
+
+            // Creating User    
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'user_type' => "HOD"
             ]);
-    
-            // If Validation Is Successful
-            if (!$validator->fails()) {
-    
-                // Creating User    
-                $user = User::create([
-                    'name' => $request->input('name'),
-                    'email' => $request->input('email'),
-                    'password' => Hash::make($request->input('password')),
-                    'user_type' => "HOD"
-                ]);
-                
-                // Attaching 'Student' Role To User
-                $user->attachRole('HOD');
-    
-                // Adding The User To The HOD Table
-                $hod = new HOD();
-                $hod->user_id = $user->id;
-                $hod->save();
-    
-                return response()->json(['success'=>'HOD Successfully Created.']);
-    
-            } else {
-                // Return Error Messages
-                return response()->json(['error'=>$validator->errors()->all()]);
-            }
-    
-            // return redirect('/admin/create')->with('supervisor', 'Supervisor Created Successfully.');
+
+            $hod = Hod::create([
+                'user_id' => 1,
+            ]);
+
+            // Attaching 'HOD' Role To User
+            $user->attachRole('HOD');
+
+            // Adding The User To The HOD Table
+            $hod = new Hod();
+            $hod->user_id = $user->id;
+            $hod->save();
+
+            return response()->json(['success' => 'HOD Successfully Created.']);
+        } else {
+            // Return Error Messages
+            return response()->json(['error' => $validator->errors()->all()]);
         }
+    }
 }
