@@ -261,6 +261,7 @@ class adminController extends Controller
     // Store Created Supervisors In The Database
     public function createHOD(Request $request)
     {
+        // Validate Form Input
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,except,id',
@@ -270,7 +271,7 @@ class adminController extends Controller
         // If Validation Is Successful
         if (!$validator->fails()) {
 
-            // Creating User    
+            // Create User    
             $user = User::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
@@ -278,19 +279,61 @@ class adminController extends Controller
                 'user_type' => "HOD"
             ]);
 
-            $hod = Hod::create([
-                'user_id' => 1,
-            ]);
-
             // Attaching 'HOD' Role To User
             $user->attachRole('HOD');
 
-            // Adding The User To The HOD Table
+            // Adding The User To The HOD Table NOT WORKING
             $hod = new Hod();
             $hod->user_id = $user->id;
             $hod->save();
 
+            // TRIED THIS TOO, ALSO NOT WORKING
+            DB::table('hods')->insert(
+                ['user_id' => $user->id],
+            );
+
             return response()->json(['success' => 'HOD Successfully Created.']);
+        } else {
+            // Return Error Messages
+            return response()->json(['error' => $validator->errors()->all()]);
+        }
+    }
+
+    // Store Created Supervisors In The Database
+    public function createFHDC(Request $request)
+    {
+        // Validate Form Input
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,except,id',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        // If Validation Is Successful
+        if (!$validator->fails()) {
+
+            // Create User    
+            $user = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'user_type' => "HOD"
+            ]);
+
+            // Attaching 'HOD' Role To User
+            $user->attachRole('FHDC');
+
+            // Adding The User To The HOD Table NOT WORKING
+            $hod = new Hod();
+            $hod->user_id = $user->id;
+            $hod->save();
+
+            // TRIED THIS TOO, ALSO NOT WORKING
+            DB::table('hods')->insert(
+                ['user_id' => $user->id],
+            );
+
+            return response()->json(['success' => 'FHDC Successfully Created.']);
         } else {
             // Return Error Messages
             return response()->json(['error' => $validator->errors()->all()]);
