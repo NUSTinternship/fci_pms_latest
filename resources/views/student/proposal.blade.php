@@ -250,25 +250,26 @@
                                             </strong>
                                         </div>
                                         <div class="modal-body">
-                                            <form id="proposal_documents">
+                                            <form id="proposal_documents" enctype="multipart/form-data">
+                                                @csrf
                                                 <div class="form-group">
                                                     <label for="proposal_summary">Proposal Summary</label>
                                                     <input type="file" class="form-control-file"
-                                                        id="proposal_summary">
+                                                        name="proposal_summary" required>
 
                                                     <label for="plagiarism_report">Turnitin Plagiarism Report</label>
                                                     <input type="file" class="form-control-file"
-                                                        id="plagiarism_report">
+                                                        name="plagiarism_report" required>
 
                                                     <label for="final_proposal">Final Proposal</label>
                                                     <input type="file" class="form-control-file"
-                                                        id="proposal_summary">
+                                                        name="final_proposal" required>
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary" id="proposal_documents">Submit</button>
+                                            <button type="button" class="btn btn-primary" id="proposalDocumentsSubmit" value="Submit">Submit</button>
                                         </div>
                                         </form>
                                     </div>

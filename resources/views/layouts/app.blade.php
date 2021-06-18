@@ -165,6 +165,43 @@
                 });
             });
 
+            
+            $("#proposalDocumentsSubmit").click(function(e) {
+                e.preventDefault();
+                $("#proposalDocumentsSubmit").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var proposal_summary = $("input[name=proposal_summary]").val();
+                var plagiarism_report = $("input[name=plagiarism_report]").val();
+                var final_proposal = $("input[name=final_proposal]").val();
+
+                $.ajax({
+                    url: "{{ route('uploadProposalDocuments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        proposal_summary: proposal_summary,
+                        plagiarism_report: plagiarism_report,
+                        final_proposal: final_proposal
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            alert('bbiuj');
+                            //$("#fhdcForm")[0].reset();
+                            $(".print-documents-error-msg").find("ul").html('');
+                            $(".print-documents-error-msg").css('display', 'none');
+                            $(".print-documents-success-msg").show();
+                            $("#proposalDocumentsSubmit").html('Create');
+                            //.attr('disabled', true)
+                        } else {
+                            alert('hjgyu');
+                            $("#proposalDocumentsSubmit").html('Submit');
+                            printErrorMsg(data.error, "proposal_documents");
+                        }
+                    }
+                });
+            });
+
             $("#studentSubmit").click(function(e) {
                 e.preventDefault();
 
@@ -231,6 +268,13 @@
                             $(".print-fhdc-error-msg").find("ul").append('<li>' + value + '</li>');
                         });
                         break;
+                    case "proposal_documents":
+                        $(".print-documents-error-msg").find("ul").html('');
+                        $(".print-documents-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-documents-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                    break;
                     default:
                         break;
                 }
