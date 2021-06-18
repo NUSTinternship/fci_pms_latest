@@ -18,6 +18,7 @@ class CreatePlagiarismReportsTable extends Migration
             $table->unsignedInteger('user_id'); // Foreign Key From User Table
             $table->string('file_path')->nullable();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
