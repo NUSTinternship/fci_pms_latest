@@ -68,8 +68,8 @@ class StudentController extends Controller
         // Validate Files (I tried mime, mimes, mimetypes) none of them are validating any of the files correctly.
         $validator = Validator::make($request->all(), [
             'proposal_summary' => 'required|mimes:application/pdf|max:2048',//'required|mimetypes:application/pdf|max:2048',
-            'plagiarism_report' => 'required',//'required|mimetypes:pdf,doc,docx,txt|max:2048',
-            'final_proposal' => 'required'//'required|mimes:pdf,doc,docx,txt|max:2048',
+            'plagiarism_report' => 'required|mimes:application/pdf|max:2048',//'required|mimetypes:pdf,doc,docx,txt|max:2048',
+            'final_proposal' => 'required|mimes:application/pdf|max:2048'//'required|mimes:pdf,doc,docx,txt|max:2048',
         ]);
 
         // If Validation Is Successful
