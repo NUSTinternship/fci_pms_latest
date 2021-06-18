@@ -211,6 +211,14 @@
                         <div class="card shadow p-3 mb-5 bg-white rounded">
                             <h5 class="card-header">Final Proposal</h5>
                             <hr>
+                            <div class="alert alert-success print-documents-success-msg alert-dismissible fade show" role="alert" style="display:none">
+                                <strong>
+                                    Documents Successfully Submitted.
+                                </strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                             <p style="color: black;">Please submit the following documents:</p>
                             <ul>
                                 <li>Final Proposal</li>
@@ -236,26 +244,31 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
+                                        <div class="alert alert-danger print-documents-error-msg" role="alert" style="display:none">
+                                            <strong>
+                                                <ul></ul>
+                                            </strong>
+                                        </div>
                                         <div class="modal-body">
-                                            <form>
+                                            <form id="proposal_documents">
                                                 <div class="form-group">
-                                                    <label for="exampleFormControlFile1">Proposal Summary</label>
+                                                    <label for="proposal_summary">Proposal Summary</label>
                                                     <input type="file" class="form-control-file"
-                                                        id="exampleFormControlFile1">
+                                                        id="proposal_summary">
 
-                                                    <label for="exampleFormControlFile1">Turnitin Plagiarism Report</label>
+                                                    <label for="plagiarism_report">Turnitin Plagiarism Report</label>
                                                     <input type="file" class="form-control-file"
-                                                        id="exampleFormControlFile1">
+                                                        id="plagiarism_report">
 
-                                                    <label for="exampleFormControlFile1">Final Proposal</label>
+                                                    <label for="final_proposal">Final Proposal</label>
                                                     <input type="file" class="form-control-file"
-                                                        id="exampleFormControlFile1">
+                                                        id="proposal_summary">
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Submit</button>
+                                            <button type="button" class="btn btn-primary" id="proposal_documents">Submit</button>
                                         </div>
                                         </form>
                                     </div>
