@@ -164,37 +164,36 @@
                     }
                 });
             });
-
             
             $("#proposalDocumentsSubmit").click(function(e) {
                 e.preventDefault();
                 $("#proposalDocumentsSubmit").html('Processing...');
 
-                var _token = $("input[name=_token]").val();
-                var proposal_summary = $("input[name=proposal_summary]").val();
-                var plagiarism_report = $("input[name=plagiarism_report]").val();
-                var final_proposal = $("input[name=final_proposal]").val();
+                var postData = new FormData($('#proposal_documents')[0]);
+
+                // var _token = $("input[name=_token]").val();
+                // var proposal_summary = $("input[name=proposal_summary]").val();
+                // var plagiarism_report = $("input[name=plagiarism_report]").val();
+                // var final_proposal = $("input[name=final_proposal]").val();
 
                 $.ajax({
                     url: "{{ route('uploadProposalDocuments') }}",
                     type: 'POST',
-                    data: {
-                        _token: _token,
-                        proposal_summary: proposal_summary,
-                        plagiarism_report: plagiarism_report,
-                        final_proposal: final_proposal
-                    },
+                    processData: false,
+                    contentType: false,
+                    data: postData,
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
-                            alert('bbiuj');
                             //$("#fhdcForm")[0].reset();
                             $(".print-documents-error-msg").find("ul").html('');
                             $(".print-documents-error-msg").css('display', 'none');
                             $(".print-documents-success-msg").show();
-                            $("#proposalDocumentsSubmit").html('Create');
-                            //.attr('disabled', true)
+                            $("#proposalDocumentsSubmit").html('Submit');
+                            $("#proposalDocumentsSubmit").attr('disabled', true);
+                            $("#proposal_summary").attr('disabled', true);
+                            $("#plagiarism_report").attr('disabled', true);
+                            $("#final_proposal").attr('disabled', true);
                         } else {
-                            alert('hjgyu');
                             $("#proposalDocumentsSubmit").html('Submit');
                             printErrorMsg(data.error, "proposal_documents");
                         }

@@ -67,9 +67,9 @@ class StudentController extends Controller
     {
         // Validate Files (I tried mime, mimes, mimetypes) none of them are validating any of the files correctly.
         $validator = Validator::make($request->all(), [
-            'proposal_summary' => 'required|mimes:application/pdf|max:2048',//'required|mimetypes:application/pdf|max:2048',
-            'plagiarism_report' => 'required|mimes:application/pdf|max:2048',//'required|mimetypes:pdf,doc,docx,txt|max:2048',
-            'final_proposal' => 'required|mimes:application/pdf|max:2048'//'required|mimes:pdf,doc,docx,txt|max:2048',
+            'proposal_summary' => 'required|mimes:pdf,doc,docx|max:2048',//'required|mimetypes:application/pdf|max:2048',
+            'plagiarism_report' => 'required|mimes:pdf,doc,docx|max:2048',//'required|mimetypes:pdf,doc,docx,txt|max:2048',
+            'final_proposal' => 'required|mimes:pdf,doc,docx|max:2048'//'required|mimes:pdf,doc,docx,txt|max:2048',
         ]);
 
         // If Validation Is Successful
@@ -79,50 +79,38 @@ class StudentController extends Controller
             $user_id = Auth::user()->id;
             $user_name = Auth::user()->name;
             
-            DB::table('proposal_summaries')->insert(
-                ['user_id' => $user_id],
-                ['file_path' => '/storage/' . 'messi']
-            );
-
-            DB::table('plagiarism_reports')->insert(
-                ['user_id' => $user_id],
-                ['file_path' => '/storage/' . 'messi']
-            );
-
-            DB::table('final_proposals')->insert(
-                ['user_id' => $user_id],
-                ['file_path' => '/storage/' . 'mesi']
-            );
-            
             // Proposal Summary File Name & Path
-            $proposalSummaryFileName = $user_name.'_'.time().'_'.'proposalsummary';
-            $proposalSummaryFilePath = $request->file('proposal_summary')->storeAs('uploads', $proposalSummaryFileName, 'public');
+            $proposalSummaryFileName = $user_name.'_'.time().'_'.'proposalsummary.' . $request->file('proposal_summary')->extension();
+            $proposalSummaryFilePath = $request->file('proposal_summary')->storeAs('final_proposals', $proposalSummaryFileName, 'public');
 
             // Plagiarism Report File Name & Path
-            $plagiarismReportFileName = $user_name.'_'.time().'_'.'plagiarismreport';
-            $plagiarismReportFilePath = $request->file('plagiarism_report')->storeAs('uploads', $plagiarismReportFileName, 'public');
+            $plagiarismReportFileName = $user_name.'_'.time().'_'.'plagiarismreport.' . $request->file('plagiarism_report')->extension();
+            $plagiarismReportFilePath = $request->file('plagiarism_report')->storeAs('plagiarism_reports', $plagiarismReportFileName, 'public');
 
             // Final Proposal File Name & Path
-            $finalProposalFileName = $user_name.'_'.time().'_'.'finalproposal';
-            $finalProposalFilePath = $request->file('final_proposal')->storeAs('uploads', $finalProposalFileName, 'public');
-
+            $finalProposalFileName = $user_name.'_'.time().'_'.'finalproposal.' . $request->file('final_proposal')->extension();
+            $finalProposalFilePath = $request->file('final_proposal')->storeAs('proposal_summaries', $finalProposalFileName, 'public');
+ 
             // Add The Proposal Summary To It's Respective Table
-            // proposalSummary::create([
-            //     'user_id' => $user_id,
-            //     'file_path' => '/storage/' . $proposalSummaryFilePath
-            // ]);
+            proposalSummary::create([
+                'user_id' => $user_id,
+                'file_name' => $proposalSummaryFileName,
+                'file_path' => '/storage/' . $proposalSummaryFilePath
+            ]);
 
             // Add The Plagiarism Report To It's Respective Table
-            // plagiarismReport::create([
-            //     'user_id' => $user_id,
-            //     'file_path' => '/storage/' . $plagiarismReportFilePath
-            // ]);
+            plagiarismReport::create([
+                'user_id' => $user_id,
+                'file_name' => $plagiarismReportFileName,
+                'file_path' => '/storage/' . $plagiarismReportFilePath
+            ]);
 
             // Add The Final Proposal To It's Respective Table
-            // finalProposal::create([
-            //     'user_id' => $user_id,
-            //     'file_path' => '/storage/' . $finalProposalFilePath
-            // ]);
+            finalProposal::create([
+                'user_id' => $user_id,
+                'file_name' => $finalProposalFileName,
+                'file_path' => '/storage/' . $finalProposalFilePath
+            ]);
 
             return response()->json(['success' => 'Supervisor Successfully Created.']);
         } else {

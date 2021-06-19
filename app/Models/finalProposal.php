@@ -15,6 +15,7 @@ class finalProposal extends Model
 
     protected $fillable = [
         'user_id',
+        'file_name',
         'file_path'
     ];
 }

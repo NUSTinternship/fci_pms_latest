@@ -250,19 +250,19 @@
                                             </strong>
                                         </div>
                                         <div class="modal-body">
-                                            <form id="proposal_documents" enctype="multipart/form-data">
+                                            <form id="proposal_documents" enctype="multipart/form-data" method="POST">
                                                 @csrf
                                                 <div class="form-group">
                                                     <label for="proposal_summary">Proposal Summary</label>
-                                                    <input type="file" class="form-control-file"
+                                                    <input type="file" class="form-control-file" id="proposal_summary"
                                                         name="proposal_summary" required>
 
                                                     <label for="plagiarism_report">Turnitin Plagiarism Report</label>
-                                                    <input type="file" class="form-control-file"
+                                                    <input type="file" class="form-control-file" id="plagiarism_report"
                                                         name="plagiarism_report" required>
 
                                                     <label for="final_proposal">Final Proposal</label>
-                                                    <input type="file" class="form-control-file"
+                                                    <input type="file" class="form-control-file" id="final_proposal"
                                                         name="final_proposal" required>
                                                 </div>
                                         </div>
