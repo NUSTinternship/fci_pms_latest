@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Supervisor;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
