@@ -91,4 +91,4 @@ Route::group([
 Route::post('/admin/edit/{id}', 'App\Http\Controllers\adminController@editUser');
 Route::post('/admin/editPassword/{id}', 'App\Http\Controllers\adminController@editPassword');
 Route::get('/admin/users/search','App\Http\Controllers\adminController@action')->name('search');
-Route::get('/download/{file}', 'DownloadsController@download');
+Route::get('/download/{file}', 'App\Http\Controllers\DownloadsController@download');

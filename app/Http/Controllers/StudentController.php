@@ -35,7 +35,23 @@ class StudentController extends Controller
 
     public function proposal()
     {
-        return view('student.proposal');
+        $id = Auth::user()->id;
+        $proposalSummaryFileName = DB::table('proposal_summaries')->select('file_name')->where('user_id', $id)->first();
+        $proposalSummaryFileName = $proposalSummaryFileName->file_name;
+
+        /*
+        Since A Student Needs To Submit All Three Documents At Once, We Know That If The Query Is Null
+        The Student Hasn't Yet Submitted Any Documents. Therefore We Only Perform The Below Queries If
+        The Query Returns Something
+        */
+        if ($proposalSummaryFileName) {
+            $plagiarismReportFileName = DB::table('plagiarism_reports')->select('file_name')->where('user_id', $id)->first();
+            $finalProposalFileName = DB::table('final_proposals')->select('file_name')->where('user_id', $id)->first();
+            $finalProposalFileName = $finalProposalFileName->file_name;
+            return view('student.proposal',  compact('plagiarismReportFileName', 'finalProposalFileName', 'proposalSummaryFileName'));
+        } else {
+            return view('student.proposal', compact('proposalSummaryFileName'));
+        }
     }
 
     public function thesis()
@@ -82,7 +98,7 @@ class StudentController extends Controller
             
             // Proposal Summary File Name & Path
             $proposalSummaryFileName = $user_name.'_'.time().'_'.'proposalsummary.' . $request->file('proposal_summary')->extension();
-            $proposalSummaryFilePath = $request->file('proposal_summary')->storeAs('final_proposals', $proposalSummaryFileName, 'public');
+            $proposalSummaryFilePath = $request->file('proposal_summary')->storeAs('proposal_summaries', $proposalSummaryFileName, 'public');
 
             // Plagiarism Report File Name & Path
             $plagiarismReportFileName = $user_name.'_'.time().'_'.'plagiarismreport.' . $request->file('plagiarism_report')->extension();
@@ -90,7 +106,7 @@ class StudentController extends Controller
 
             // Final Proposal File Name & Path
             $finalProposalFileName = $user_name.'_'.time().'_'.'finalproposal.' . $request->file('final_proposal')->extension();
-            $finalProposalFilePath = $request->file('final_proposal')->storeAs('proposal_summaries', $finalProposalFileName, 'public');
+            $finalProposalFilePath = $request->file('final_proposal')->storeAs('final_proposals', $finalProposalFileName, 'public');
  
             // Add The Proposal Summary To It's Respective Table
             proposalSummary::create([
