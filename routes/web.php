@@ -32,6 +32,7 @@ Route::group([
     Route::get('proposal', 'StudentController@proposal')->name('student-proposal');
     Route::get('thesis', 'StudentController@thesis')->name('student-thesis');
     Route::post('upload-files', 'StudentController@uploadProposalDocuments')->name('uploadProposalDocuments');
+    Route::post('upload-thesis', 'StudentController@uploadThesisDocuments')->name('uploadThesisDocuments');
 });
 
 // Routes For Supervisors
