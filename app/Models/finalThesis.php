@@ -9,6 +9,16 @@ class Thesis extends Model
 {
     use HasFactory;
 
+    protected $table = 'final_thesis';
+
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'user_id',
+        'file_name',
+        'file_path'
+    ];
+
     // A Specific Thesis Belongs To One Student
     public function Student()
     {
