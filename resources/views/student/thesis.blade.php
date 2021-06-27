@@ -213,8 +213,8 @@
                           <p style="color: black;">Please submit the following documents:</p>
                           <ul>
                               <li>Intention To Submit Thesis</li>
-                              <li>Turnitin Plagiarism Report</li>
-                              <li>Proposal Summary</li>
+                              <li>Thesis Abstract</li>
+                              <li>Final Thesis</li>
                           </ul>
                           <!-- Button trigger modal -->
                           <div class="text-center">
@@ -237,7 +237,7 @@
                                       <div class="modal-body">
                                           <form id="thesis_documents">
                                               <div class="form-group">
-                                                  <label for="exampleFormControlFile1" style="color: black;">Intention To
+                                                  <label for="intention" id="intention" style="color: black;">Intention To
                                                       Submit</label>
                                                   <input type="file" class="form-control-file"
                                                       id="exampleFormControlFile1">
@@ -256,7 +256,7 @@
                                       <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary"
                                               data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary">Submit</button>
+                                          <button type="button" id="thesisDocumentsSubmit" class="btn btn-primary">Submit</button>
                                       </div>
                                   </div>
                               </div>
