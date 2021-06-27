@@ -225,11 +225,19 @@
                                 <li>Final Thesis</li>
                             </ul>
                             <!-- Button trigger modal -->
+                            @if ($intentionToSubmitFileName != null)
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#final">
+                                    View Submissions
+                                </button>
+                            </div>
+                            @else
                             <div class="text-center">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#final">
                                     Submit
                                 </button>
                             </div>
+                            @endif
                             <!--Modal To Submit Final Proposal Documents-->
                             <div class="modal fade text-center" id="final" tabindex="-1" role="dialog"
                                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
