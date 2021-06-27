@@ -171,11 +171,6 @@
 
                 var postData = new FormData($('#proposal_documents')[0]);
 
-                // var _token = $("input[name=_token]").val();
-                // var proposal_summary = $("input[name=proposal_summary]").val();
-                // var plagiarism_report = $("input[name=plagiarism_report]").val();
-                // var final_proposal = $("input[name=final_proposal]").val();
-
                 $.ajax({
                     url: "{{ route('uploadProposalDocuments') }}",
                     type: 'POST',
@@ -196,6 +191,37 @@
                         } else {
                             $("#proposalDocumentsSubmit").html('Submit');
                             printErrorMsg(data.error, "proposal_documents");
+                        }
+                    }
+                });
+            });
+
+            $("#thesisDocumentsSubmit").click(function(e) {
+                e.preventDefault();
+                $("#thesisDocumentsSubmit").html('Processing...');
+
+                var postData = new FormData($('#thesis_documents')[0]);
+
+                $.ajax({
+                    url: "{{ route('uploadThesisDocuments') }}",
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: postData,
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            //$("#fhdcForm")[0].reset();
+                            $(".print-thesis-error-msg").find("ul").html('');
+                            $(".print-thesis-error-msg").css('display', 'none');
+                            $(".print-thesis-success-msg").show();
+                            $("#thesisDocumentsSubmit").html('Submit');
+                            $("#thesisDocumentsSubmit").attr('disabled', true);
+                            $("#thesis_summary").attr('disabled', true);
+                            $("#plagiarism_report").attr('disabled', true);
+                            $("#final_proposal").attr('disabled', true);
+                        } else {
+                            $("#proposalDocumentsSubmit").html('Submit');
+                            printErrorMsg(data.error, "thesis_documents");
                         }
                     }
                 });
@@ -273,7 +299,14 @@
                         $.each(msg, function(key, value) {
                             $(".print-documents-error-msg").find("ul").append('<li>' + value + '</li>');
                         });
-                    break;
+                        break;
+                    case "thesis_documents":
+                        $(".print-thesis-error-msg").find("ul").html('');
+                        $(".print-thesis-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-thesis-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
                     default:
                         break;
                 }

@@ -235,7 +235,7 @@
                                           </button>
                                       </div>
                                       <div class="modal-body">
-                                          <form>
+                                          <form id="thesis_documents">
                                               <div class="form-group">
                                                   <label for="exampleFormControlFile1" style="color: black;">Intention To
                                                       Submit</label>
