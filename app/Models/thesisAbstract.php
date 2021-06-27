@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class thesisSummary extends Model
+class thesisAbstract extends Model
 {
     use HasFactory;
 
-    protected $table = 'thesis_summaries';
+    protected $table = 'thesis_abstracts';
 
     protected $primaryKey = 'id';
 
