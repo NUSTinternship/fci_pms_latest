@@ -211,15 +211,14 @@
                         <div class="card shadow p-3 mb-5 bg-white rounded">
                             <h5 class="card-header">Final Proposal</h5>
                             <hr>
-                            <div class="alert alert-success print-documents-success-msg alert-dismissible fade show"
-                                role="alert" style="display:none">
-                                <strong>
-                                    Documents Successfully Submitted.
-                                </strong>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+                            @if ($proposalSummaryFileName != null)
+                            <div class="alert alert-success"
+                            role="alert">
+                            <strong>
+                                Documents Successfully Submitted. Please Wait For A Response From Your Supervisor.
+                            </strong>
+                        </div>
+                            @endif
                             <p style="color: black;">Please submit the following documents:</p>
                             <ul>
                                 <li>Final Proposal</li>

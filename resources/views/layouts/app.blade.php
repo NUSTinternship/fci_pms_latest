@@ -213,14 +213,9 @@
                             //$("#fhdcForm")[0].reset();
                             $(".print-thesis-error-msg").find("ul").html('');
                             $(".print-thesis-error-msg").css('display', 'none');
-                            $(".print-thesis-success-msg").show();
-                            $("#thesisDocumentsSubmit").html('Submit');
-                            $("#thesisDocumentsSubmit").attr('disabled', true);
-                            $("#thesis_summary").attr('disabled', true);
-                            $("#plagiarism_report").attr('disabled', true);
-                            $("#final_proposal").attr('disabled', true);
+                            location.reload();
                         } else {
-                            $("#proposalDocumentsSubmit").html('Submit');
+                            $("#thesisDocumentsSubmit").html('Submit');
                             printErrorMsg(data.error, "thesis_documents");
                         }
                     }
