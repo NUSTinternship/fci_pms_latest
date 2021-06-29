@@ -402,7 +402,7 @@
                                         @endif --}}
                                         <!--<span class="alert a success-text"></span>-->
 
-                                        <form id="hodForm">
+                                        <form id="fhdcForm">
                                             @csrf
                                             <div class="form-group row required">
                                                 <label for="name" class="col-md-4 col-form-label text-md-right">Name <span id="required">*</span></label>

@@ -65,6 +65,7 @@
 
             $("#supervisorSubmit").click(function(e) {
                 e.preventDefault();
+                $("#supervisorSubmit").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
                 var name = $("input[name=supervisor_name]").val();
@@ -93,9 +94,11 @@
                             $("#supervisorForm")[0].reset();
                             $(".print-super-error-msg").find("ul").html('');
                             $(".print-super-error-msg").css('display', 'none');
+                            $("#supervisorSubmit").html('Create Supervisor');
                             printSuccessMsg("supervisor");
                         } else {
-                            printErrorMsg(data.error, "supervisor")
+                            printErrorMsg(data.error, "supervisor");
+                            $("#supervisorSubmit").html('Create Supervisor');
                         }
                     }
                 });
@@ -103,6 +106,7 @@
 
             $("#hodSubmit").click(function(e) {
                 e.preventDefault();
+                $("#hodSubmit").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
                 var name = $("input[name=hod_name]").val();
@@ -125,9 +129,11 @@
                             $("#hodForm")[0].reset();
                             $(".print-hod-error-msg").find("ul").html('');
                             $(".print-hod-error-msg").css('display', 'none');
+                            $("#hodSubmit").html('Create HOD');
                             printSuccessMsg("hod");
                         } else {
                             printErrorMsg(data.error, "hod");
+                            $("#hodSubmit").html('Create HOD');
                         }
                     }
                 });
@@ -135,6 +141,7 @@
 
             $("#fhdcSubmit").click(function(e) {
                 e.preventDefault();
+                $("#fhdcSubmit").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
                 var name = $("input[name=fhdc_name]").val();
@@ -154,11 +161,13 @@
                     },
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
+                            $("#fhdcSubmit").html('Create FHDC');
                             $("#fhdcForm")[0].reset();
                             $(".print-fhdc-error-msg").find("ul").html('');
                             $(".print-fhdc-error-msg").css('display', 'none');
                             $(".print-fhdc-success-msg").show();
                         } else {
+                            $("#fhdcSubmit").html('Create FHDC');
                             printErrorMsg(data.error, "fhdc");
                         }
                     }
@@ -224,6 +233,7 @@
 
             $("#studentSubmit").click(function(e) {
                 e.preventDefault();
+                $("#studentSubmit").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
                 var name = $("input[name=student_name]").val();
@@ -250,8 +260,10 @@
                             $("#studentForm")[0].reset();
                             $(".print-std-error-msg").find("ul").html('');
                             $(".print-std-error-msg").css('display', 'none');
+                            $("#studentSubmit").html('Create Student');
                             printSuccessMsg("student");
                         } else {
+                            $("#studentSubmit").html('Create Student');
                             printErrorMsg(data.error, "student");
                         }
                     }

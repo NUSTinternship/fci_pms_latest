@@ -390,7 +390,7 @@ class adminController extends Controller
                 'user_type' => "FHDC"
             ]);
 
-            // Attaching 'HOD' Role To User
+            // Attaching 'FHDC' Role To User
             $user->attachRole('FHDC');
 
             // TRIED THIS TOO, ALSO NOT WORKING
