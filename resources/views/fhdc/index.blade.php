@@ -45,47 +45,35 @@
                           </tr>
                         </thead>
                         <tbody>
+                          @forelse ($compSciMastersStudents as $student)
                           <tr>
-                            <td>Peter Jonas</td>
+                            <td>{{ $student->name }}</td>
                             <td>
-                              Proposal
+                              {{ $student->progress }}
                             </td>
                           </tr>
-                          <tr>
-                            <td>Jonas Peter</td>
-                            <td>
-                              Thesis
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Tangeni Samuel</td>
-                            <td>
-                              Exam
-                            </td>
-                          </tr>
+                          @empty
+                            <tr>
+                              <td colspan="3" style="text-align: center; font-weight: bold">No Masters Students In This Department</td>
+                            </tr>
+                          @endforelse
                           <thead class="thead-light">
                             <tr>
-                              <th scope="col" colspan="2">PhD Students</th>
+                              <th scope="col" colspan="3">PhD Students</th>
                             </tr>
                           </thead>
+                          @forelse ($compSciPhdStudents as $student)
                           <tr>
-                            <td>Peter Jonas</td>
+                            <td>{{ $student->name }}</td>
                             <td>
-                              Proposal
+                              {{ $student->progress }}
                             </td>
                           </tr>
-                          <tr>
-                            <td>Jonas Peter</td>
-                            <td>
-                              Thesis
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Tangeni Samuel</td>
-                            <td>
-                              Exam
-                            </td>
-                          </tr>
+                          @empty
+                            <tr>
+                              <td colspan="3" style="text-align: center; font-weight: bold">No PhD Students In This Department</td>
+                            </tr>
+                          @endforelse
                         </tbody>
                       </table>
                     </div>
@@ -104,47 +92,31 @@
                           </tr>
                         </thead>
                         <tbody>
+                          @forelse ($informaticsMastersStudents as $student)
                           <tr>
-                            <td>Peter Jonas</td>
+                            <td>{{ $student->name }}</td>
                             <td>
-                              Proposal
+                              {{ $student->progress }}
                             </td>
                           </tr>
-                          <tr>
-                            <td>Jonas Peter</td>
-                            <td>
-                              Thesis
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Tangeni Samuel</td>
-                            <td>
-                              Exam
-                            </td>
-                          </tr>
+                          @empty
+                          <td colspan="3" style="text-align: center; font-weight: bold">No Masters Students In This Department</td>
+                          @endforelse
                           <thead class="thead-light">
                             <tr>
                               <th scope="col" colspan="2">PhD Students</th>
                             </tr>
                           </thead>
+                          @forelse ($informaticsPhdStudents as $student)
                           <tr>
-                            <td>Peter Jonas</td>
+                            <td>{{ $student->name }}</td>
                             <td>
-                              Proposal
+                              {{ $student->progress }}
                             </td>
                           </tr>
-                          <tr>
-                            <td>Jonas Peter</td>
-                            <td>
-                              Thesis
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Tangeni Samuel</td>
-                            <td>
-                              Exam
-                            </td>
-                          </tr>
+                          @empty
+                          <td colspan="3" style="text-align: center; font-weight: bold">No PhD Students In This Department</td>
+                          @endforelse
                         </tbody>
                       </table>
                     </div>

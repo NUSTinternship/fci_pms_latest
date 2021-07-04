@@ -21,6 +21,12 @@ class Student extends Model
         'co-supervisor'
     ];
 
+    // Defining Relationship Between Student & User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
     // Defining Relationship Between Student & Supervisor
     public function studentSupervisor()
     {
