@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Student;
+use App\Models\User;
+use App\Models\Supervisor;
 
 class hdcController extends Controller
 {
@@ -87,6 +89,39 @@ class hdcController extends Controller
     public function application()
     {
         //
-        return view('fhdc.application');
+        // Get Students To Display On FHDC Index Page
+        $compSciMastersStudents = DB::table('users')
+            ->join('students', 'students.user_id', '=', 'users.id')
+            ->join('supervisors', 'students.supervisor_id', '=', 'supervisors.id')
+            ->select('name', 'program', 'supervisor_id', 'co_supervisor_id', 'students.department')
+            ->where('program', 'Masters')
+            ->where('students.department', 'Computer Science')
+            ->get();
+        
+        $informaticsMastersStudents = DB::table('users')
+            ->join('students', 'students.user_id', '=', 'users.id')
+            ->join('supervisors', 'students.supervisor_id', '=', 'supervisors.id')
+            ->select('name', 'program', 'supervisor_id', 'co_supervisor_id', 'students.department')
+            ->where('program', 'Masters')
+            ->where('students.department', 'Informatics')
+            ->get();
+        
+        $compSciPhdStudents = DB::table('users')
+            ->join('students', 'students.user_id', '=', 'users.id')
+            ->join('supervisors', 'students.supervisor_id', '=', 'supervisors.id')
+            ->select('name', 'program', 'supervisor_id', 'co_supervisor_id', 'students.department')
+            ->where('program', 'Phd')
+            ->where('students.department', 'Computer Science')
+            ->get();
+
+        $informaticsPhdStudents = DB::table('users')
+            ->join('students', 'students.user_id', '=', 'users.id')
+            ->join('supervisors', 'students.supervisor_id', '=', 'supervisors.id')
+            ->select('name', 'program', 'supervisor_id', 'co_supervisor_id', 'students.department')
+            ->where('program', 'PhD')
+            ->where('students.department', 'Computer Science')
+            ->get();
+
+        return view('fhdc.application', compact('compSciMastersStudents', 'informaticsMastersStudents', 'informaticsPhdStudents', 'compSciPhdStudents'));
     }
 }
