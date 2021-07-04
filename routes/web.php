@@ -67,7 +67,7 @@ Route::group([
     'middleware' => ['auth', 'role:fhdc']
 ], function () {
     Route::get('home', 'hdcController@index')->name('hdc-home');
-    Route::get('students', 'hdcController@allStudents')->name('hdc-all-students');
+    Route::get('students', 'hdcController@allStudents')->name('hdc-allStudents');
     Route::get('application', 'hdcController@application')->name('hdc-application');
     Route::get('proposal', 'hdcController@proposal')->name('hdc-proposal');
     Route::get('thesis', 'hdcController@thesis')->name('hdc-thesis');

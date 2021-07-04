@@ -122,7 +122,7 @@
                     </div>
                   </div>
                   <div class="text-center">
-                    <a href="all-students.html" type="button" class="btn btn-primary">See All</a>
+                    <a href="{{route('hdc-allStudents')}}" type="button" class="btn btn-primary">See All</a>
                   </div>
                 </div>
               </div>

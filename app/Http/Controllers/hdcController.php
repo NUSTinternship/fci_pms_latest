@@ -53,6 +53,25 @@ class hdcController extends Controller
         return view('fhdc.index', compact('compSciMastersStudents', 'informaticsMastersStudents', 'informaticsPhdStudents', 'compSciPhdStudents'));
     }
 
+    public function allStudents()
+    {
+        //
+        // Get Students To Display On FHDC Index Page
+        $mastersStudents = DB::table('users')
+            ->join('students', 'students.user_id', '=', 'users.id')
+            ->select('name', 'program', 'progress', 'department')
+            ->where('program', 'Masters')
+            ->get();
+        
+        $phdStudents = DB::table('users')
+            ->join('students', 'students.user_id', '=', 'users.id')
+            ->select('name', 'program', 'progress', 'department')
+            ->where('program', 'PhD')
+            ->get();
+        
+        return view('fhdc.allStudents', compact('mastersStudents', 'phdStudents'));
+    }
+
     public function proposal()
     {
         //
