@@ -61,7 +61,6 @@ class StudentController extends Controller
     {
         $id = Auth::user()->id;
         $intentionToSubmitFileName = DB::table('intentions')->select('file_name')->where('user_id', $id)->first();
-
         /*
         Since A Student Needs To Submit All Three Documents At Once, We Know That If The Query Is Null
         The Student Hasn't Yet Submitted Any Documents. Therefore We Only Perform The Below Queries If
