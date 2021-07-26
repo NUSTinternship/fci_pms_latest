@@ -32,6 +32,7 @@ Route::group([
     Route::get('proposal', 'StudentController@proposal')->name('student-proposal');
     Route::get('thesis', 'StudentController@thesis')->name('student-thesis');
     Route::post('upload-files', 'StudentController@uploadProposalDocuments')->name('uploadProposalDocuments');
+    Route::post('resubmit-upload-files', 'StudentController@resubmitProposalDocuments')->name('resubmitProposalDocuments');
     Route::post('upload-thesis', 'StudentController@uploadThesisDocuments')->name('uploadThesisDocuments');
 });
 
@@ -45,6 +46,9 @@ Route::group([
     Route::get('home', 'supervisorController@index')->name('supervisor-home');
     Route::get('proposal', 'supervisorController@proposal')->name('supervisor-proposal');
     Route::get('thesis', 'supervisorController@thesis')->name('supervisor-thesis');
+    Route::get('allStudents', 'supervisorController@allStudents')->name('supervisor-allStudents');
+    Route::get('profile/{id}', 'supervisorController@studentProfile')->name('studentProfile');
+    Route::post('comments', 'supervisorController@proposalDocumentsComments')->name('proposalComments');
 });
 
 // Routes For HOD
@@ -66,11 +70,14 @@ Route::group([
     'namespace' => 'App\Http\Controllers',
     'middleware' => ['auth', 'role:fhdc']
 ], function () {
+    Route::get('profile/{id}', 'hdcController@studentProfile')->name('student.profile');
     Route::get('home', 'hdcController@index')->name('hdc-home');
     Route::get('students', 'hdcController@allStudents')->name('hdc-allStudents');
     Route::get('application', 'hdcController@application')->name('hdc-application');
     Route::get('proposal', 'hdcController@proposal')->name('hdc-proposal');
     Route::get('thesis', 'hdcController@thesis')->name('hdc-thesis');
+    Route::post('addSupervisor', 'hdcController@addSupervisor')->name('addSupervisor');
+    Route::post('addCoSupervisor', 'hdcController@addCoSupervisor')->name('addCoSupervisor');
 });
 
 // Routes For Admin

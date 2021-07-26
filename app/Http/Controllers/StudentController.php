@@ -6,6 +6,7 @@ use App\Models\finalProposal;
 use App\Models\FinalThesis;
 use App\Models\intentionToSubmit;
 use App\Models\plagiarismReport;
+use App\Models\ProposalStatus;
 use App\Models\proposalSummary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,14 +34,20 @@ class StudentController extends Controller
     public function index()
     {
         //
-        return view('student.index');
+        $userId = Auth::user()->id;
+        $supervisor = DB::table('students')->select('supervisor_id')->where('user_id', $userId)->first();
+
+        $user = DB::table('students')->where('user_id', $userId)->first();
+
+        return view('student.index', compact('supervisor', 'user'));
     }
 
     public function proposal()
     {
         $id = Auth::user()->id;
         $proposalSummaryFileName = DB::table('proposal_summaries')->select('file_name')->where('user_id', $id)->first();
-        $proposalSummaryFileName = $proposalSummaryFileName->file_name;
+        $proposalStatus = DB::table('proposal_status')->where('student_id', $id)->limit(1)->get();
+        //$proposalSummaryFileName = $proposalSummaryFileName->file_name;
 
         /*
         Since A Student Needs To Submit All Three Documents At Once, We Know That If The Query Is Null
@@ -51,7 +58,7 @@ class StudentController extends Controller
             $plagiarismReportFileName = DB::table('plagiarism_reports')->select('file_name')->where('user_id', $id)->first();
             $finalProposalFileName = DB::table('final_proposals')->select('file_name')->where('user_id', $id)->first();
             $finalProposalFileName = $finalProposalFileName->file_name;
-            return view('student.proposal',  compact('plagiarismReportFileName', 'finalProposalFileName', 'proposalSummaryFileName'));
+            return view('student.proposal',  compact('plagiarismReportFileName', 'finalProposalFileName', 'proposalSummaryFileName', 'proposalStatus'));
         } else {
             return view('student.proposal', compact('proposalSummaryFileName'));
         }
@@ -144,6 +151,95 @@ class StudentController extends Controller
                 'file_name' => $finalProposalFileName,
                 'file_path' => '/storage/' . $finalProposalFilePath
             ]);
+
+            $data=array('student_id'=>$user_id, "attempts"=>1, 'status'=> 'Submitted');
+            DB::table('proposal_status')->insert($data);
+
+            return response()->json(['success' => 'Supervisor Successfully Created.']);
+        } else {
+            // Return Error Messages
+            return response()->json(['error' => $validator->errors()->all()]);
+        }
+    }
+
+    public function resubmitProposalDocuments(Request $request)
+    {
+        // Validate Files
+        $validator = Validator::make($request->all(), [
+            'proposal_summary' => 'required|mimes:pdf,doc,docx|max:2048', 
+            'plagiarism_report' => 'required|mimes:pdf,doc,docx|max:2048',
+            'final_proposal' => 'required|mimes:pdf,doc,docx|max:2048'
+        ]);
+
+        // If Validation Is Successful
+        if (!$validator->fails()) {
+
+            // Get Current Logged In User's ID & name
+            $user_id = Auth::user()->id;
+            $user_name = Auth::user()->name;
+
+            // Find This User's Previously Submitted Documents
+            $previousPlagiarismReport = DB::table('plagiarism_reports')->where('user_id', $user_id)->get();
+            $previousFinalProposal = DB::table('final_proposals')->where('user_id', $user_id)->get();
+            $previousProposalSummary = DB::table('proposal_summaries')->where('user_id', $user_id)->get();
+
+            // Delete These Previous Files From Storage
+            if(is_file($previousProposalSummary[0]->file_path))
+            {
+                // 1. possibility
+                //Storage::delete($previousProposalSummary[0]->file_path);
+                // 2. possibility
+                unlink(storage_path($previousProposalSummary[0]->file_path));
+            }
+
+            if(is_file($previousFinalProposal[0]->file_path))
+            {
+                // 1. possibility
+                //Storage::delete($previousFinalProposal[0]->file_path);
+                // 2. possibility
+                unlink(storage_path($previousFinalProposal[0]->file_path));
+            }
+
+            if(is_file($previousPlagiarismReport[0]->file_path))
+            {
+                // 1. possibility
+                //Storage::delete($previousProposalSummary[0]->file_path);
+                // 2. possibility
+                unlink(storage_path($previousPlagiarismReport[0]->file_path));
+            }
+
+            // Proposal Summary File Name & Path
+            $proposalSummaryFileName = $user_name . '_' . time() . '_' . 'proposalsummary.' . $request->file('proposal_summary')->extension();
+            $proposalSummaryFilePath = $request->file('proposal_summary')->storeAs('proposal_summaries', $proposalSummaryFileName, 'public');
+
+            // Plagiarism Report File Name & Path
+            $plagiarismReportFileName = $user_name . '_' . time() . '_' . 'plagiarismreport.' . $request->file('plagiarism_report')->extension();
+            $plagiarismReportFilePath = $request->file('plagiarism_report')->storeAs('plagiarism_reports', $plagiarismReportFileName, 'public');
+
+            $current_date_time = \Carbon\Carbon::now()->toDateTimeString();
+
+            // Final Proposal File Name & Path
+            $finalProposalFileName = $user_name . '_' . time() . '_' . 'finalproposal.' . $request->file('final_proposal')->extension();
+            $finalProposalFilePath = $request->file('final_proposal')->storeAs('final_proposals', $finalProposalFileName, 'public');
+
+            // Update Proposal Summaries Table With The New File Information
+            $proposalSummariesData=array('user_id'=>$user_id, 'file_name'=> $proposalSummaryFileName, 'file_path' => '/storage/' . $proposalSummaryFilePath, 'updated_at' => $current_date_time);
+            DB::table('proposal_summaries')->where('user_id', $user_id)->update($proposalSummariesData);
+
+            // Update Plagiarism Reports Table With The New File Information
+            $plagiarismReportsData=array('user_id'=>$user_id, 'file_name'=> $plagiarismReportFileName, 'file_path' => '/storage/' . $plagiarismReportFilePath, 'updated_at' => $current_date_time);
+            DB::table('plagiarism_reports')->where('user_id', $user_id)->update($plagiarismReportsData);
+
+            // Update Final Proposals Table With The New File Information
+            $finalProposalsData=array('user_id'=>$user_id, 'file_name'=> $finalProposalFileName, 'file_path' => '/storage/' . $finalProposalFilePath, 'updated_at' => $current_date_time);
+            DB::table('final_proposals')->where('user_id', $user_id)->update($finalProposalsData);
+
+            // Get The Student's Current Number Of Attempts And Add One To That Value
+            $attempts = DB::table('proposal_status')->select('attempts')->where('student_id', $user_id)->get();
+            $newAttempts = $attempts[0]->attempts + 1;
+
+            $data=array('student_id'=>$user_id, "attempts"=>$newAttempts, 'status'=> 'Submitted');
+            DB::table('proposal_status')->where('student_id', $user_id)->update($data);
 
             return response()->json(['success' => 'Supervisor Successfully Created.']);
         } else {

@@ -29,7 +29,6 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
     </script>
 
     <!-- Menu Toggle Script -->
@@ -173,7 +172,7 @@
                     }
                 });
             });
-            
+
             $("#proposalDocumentsSubmit").click(function(e) {
                 e.preventDefault();
                 $("#proposalDocumentsSubmit").html('Processing...');
@@ -191,15 +190,54 @@
                             //$("#fhdcForm")[0].reset();
                             $(".print-documents-error-msg").find("ul").html('');
                             $(".print-documents-error-msg").css('display', 'none');
-                            $(".print-documents-success-msg").show();
                             $("#proposalDocumentsSubmit").html('Submit');
                             $("#proposalDocumentsSubmit").attr('disabled', true);
                             $("#proposal_summary").attr('disabled', true);
                             $("#plagiarism_report").attr('disabled', true);
                             $("#final_proposal").attr('disabled', true);
+                            $("#proposal-documents-close").css('display', 'none')
+                            $('print-proposalDocuments-success-msg').show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
                         } else {
                             $("#proposalDocumentsSubmit").html('Submit');
                             printErrorMsg(data.error, "proposal_documents");
+                        }
+                    }
+                });
+            });
+
+            $("#proposalDocumentsReSubmit").click(function(e) {
+                e.preventDefault();
+                $("#proposalDocumentsReSubmit").html('Processing...');
+
+                var postData = new FormData($('#resubmit_proposal_documents')[0]);
+
+                $.ajax({
+                    url: "{{ route('resubmitProposalDocuments') }}",
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: postData,
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            //$("#fhdcForm")[0].reset();
+                            $(".print-proposalDocsResubmit-error-msg").find("ul").html('');
+                            $(".print-proposalDocsResubmit-error-msg").css('display', 'none');
+                            $("#proposalDocumentsReSubmit").html('Submit');
+                            $("#proposalDocumentsReSubmit").attr('disabled', true);
+                            $("#proposal_summary").attr('disabled', true);
+                            $("#plagiarism_report").attr('disabled', true);
+                            $("#final_proposal").attr('disabled', true);
+                            $("#proposalDocumentsReSubmit-close").css('display', 'none')
+                            $('print-proposalDocsResubmit-success-msg').show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#proposalDocumentsReSubmit").html('Submit');
+                            printErrorMsg(data.error, "resubmit_proposal_documents");
                         }
                     }
                 });
@@ -226,6 +264,388 @@
                         } else {
                             $("#thesisDocumentsSubmit").html('Submit');
                             printErrorMsg(data.error, "thesis_documents");
+                        }
+                    }
+                });
+            });
+
+            $("#addCompSciMastersSupervisor").click(function(e) {
+                e.preventDefault();
+                $("#addCompSciMastersSupervisor").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_comp_masters_supervisors :selected').val();
+                var student_id = $('#comp_masters_student_id').val();
+
+                $.ajax({
+                    url: "{{ route('addSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-addSupervisorCompMasters-success-msg").show();
+                            $("#addCompSciMastersSupervisor").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#addCompSciMastersSupervisor").html('Submit');
+                            printErrorMsg(data.error, "addCompMastersSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#addCompSciMastersCoSupervisor").click(function(e) {
+                e.preventDefault();
+                $("#addCompSciMastersCoSupervisor").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_comp_masters_co_supervisors :selected').val();
+                var student_id = $('#comp_mastersCo_student_id').val();
+
+                alert(selected);
+                alert(student_id);
+
+                $.ajax({
+                    url: "{{ route('addCoSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-addCompMastersCoSupervisor-success-msg").show();
+                            $("#addCompSciMastersCoSupervisor").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#addCompSciMastersCoSupervisor").html('Submit');
+                            printErrorMsg(data.error, "addCompMastersCoSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#addCompSciPhdSupervisor").click(function(e) {
+                e.preventDefault();
+                $("#addCompSciPhdSupervisor").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_comp_phd_supervisors :selected').val();
+                var student_id = $('#comp_phd_student_id').val();
+
+                $.ajax({
+                    url: "{{ route('addSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-addCompPhdSupervisor-success-msg").show();
+                            $("#addCompSciPhdSupervisor").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#addCompSciPhdSupervisor").html('Submit');
+                            printErrorMsg(data.error, "addCompPhdSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#addCompSciPhdCoSupervisor").click(function(e) {
+                e.preventDefault();
+                $("#addCompSciPhdCoSupervisor").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_comp_phd_co_supervisors :selected').val();
+                var student_id = $('#comp_phdCo_student_id').val();
+
+                $.ajax({
+                    url: "{{ route('addCoSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-addCompPhdCoSupervisor-success-msg").show();
+                            $("#addCompSciPhdCoSupervisor").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#addCompSciPhdCoSupervisor").html('Submit');
+                            printErrorMsg(data.error, "addCompPhdCoSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#addInfoMastersSupervisor").click(function(e) {
+                e.preventDefault();
+                $("#addInfoMastersSupervisor").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_info_masters_supervisors :selected').val();
+                var student_id = $('#info_masters_student_id').val();
+
+                $.ajax({
+                    url: "{{ route('addSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-addInfoMastersSupervisor-success-msg").show();
+                            $("#addInfoMastersSupervisor").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#addInfoMastersSupervisor").html('Submit');
+                            printErrorMsg(data.error, "addInfoMastersSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#addInfoMastersCoSupervisor").click(function(e) {
+                e.preventDefault();
+                $("#addInfoMastersCoSupervisor").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_info_masters_co_supervisors :selected').val();
+                var student_id = $('#info_mastersCo_student_id').val();
+
+                $.ajax({
+                    url: "{{ route('addCoSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-addInfoMastersCoSupervisor-success-msg").show();
+                            $("#addInfoMastersCoSupervisor").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#addInfoMastersCoSupervisor").html('Submit');
+                            printErrorMsg(data.error, "addInfoMastersCoSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#addInfoPhdSupervisor").click(function(e) {
+                e.preventDefault();
+                $("#addInfoPhdSupervisor").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_info_phd_supervisors :selected').val();
+                var student_id = $('#info_phd_student_id').val();
+
+                $.ajax({
+                    url: "{{ route('addSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-addInfoPhdSupervisor-success-msg").show();
+                            $("#addInfoPhdSupervisor").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#addInfoPhdSupervisor").html('Submit');
+                            printErrorMsg(data.error, "addInfoPhdSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#addInfoPhdCoSupervisor").click(function(e) {
+                e.preventDefault();
+                $("#addInfoPhdCoSupervisor").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_info_phd_co_supervisors :selected').val();
+                var student_id = $('#info_phdCo_student_id').val();
+
+                alert(selected);
+                alert(student_id);
+
+                $.ajax({
+                    url: "{{ route('addCoSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-addInfoPhdCoSupervisor-success-msg").show();
+                            $("#addInfoPhdCoSupervisor").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#addInfoPhdCoSupervisor").html('Submit');
+                            printErrorMsg(data.error, "addInfoPhdCoSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#editSupervisorSubmit").click(function(e) {
+                e.preventDefault();
+                $("#editSupervisorSubmit").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_editSupervisor :selected').val();
+                var student_id = $('#editSupervisor_student_id').val();
+                alert(selected);
+                alert(student_id);
+                $.ajax({
+                    url: "{{ route('addSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-editSupervisor-success-msg").show();
+                            $("#editSupervisorSubmit").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#editSupervisorSubmit").html('Submit');
+                            printErrorMsg(data.error, "editSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#assignSupervisorSubmit").click(function(e) {
+                e.preventDefault();
+                $("#assignSupervisorSubmit").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_assignSupervisor :selected').val();
+                var student_id = $('#assignSupervisor_student_id').val();
+                alert(selected);
+                alert(student_id);
+                $.ajax({
+                    url: "{{ route('addSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-assignSupervisor-success-msg").show();
+                            $("#assignSupervisorSubmit").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#assignSupervisorSubmit").html('Submit');
+                            printErrorMsg(data.error, "assignSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#editCoSupervisorSubmit").click(function(e) {
+                e.preventDefault();
+                $("#editCoSupervisorSubmit").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_editCoSupervisor :selected').val();
+                var student_id = $('#editCoSupervisor_student_id').val();
+                alert(selected);
+                alert(student_id);
+                $.ajax({
+                    url: "{{ route('addCoSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-editCoSupervisor-success-msg").show();
+                            $("#editCoSupervisorSubmit").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#editCoSupervisorSubmit").html('Submit');
+                            printErrorMsg(data.error, "editCoSupervisor");
+                        }
+                    }
+                });
+            });
+
+            $("#assignCoSupervisorSubmit").click(function(e) {
+                e.preventDefault();
+                $("#assignCoSupervisorSubmit").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var selected = $('#select_assignCoSupervisor :selected').val();
+                var student_id = $('#assignCoSupervisor_student_id').val();
+                alert(selected);
+                alert(student_id);
+                $.ajax({
+                    url: "{{ route('addCoSupervisor') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        selected: selected,
+                        student_id: student_id
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $(".print-assignCoSupervisor-success-msg").show();
+                            $("#assignCoSupervisorSubmit").css('display', 'none');
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 3000);
+                        } else {
+                            $("#assignCoSupervisorSubmit").html('Submit');
+                            printErrorMsg(data.error, "assignCoSupervisor");
                         }
                     }
                 });
@@ -265,6 +685,70 @@
                         } else {
                             $("#studentSubmit").html('Create Student');
                             printErrorMsg(data.error, "student");
+                        }
+                    }
+                });
+            });
+
+            // TODO: Add Comments To Database
+            $("#proposalDocsApproval").click(function(e) {
+                e.preventDefault();
+                $("#proposalDocsApproval").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var comments = $("input[name=approvalComments]").val();
+
+                $.ajax({
+                    url: "{{ route('proposalComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        comments: comments
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#proposalDocsApproval").html('Submit');
+                            $("#fhdcForm")[0].reset();
+                            $(".print-fhdc-error-msg").find("ul").html('');
+                            $(".print-fhdc-error-msg").css('display', 'none');
+                            $(".print-fhdc-success-msg").show();
+                        } else {
+                            $("#proposalDocsApproval").html('Submit');
+                            printErrorMsg(data.error, "fhdc");
+                        }
+                    }
+                });
+            });
+
+            $("#proposalDocsRejection").click(function(e) {
+                e.preventDefault();
+                $("#proposalDocsRejection").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var rejectionComments = $("textarea[name=rejectionComments]").val();
+                var studentId = $("input[name=rejectionStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('proposalComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#proposalDocsRejection").html('Submit');
+                            $(".print-proposalDocsRejection-error-msg").find("ul").html('');
+                            $(".print-proposalDocsRejection-error-msg").css('display', 'none');
+                            $(".print-proposalDocsRejection-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            alert('FAILURE');
+                            $("#proposalDocsRejection").html('Submit');
+                            printErrorMsg(data.error, "proposalDocsRejection");
                         }
                     }
                 });
@@ -314,6 +798,103 @@
                             $(".print-thesis-error-msg").find("ul").append('<li>' + value + '</li>');
                         });
                         break;
+                    case "addCompMastersSupervisor":
+                        $(".print-addSupervisorCompMasters-error-msg").find("ul").html('');
+                        $(".print-addSupervisorCompMasters-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-addSupervisorCompMasters-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "addCompMastersCoSupervisor":
+                        $(".print-addCompMastersCoSupervisor-error-msg").find("ul").html('');
+                        $(".print-addCompMastersCoSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-addCompMastersCoSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "addCompPhdSupervisor":
+                        $(".print-addCompPhdSupervisor-error-msg").find("ul").html('');
+                        $(".print-addCompPhdSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-addCompPhdSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "addCompPhdCoSupervisor":
+                        $(".print-addCompPhdCoSupervisor-error-msg").find("ul").html('');
+                        $(".print-addCompPhdCoSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-addCompPhdCoSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "addInfoMastersSupervisor":
+                        $(".print-addInfoMastersSupervisor-error-msg").find("ul").html('');
+                        $(".print-addInfoMastersSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-addInfoMastersSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "addInfoMastersCoSupervisor":
+                        $(".print-addInfoMastersCoSupervisor-error-msg").find("ul").html('');
+                        $(".print-addInfoMastersCoSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-addInfoMastersCoSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "addInfoPhdSupervisor":
+                        $(".print-addInfoPhdSupervisor-error-msg").find("ul").html('');
+                        $(".print-addInfoPhdSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-addInfoPhdSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "addInfoPhdCoSupervisor":
+                        $(".print-addInfoPhdCoSupervisor-error-msg").find("ul").html('');
+                        $(".print-addInfoPhdCoSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-addInfoPhdCoSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                    case "editSupervisor":
+                        $(".print-editSupervisor-error-msg").find("ul").html('');
+                        $(".print-editSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-editSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "editCoSupervisor":
+                        $(".print-editCoSupervisor-error-msg").find("ul").html('');
+                        $(".print-editCoSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-editCoSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "assignSupervisor":
+                        $(".print-assignSupervisor-error-msg").find("ul").html('');
+                        $(".print-assignSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-assignSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "assignCoSupervisor":
+                        $(".print-assignCoSupervisor-error-msg").find("ul").html('');
+                        $(".print-assignCoSupervisor-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-assignCoSupervisor-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "proposalDocsRejection":
+                        $(".print-proposalDocsRejection-error-msg").find("ul").html('');
+                        $(".print-proposalDocsRejection-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-proposalDocsRejection-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "resubmit_proposal_documents":
+                        $(".print-proposalDocsResubmit-error-msg").find("ul").html('');
+                        $(".print-proposalDocsResubmit-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-proposalDocsResubmit-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
                     default:
                         break;
                 }
@@ -327,17 +908,17 @@
             function printSuccessMsg(role) {
                 switch (role) {
                     case "student":
-                    $(".print-std-success-msg").show();
+                        $(".print-std-success-msg").show();
                         break;
                     case "supervisor":
-                    $(".print-super-success-msg").show();
-                    break;
+                        $(".print-super-success-msg").show();
+                        break;
                     case "hod":
-                    $(".print-hod-success-msg").show();
-                    break;
+                        $(".print-hod-success-msg").show();
+                        break;
                     case "fhdc":
-                    $(".print-fhdc-success-msg").show();
-                    break;
+                        $(".print-fhdc-success-msg").show();
+                        break;
                     default:
                         break;
                 }
@@ -393,7 +974,6 @@
             })
 
         })
-
     </script>
 
 </head>
@@ -447,7 +1027,7 @@
                                     </a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                                             document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

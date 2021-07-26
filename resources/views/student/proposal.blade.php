@@ -208,115 +208,246 @@
                                 <hr>
                             </div>
                         </div>
+                        @if ($proposalSummaryFileName != null)
+                            @if ($proposalStatus[0]->status == 'Submitted')
+                                <div class="card shadow p-3 mb-5 bg-white rounded">
+                                    <h5 class="card-header">Final Proposal</h5>
+                                    <hr>
+                                    <div class="alert alert-success" role="alert">
+                                        <strong>
+                                            You Have Submitted Your Documents. Please Wait For A Response From Your
+                                            Supervisor.
+                                        </strong>
+                                    </div>
+                                    <p style="color: black;">You have submitted the following documents:</p>
+                                    <ul>
+                                        <li>Final Proposal</li>
+                                        <li>Turnitin Plagiarism Report</li>
+                                        <li>Proposal Summary</li>
+                                    </ul>
+                                    <!-- Button trigger modal -->
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#final">
+                                            View Submissions
+                                        </button>
+                                    </div>
+                                    <div class="modal fade text-center" id="final" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Submitted Final
+                                                        Proposal
+                                                        Documents</h5>
+                                                    <button type="button" class="close" style="color: white;"
+                                                        data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body" style="text-align: justify">
+                                                    <form id="proposal_documents" enctype="multipart/form-data"
+                                                        method="POST">
+                                                        @csrf
+                                                        <div class="form-group">
+
+                                                            <label for="proposal_summary">Proposal Summary</label><br>
+                                                            <a
+                                                                href="/download/{{ $proposalSummaryFileName->file_name }}">{{ $proposalSummaryFileName->file_name }}</a>
+
+
+                                                            <hr>
+                                                            <label for="plagiarism_report">Turnitin Plagiarism
+                                                                Report</label><br>
+                                                            <a
+                                                                href="/download/{{ $plagiarismReportFileName->file_name }}">{{ $plagiarismReportFileName->file_name }}</a>
+
+                                                            <hr>
+                                                            <label for="final_proposal">Final Proposal</label><br>
+                                                            <a
+                                                                href="/download/{{ $finalProposalFileName }}">{{ $finalProposalFileName }}</a>
+                                                        </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        id="proposal-documents-close" data-dismiss="modal">Close</button>
+                                                </div>
+                            @elseif ($proposalStatus[0]->status == "Resubmit")
+                                <div class="card shadow p-3 mb-5 bg-white rounded">
+                                    <h5 class="card-header">Final Proposal</h5>
+                                    <hr>
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>
+                                            {{ $proposalStatus[0]->supervisor_comments }}
+                                        </strong>
+                                    </div>
+                                    <p style="color: black;">Please resubmit the following documents:</p>
+                                    <ul>
+                                        <li>Final Proposal</li>
+                                        <li>Turnitin Plagiarism Report</li>
+                                        <li>Proposal Summary</li>
+                                    </ul>
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#resubmit">
+                                            Submit
+                                        </button>
+                                    </div>
+                                    <!--Modal To Submit Final Proposal Documents-->
+                                    <div class="modal fade text-center" id="resubmit" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">
+                                                        Submit Final Proposal
+                                                        Documents</h5>
+                                                    <button type="button" class="close"
+                                                        style="color: white;" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="alert alert-danger print-proposalDocsResubmit-error-msg"
+                                                    role="alert" style="display:none">
+                                                    <strong>
+                                                        <ul></ul>
+                                                    </strong>
+                                                </div>
+                                                <div class="alert alert-success print-proposalDocsResubmit-success-msg"
+                                                    role="alert" style="display:none">
+                                                    <strong>
+                                                        Documents Successfully Submitted.
+                                                    </strong>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="resubmit_proposal_documents"
+                                                        enctype="multipart/form-data" method="POST">
+                                                        @csrf
+                                                        <div class="form-group">
+                                                            <label for="proposal_summary">Proposal
+                                                                Summary</label>
+                                                            <input type="file" class="form-control-file"
+                                                                id="proposal_summary"
+                                                                name="proposal_summary" required>
+
+                                                            <label for="plagiarism_report">Turnitin
+                                                                Plagiarism
+                                                                Report</label>
+                                                            <input type="file" class="form-control-file"
+                                                                id="plagiarism_report"
+                                                                name="plagiarism_report" required>
+
+                                                            <label for="final_proposal">Final
+                                                                Proposal</label>
+                                                            <input type="file" class="form-control-file"
+                                                                id="final_proposal" name="final_proposal"
+                                                                required>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" id="proposalDocumentsResubmit-close"
+                                                        data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary"
+                                                        id="proposalDocumentsReSubmit"
+                                                        value="Submit">Submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @elseif ($proposalSummaryFileName = null)
                         <div class="card shadow p-3 mb-5 bg-white rounded">
                             <h5 class="card-header">Final Proposal</h5>
                             <hr>
-                            @if ($proposalSummaryFileName != null)
-                            <div class="alert alert-success"
-                            role="alert">
-                            <strong>
-                                Documents Successfully Submitted. Please Wait For A Response From Your Supervisor.
-                            </strong>
-                        </div>
-                            @endif
                             <p style="color: black;">Please submit the following documents:</p>
                             <ul>
                                 <li>Final Proposal</li>
                                 <li>Turnitin Plagiarism Report</li>
                                 <li>Proposal Summary</li>
                             </ul>
-                            <!-- Button trigger modal -->
-                            @if ($proposalSummaryFileName != null)
                             <div class="text-center">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#final">
-                                    View Submissions
-                                </button>
-                            </div>
-                            @else
-                            <div class="text-center">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#final">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#final">
                                     Submit
                                 </button>
                             </div>
-                            @endif
                             <!--Modal To Submit Final Proposal Documents-->
-                            <div class="modal fade text-center" id="final" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal fade text-center" id="final" tabindex="-1"
+                                role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLongTitle">Submit Final Proposal
+                                            <h5 class="modal-title" id="exampleModalLongTitle">
+                                                Submit Final Proposal
                                                 Documents</h5>
-                                            <button type="button" class="close" style="color: white;" data-dismiss="modal"
+                                            <button type="button" class="close"
+                                                style="color: white;" data-dismiss="modal"
                                                 aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        <div class="alert alert-danger print-documents-error-msg" role="alert"
-                                            style="display:none">
+                                        <div class="alert alert-danger print-documents-error-msg"
+                                            role="alert" style="display:none">
                                             <strong>
                                                 <ul></ul>
                                             </strong>
                                         </div>
-                                        @if ($proposalSummaryFileName != null)
-                                            <div class="modal-body" style="text-align: justify">
-                                                <form id="proposal_documents" enctype="multipart/form-data" method="POST">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        
-                                                        <label for="proposal_summary">Proposal Summary</label><br>
-                                                        <a href="/download/{{ $proposalSummaryFileName }}">{{ $proposalSummaryFileName }}</a>
-                                                        
-                                                        
-                                                        <hr>
-                                                        <label for="plagiarism_report">Turnitin Plagiarism Report</label><br>
-                                                        <a href="/download/{{ $plagiarismReportFileName->file_name }}">{{ $plagiarismReportFileName->file_name }}</a>
-                                                        
-                                                        <hr>
-                                                        <label for="final_proposal">Final Proposal</label><br>
-                                                        <a href="/download/{{ $finalProposalFileName }}">{{ $finalProposalFileName }}</a>
-                                                    </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
-                                            </div>
-                                        @else
-                                            <div class="modal-body">
-                                                <form id="proposal_documents" enctype="multipart/form-data" method="POST">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="proposal_summary">Proposal Summary</label>
-                                                        <input type="file" class="form-control-file" id="proposal_summary"
-                                                            name="proposal_summary" required>
+                                        <div class="alert alert-success print-proposalDocuments-success-msg"
+                                            role="alert" style="display:none">
+                                            <strong>
+                                                Documents Successfully Submitted.
+                                            </strong>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="proposal_documents"
+                                                enctype="multipart/form-data" method="POST">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label for="proposal_summary">Proposal
+                                                        Summary</label>
+                                                    <input type="file" class="form-control-file"
+                                                        id="proposal_summary"
+                                                        name="proposal_summary" required>
 
-                                                        <label for="plagiarism_report">Turnitin Plagiarism Report</label>
-                                                        <input type="file" class="form-control-file" id="plagiarism_report"
-                                                            name="plagiarism_report" required>
+                                                    <label for="plagiarism_report">Turnitin
+                                                        Plagiarism
+                                                        Report</label>
+                                                    <input type="file" class="form-control-file"
+                                                        id="plagiarism_report"
+                                                        name="plagiarism_report" required>
 
-                                                        <label for="final_proposal">Final Proposal</label>
-                                                        <input type="file" class="form-control-file" id="final_proposal"
-                                                            name="final_proposal" required>
-                                                    </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary" id="proposalDocumentsSubmit"
-                                                    value="Submit">Submit</button>
-                                            </div>
-                                        @endif
-                                        
-                                        </form>
+                                                    <label for="final_proposal">Final
+                                                        Proposal</label>
+                                                    <input type="file" class="form-control-file"
+                                                        id="final_proposal" name="final_proposal"
+                                                        required>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary"
+                                                id="proposalDocumentsSubmit"
+                                                value="Submit">Submit</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <hr>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-        <!-- End Of Page Content -->
+    </div>
+    </div>
+    </div>
+    <!-- End Of Page Content -->
     </div>
 @endsection

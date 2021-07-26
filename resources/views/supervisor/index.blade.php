@@ -33,30 +33,25 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @forelse ($students as $student)
                       <tr>
-                        <td>Peter Jonas</td>
+                        <td>{{ App\Models\User::find($student->user_id)->name }}</td>
                         <td>
-                          Proposal
+                          {{ $student->progress }}
                         </td>
                       </tr>
-                      <tr>
-  
-                        <td>Jonas Peter</td>
-                        <td>
-                          Thesis
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Tangeni Samuel</td>
-                        <td>
-                          Exam
-                        </td>
-                      </tr>
+                      @empty
+                      <td colspan="2" style="text-align: center; font-weight: bold">No Students Assigned To You</td>
+                      @endforelse
                     </tbody>
                   </table>
+                  @if (!$students->isEmpty())
                   <div class="text-center">
-                    <a href="all-students.html" type="button" class="btn btn-primary">See All</a>
+                    <a href="{{ route('supervisor-allStudents') }}" type="button" class="btn btn-primary">See All</a>
                   </div>
+                  @else
+
+                  @endif
                 </div>
               </div>
             </div>

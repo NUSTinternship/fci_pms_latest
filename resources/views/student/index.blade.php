@@ -32,49 +32,186 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Proposal</td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-success" role="progressbar"
-                                                                style="width: 100%" aria-valuenow="25" aria-valuemin="0"
-                                                                aria-valuemax="100">Completed</div>
+                                        @switch($user->progress)
+                                            @case('Proposal')
+                                                <tr>
+                                                    <td>Proposal</td>
+                                                    <td>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="progress">
+                                                                    <div class="progress-bar bg-warning" role="progressbar"
+                                                                        style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                        aria-valuemax="100">In Progress</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Thesis</td>
+                                                    <td>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="progress">
+                                                                    <div class="progress-bar bg-danger" role="progressbar"
+                                                                        style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                        aria-valuemax="100">Blocked</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Examination</td>
+                                                    <td>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+                                                                <div class="progress">
+                                                                    <div class="progress-bar bg-danger" role="progressbar"
+                                                                        style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                        aria-valuemax="100">Blocked</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                @break
+                                            
+                                            @case('Thesis')
+                                            <tr>
+                                                <td>Proposal</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-success" role="progressbar"
+                                                                    style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                    aria-valuemax="100">Completed</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Thesis</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-warning" role="progressbar"
+                                                                    style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                    aria-valuemax="100">In Progress</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Examination</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-danger" role="progressbar"
+                                                                    style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                    aria-valuemax="100">Blocked</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @break
 
-                                            <td>Thesis</td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-warning" role="progressbar"
-                                                                style="width: 100%" aria-valuenow="25" aria-valuemin="0"
-                                                                aria-valuemax="100">In Progress</div>
+                                            @case('Examination')
+                                            <tr>
+                                                <td>Proposal</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-success" role="progressbar"
+                                                                    style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                    aria-valuemax="100">Completed</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Exam</td>
-                                            <td>
-                                                <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="progress">
-                                                            <div class="progress-bar bg-danger" role="progressbar"
-                                                                style="width: 100%" aria-valuenow="25" aria-valuemin="0"
-                                                                aria-valuemax="100">Blocked</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Thesis</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-success" role="progressbar"
+                                                                    style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                    aria-valuemax="100">Completed</div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Examination</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-warning" role="progressbar"
+                                                                    style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                    aria-valuemax="100">In Progress</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @break
+                                        
+                                            @default
+                                            <tr>
+                                                <td>Proposal</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-success" role="progressbar"
+                                                                    style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                    aria-valuemax="100">Completed</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Thesis</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-success" role="progressbar"
+                                                                    style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                    aria-valuemax="100">Completed</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Examination</td>
+                                                <td>
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="progress">
+                                                                <div class="progress-bar bg-success" role="progressbar"
+                                                                    style="width: 100%" aria-valuenow="25" aria-valuemin="0"
+                                                                    aria-valuemax="100">Completed</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endswitch
                                     </tbody>
                                 </table>
                             </div>
@@ -84,14 +221,18 @@
                         <div class="card shadow p-3 mb-5 bg-white rounded h-70 border-left-secondary">
                             <div class="card-body">
                                 <h5 class="card-title font-weight-bold">SUPERVISOR DETAILS</h5>
-                                <p>Name: Nasimane Ekandjo</p>
-                                <hr>
-                                <p>Email: nekandjo@nust.na</p>
-                                <hr>
-                                <p>Office: Poly Heights Room 508</p>
-                                <hr>
-                                <p>Phone: +264 61 12345</p>
-                                <!--<a href="#" class="btn btn-primary">Contact Supervisor</a>-->
+                                @if ($supervisor->supervisor_id != null)
+                                    <p>Name: {{ App\Models\User::find(App\Models\Supervisor::find($supervisor->supervisor_id)->user_id)->name }}</p>
+                                    <hr>
+                                    <p>Email: {{ App\Models\User::find(App\Models\Supervisor::find($supervisor->supervisor_id)->user_id)->email }}</p>
+                                    <hr>
+                                    <p>Office: {{ App\Models\Supervisor::find($supervisor->supervisor_id)->office }}</p>
+                                    <hr>
+                                    <p>Phone: {{ App\Models\Supervisor::find($supervisor->supervisor_id)->phone }}</p>
+                                    <!--<a href="#" class="btn btn-primary">Contact Supervisor</a>-->
+                                @else
+                                    <p>Supervisor Not Yet Assigned</p>
+                                @endif
                             </div>
                         </div>
                     </div>

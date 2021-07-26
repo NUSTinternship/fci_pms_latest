@@ -159,9 +159,9 @@
     
                                                     <div class="col-md-6">
                                                         <select class="form-control" id="department" name="student_department">
-                                                            <option value="Masters" selected>Computer Science
+                                                            <option value="Computer Science" selected>Computer Science
                                                             </option>
-                                                            <option value="PhD">Informatics</option>
+                                                            <option value="Informatics">Informatics</option>
                                                         </select>
                                                     </div>
                                                 </div>

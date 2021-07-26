@@ -39,11 +39,13 @@
                             @if (Auth::user()->user_type == 'Student')
                                 <a href="{{ url('/student/home') }}" class="nav-link">Home</a>
                             @elseif (Auth::user()->user_type == "Supervisor")
-                                <a href="{{ url('/supervisor') }}" class="text-sm text-gray-700 underline">Home</a>
+                                <a href="{{ url('/supervisor/home') }}" class="text-sm text-gray-700 underline">Home</a>
                             @elseif (Auth::user()->user_type == "HOD")
-                                <a href="{{ url('/hod') }}" class="nav-link">Home</a>
+                                <a href="{{ url('/hod/home') }}" class="nav-link">Home</a>
                             @elseif (Auth::user()->user_type == "Administrator")
                                 <a href="{{ url('/admin/home') }}" class="nav-link">Home</a>
+                            @elseif (Auth::user()->user_type == "FHDC")
+                                <a href="{{ url('/fhdc/home') }}" class="nav-link">Home</a>
                             @else
                                 <a href="{{ url('/fhdc') }}" class="nav-link">Home</a>
                             @endif

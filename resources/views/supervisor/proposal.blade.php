@@ -41,25 +41,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @forelse ($proposalMastersStudents as $student)
                       <tr>
-                        <td>Peter Jonas</td>
+                        <td>{{ App\Models\User::find($student->user_id)->name }}</td>
                         <td>
-                          <a href="student-proposal.html" type="button" class="btn btn-primary">View</a>
+                          <a href="{{ route('studentProfile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
                         </td>
                       </tr>
-                      <tr>
-  
-                        <td>Jonas Peter</td>
-                        <td>
-                          <button type="button" class="btn btn-primary">View</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Tangeni Samuel</td>
-                        <td>
-                          <button type="button" class="btn btn-primary">View</button>
-                        </td>
-                      </tr>
+                      @empty
+                        <td colspan="2"><b>No Masters Students At This Stage</b></td>
+                      @endforelse
                     </tbody>
                     <thead class="thead-light">
                       <tr>
@@ -67,25 +58,16 @@
                       </tr>
                     </thead>
                     <tbody>
+                      @forelse ($proposalPhDStudents as $student)
                       <tr>
-                        <td>Peter Jonas</td>
+                        <td>{{ App\Models\User::find($student->user_id)->name }}</td>
                         <td>
-                          <button type="button" class="btn btn-primary">View</button>
+                          <a href="{{ route('student.profile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
                         </td>
                       </tr>
-                      <tr>
-  
-                        <td>Jonas Peter</td>
-                        <td>
-                          <button type="button" class="btn btn-primary">View</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Tangeni Samuel</td>
-                        <td>
-                          <button type="button" class="btn btn-primary">View</button>
-                        </td>
-                      </tr>
+                      @empty
+                      <td colspan="2"><b>No Masters Students At This Stage</b></td>
+                      @endforelse
                     </tbody>
                   </table>
                   <hr>

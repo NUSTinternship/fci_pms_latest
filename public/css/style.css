@@ -41,6 +41,14 @@
   .card-title {
     text-align: center;
   }
+
+  .download-icon {
+    color: black;
+  }
+
+  .download-icon:hover {
+    color: #1b2d5d;
+}
   
   ul {
     list-style-position: inside;
