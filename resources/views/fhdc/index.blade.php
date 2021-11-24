@@ -47,7 +47,7 @@
                         <tbody>
                           @forelse ($compSciMastersStudents as $student)
                           <tr>
-                            <td>{{ $student->name }}</td>
+                            <td><a href="{{ route('hdc.studentProfile', $student->user_id) }}" style="color: black;">{{ $student->name }}</a></td>
                             <td>
                               {{ $student->progress }}
                             </td>
@@ -64,7 +64,7 @@
                           </thead>
                           @forelse ($compSciPhdStudents as $student)
                           <tr>
-                            <td>{{ $student->name }}</td>
+                            <td><a href="{{ route('hdc.studentProfile', $student->user_id) }}" style="color: black;">{{ $student->name }}</a></td>
                             <td>
                               {{ $student->progress }}
                             </td>
@@ -94,7 +94,7 @@
                         <tbody>
                           @forelse ($informaticsMastersStudents as $student)
                           <tr>
-                            <td>{{ $student->name }}</td>
+                            <td><a href="{{ route('hdc.studentProfile', $student->user_id) }}" style="color: black;">{{ $student->name }}</td>
                             <td>
                               {{ $student->progress }}
                             </td>
@@ -109,7 +109,7 @@
                           </thead>
                           @forelse ($informaticsPhdStudents as $student)
                           <tr>
-                            <td>{{ $student->name }}</td>
+                            <td><a href="{{ route('hdc.studentProfile', $student->user_id) }}" style="color: black;">{{ $student->name }}</td>
                             <td>
                               {{ $student->progress }}
                             </td>
@@ -124,6 +124,76 @@
                   <div class="text-center">
                     <a href="{{route('hdc-allStudents')}}" type="button" class="btn btn-primary">See All</a>
                   </div>
+                  @if (!$studentsYourEvaluating->isEmpty())
+                      <hr>
+                      <div class="col-sm-12">
+                        <h5 class="card-title font-weight-bold" style="text-align: center">STUDENTS YOU ARE EVALUATING</h5>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <table class="table table-hover">
+                              <thead class="thead-light">
+                                <tr>
+                                  <th scope="col" colspan="2">Masters Students</th>
+                                </tr>
+                              </thead>
+                              <thead class="thead-blue">
+                                <tr>
+                                  <th scope="col" style="color: white;">Student</th>
+                                  <th scope="col" style="color: white;">Position</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @forelse ($mastersStudentsYourEvaluating as $student)
+                                  <tr>
+                                    <td> <a href="{{ route('hod.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }} </td>
+                                    <td>
+                                      @if ($student->evaluator_id == Auth::user()->id)
+                                        Evaluator
+                                      @elseif ($student->co_evaluator_id == Auth::user()->id)
+                                        Co-Evaluator
+                                      @endif
+                                    </td>
+                                  </tr>
+                                @empty
+                                  <td colspan="2" style="text-align: center; font-weight: bold">You Are Not Evaluating Any Masters Students</td>
+                                @endforelse
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="col-sm-6">
+                            <table class="table table-hover">
+                              <thead class="thead-light">
+                                <tr>
+                                  <th scope="col" colspan="2">PhD Students</th>
+                                </tr>
+                              </thead>
+                              <thead class="thead-blue">
+                                <tr>
+                                  <th scope="col" style="color: white;">Student</th>
+                                  <th scope="col" style="color: white;">Position</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @forelse ($phdStudentsYourEvaluating as $student)
+                                  <tr>
+                                    <td><a href="{{ route('hod.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</td>
+                                    <td>
+                                      @if ($student->evaluator_id == Auth::user()->id)
+                                        Evaluator
+                                      @elseif ($student->co_evaluator_id == Auth::user()->id)
+                                        Co-Evaluator
+                                      @endif
+                                    </td>
+                                  </tr>
+                                @empty
+                                  <td colspan="2" style="text-align: center; font-weight: bold">You Are Not Evaluating Any PhD Students</td>
+                                @endforelse
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      @endif
                 </div>
               </div>
             </div>

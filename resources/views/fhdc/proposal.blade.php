@@ -50,7 +50,7 @@
                       <tr>
                         <td>{{ App\Models\User::find($student->user_id)->name }}</td>
                         <td>
-                          <a href="student-proposal.html" type="button" class="btn btn-primary">View</a>
+                          <a href="{{ route('hdc.studentProposalProfile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
                         </td>
                       </tr>
                       @empty
@@ -67,7 +67,7 @@
                       <tr>
                         <td>{{ App\Models\User::find($student->user_id)->name }}</td>
                         <td>
-                          <a href="student-proposal.html" type="button" class="btn btn-primary">View</a>
+                          <a href="{{ route('hdc.studentProposalProfile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
                         </td>
                       </tr>
                       @empty

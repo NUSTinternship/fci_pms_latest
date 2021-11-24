@@ -47,10 +47,10 @@
                     <tbody>
                       @forelse ($mastersThesisStudents as $student)
                       <tr>
-                        <td>{{ App\Models\User::find($student->user_id)->name }}</td>
-                        <td>
-                          <a href="student-proposal.html" type="button" class="btn btn-primary">View</a>
-                        </td>
+                        <td><a href="{{ route('hdc.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</td>
+                          <td>
+                            <a href="{{ route('hdc.studentThesisProfile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
+                          </td>
                       </tr>
                       @empty
                       <td colspan="3" style="text-align: center; font-weight: bold">No Masters Students At This Stage</td>
@@ -64,10 +64,10 @@
                     <tbody>
                       @forelse ($phdThesisStudents as $student)
                       <tr>
-                        <td>{{ App\Models\User::find($student->user_id)->name }}</td>
-                        <td>
-                          <a href="student-proposal.html" type="button" class="btn btn-primary">View</a>
-                        </td>
+                        <td><a href="{{ route('hod.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</td>
+                          <td>
+                            <a href="{{ route('hod.studentThesisProfile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
+                          </td>
                       </tr>
                       @empty
                       <td colspan="3" style="text-align: center; font-weight: bold">No PhD Students At This Stage</td>

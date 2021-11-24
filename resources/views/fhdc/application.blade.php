@@ -40,7 +40,6 @@
                                                 <tr>
                                                     <th scope="col" style="color: white;">Student</th>
                                                     <th scope="col" style="color: white;">Supervisor</th>
-                                                    <th scope="col" style="color: white;">Co-Supervisor</th>
                                                 </tr>
                                             </thead>
                                             <thead class="thead-light">
@@ -51,7 +50,7 @@
                                             <tbody>
                                                 @forelse ($compSciMastersStudents as $student)
                                                     <tr>
-                                                        <td><a href="{{ route('student.profile', $student->id) }}" style="color: black;">{{ $student->name }}</a>
+                                                        <td><a href="{{ route('hdc.studentProfile', $student->id) }}" style="color: black;">{{ $student->name }}</a>
                                                         </td>
                                                         @if ($student->supervisor_id != null)
                                                             <td>
@@ -91,7 +90,7 @@
                                                                                     <div class="alert alert-success print-addSupervisorCompMasters-success-msg"
                                                                                         role="alert" style="display:none">
                                                                                         <strong>
-                                                                                            Supervisor Successfully
+                                                                                            Supervisors Successfully
                                                                                             Assigned.
                                                                                         </strong>
                                                                                     </div>
@@ -108,6 +107,21 @@
                                                                                             value="{{ $student->user_id }}"
                                                                                             id="comp_masters_student_id">
                                                                                     </select>
+                                                                                    <hr>
+                                                                                    <label>Please select a
+                                                                                        co-supervisor:</label>
+                                                                                    <select
+                                                                                        name="select_comp_masters_co_supervisors"
+                                                                                        id="select_comp_masters_co_supervisors"
+                                                                                        class="form-control">
+                                                                                        <option value="None">None</option>
+                                                                                        @foreach ($users as $user)
+                                                                                            <option
+                                                                                                value="{{ $user->id }}">
+                                                                                                {{ $user->name }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
                                                                                 </form>
                                                                             </div>
                                                                             <div class="modal-footer">
@@ -123,7 +137,7 @@
                                                                 </div>
                                                             </td>
                                                         @endif
-                                                        @if ($student->co_supervisor_id != null)
+                                                        {{-- @if ($student->co_supervisor_id != null)
                                                             <td>
                                                                 {{ App\Models\User::find(App\Models\Supervisor::find($student->co_supervisor_id)->user_id)->name }}
                                                             </td>
@@ -193,11 +207,10 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                        @endif
+                                                        @endif --}}
                                                     </tr>
                                                 @empty
-                                                    <td colspan="3" style="text-align: center; font-weight: bold">No Masters
-                                                        Students In This Department</td>
+                                                    <td colspan="3" style="text-align: center; font-weight: bold">No Masters Students In This Department Need To Be Assigned A Supervisor</td>
                                                 @endforelse
                                                 </tr>
                                                 <thead class="thead-light">
@@ -208,7 +221,7 @@
                                             <tbody>
                                                 @forelse ($compSciPhdStudents as $student)
                                                     <tr>
-                                                        <td><a href="{{ route('student.profile', $student->id) }}" style="color: black;">{{ $student->name }}</a>
+                                                        <td><a href="{{ route('hdc.studentProfile', $student->id) }}" style="color: black;">{{ $student->name }}</a>
                                                         </td>
                                                         @if ($student->supervisor_id != null)
                                                             <td>
@@ -266,6 +279,21 @@
                                                                                             value="{{ $student->user_id }}"
                                                                                             id="comp_phd_student_id">
                                                                                     </select>
+                                                                                    <hr>
+                                                                                    <label>Please select a
+                                                                                        co-supervisor:</label>
+                                                                                    <select
+                                                                                        name="select_comp_phd_co_supervisors"
+                                                                                        id="select_comp_phd_co_supervisors"
+                                                                                        class="form-control">
+                                                                                        <option value="None">None</option>
+                                                                                        @foreach ($users as $user)
+                                                                                            <option
+                                                                                                value="{{ $user->id }}">
+                                                                                                {{ $user->name }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
                                                                                 </form>
                                                                             </div>
                                                                             <div class="modal-footer">
@@ -281,7 +309,7 @@
                                                                 </div>
                                                             </td>
                                                         @endif
-                                                        @if ($student->co_supervisor_id != null)
+                                                        {{-- @if ($student->co_supervisor_id != null)
 
                                                             <td>
                                                                 {{ App\Models\User::find(App\Models\Supervisor::find($student->co_supervisor_id)->user_id)->name }}
@@ -353,11 +381,10 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                        @endif
+                                                        @endif --}}
                                                     </tr>
                                                 @empty
-                                                    <td colspan="3" style="text-align: center; font-weight: bold">No PhD
-                                                        Students In This Department</td>
+                                                    <td colspan="3" style="text-align: center; font-weight: bold">No PhD Students In This Department Need To Be Assigned A Supervisor</td>
                                                 @endforelse
                                             </tbody>
                                         </table>
@@ -369,7 +396,6 @@
                                                 <tr>
                                                     <th scope="col" style="color: white;">Student</th>
                                                     <th scope="col" style="color: white;">Supervisor</th>
-                                                    <th scope="col" style="color: white;">Co-Supervisor</th>
                                                 </tr>
                                             </thead>
                                             <thead class="thead-light">
@@ -380,7 +406,7 @@
                                             <tbody>
                                                 @forelse ($informaticsMastersStudents as $student)
                                                     <tr>
-                                                        <td><a href="{{ route('student.profile', $student->id) }}" style="color: black;">{{ $student->name }}</a>
+                                                        <td><a href="{{ route('hdc.studentProfile', $student->id) }}" style="color: black;">{{ $student->name }}</a>
                                                         </td>
                                                         @if ($student->supervisor_id != null)
                                                             <td>
@@ -410,7 +436,7 @@
                                                                                 <form>
                                                                                     @csrf
                                                                                     <label>Please select a
-                                                                                        co-supervisor:</label>
+                                                                                        supervisor:</label>
                                                                                     <div class="alert alert-danger print-addInfoMastersSupervisor-error-msg"
                                                                                         role="alert" style="display:none">
                                                                                         <strong>
@@ -438,6 +464,36 @@
                                                                                             value="{{ $student->user_id }}"
                                                                                             id="info_masters_student_id">
                                                                                     </select>
+                                                                                    <hr>
+                                                                                    <label>Please select a
+                                                                                        co-supervisor:</label>
+                                                                                    <div class="alert alert-danger print-addInfoMastersCoSupervisor-error-msg"
+                                                                                        role="alert" style="display:none">
+                                                                                        <strong>
+                                                                                            <ul></ul>
+                                                                                        </strong>
+                                                                                    </div>
+                                                                                    <div class="alert alert-success print-addInfoMastersCoSupervisor-success-msg"
+                                                                                        role="alert" style="display:none">
+                                                                                        <strong>
+                                                                                            Co-Supervisor Successfully
+                                                                                            Assigned.
+                                                                                        </strong>
+                                                                                    </div>
+                                                                                    <select
+                                                                                        name="select_info_masters_co_supervisors"
+                                                                                        id="select_info_masters_co_supervisors"
+                                                                                        class="form-control">
+                                                                                        <option value="None">
+                                                                                            None
+                                                                                        </option>
+                                                                                        @foreach ($users as $user)
+                                                                                            <option
+                                                                                                value="{{ $user->id }}">
+                                                                                                {{ $user->name }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
                                                                                 </form>
                                                                             </div>
                                                                             <div class="modal-footer">
@@ -453,7 +509,7 @@
                                                                 </div>
                                                             </td>
                                                         @endif
-                                                        @if ($student->co_supervisor_id != null)
+                                                        {{-- @if ($student->co_supervisor_id != null)
 
                                                             <td>
 
@@ -524,12 +580,11 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </td>
-                                                        @endif
+                                                            </td> --}}
+                                                        {{-- @endif --}}
                                                     </tr>
                                                 @empty
-                                                    <td colspan="3" style="text-align: center; font-weight: bold">No Masters
-                                                        Students In This Department</td>
+                                                    <td colspan="3" style="text-align: center; font-weight: bold">No Masters Students In This Department Need To Be Assigned A Supervisor</td>
                                                 @endforelse
                                                 <thead class="thead-light">
                                                     <tr>
@@ -539,7 +594,7 @@
                                             <tbody>
                                                 @forelse ($informaticsPhdStudents as $student)
                                                     <tr>
-                                                        <td><a href="{{ route('student.profile', $student->id) }}" style="color: black;">{{ $student->name }}</a>
+                                                        <td><a href="{{ route('hdc.studentProfile', $student->id) }}" style="color: black;">{{ $student->name }}</a>
                                                         </td>
                                                         @if ($student->supervisor_id != null)
                                                             <td>
@@ -597,6 +652,20 @@
                                                                                             value="{{ $student->user_id }}"
                                                                                             id="info_phd_student_id">
                                                                                     </select>
+                                                                                    <label>Please select a
+                                                                                        co-supervisor:</label>
+                                                                                    <select
+                                                                                        name="select_info_phd_co_supervisors"
+                                                                                        id="select_info_phd_co_supervisors"
+                                                                                        class="form-control">
+                                                                                        <option value="None">None</option>
+                                                                                        @foreach ($users as $user)
+                                                                                            <option
+                                                                                                value="{{ $user->id }}">
+                                                                                                {{ $user->name }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
                                                                                 </form>
                                                                             </div>
                                                                             <div class="modal-footer">
@@ -612,7 +681,7 @@
                                                                 </div>
                                                             </td>
                                                         @endif
-                                                        @if ($student->co_supervisor_id != null)
+                                                        {{-- @if ($student->co_supervisor_id != null)
 
                                                             <td>
                                                                 {{ App\Models\User::find(App\Models\Supervisor::find($student->co_supervisor_id)->user_id)->name }}
@@ -683,18 +752,17 @@
                                                                     </div>
                                                                 </div>
                                                             </td>
-                                                        @endif
+                                                        @endif --}}
                                                     </tr>
                                                 @empty
-                                                    <td colspan="3" style="text-align: center; font-weight: bold">No PhD
-                                                        Students In This Department</td>
+                                                    <td colspan="3" style="text-align: center; font-weight: bold">No PhD Students In This Department Need To Be Assigned A Supervisor</td>
                                                 @endforelse
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <a href="assign-supervisor.html" type="button" class="btn btn-primary">See All</a>
+                                    <a href="{{ route('hdc.assignSupervisors') }}" type="button" class="btn btn-primary">See All</a>
                                 </div>
                             </div>
                         </div>

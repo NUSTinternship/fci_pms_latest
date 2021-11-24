@@ -188,15 +188,15 @@
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
                             //$("#fhdcForm")[0].reset();
-                            $(".print-documents-error-msg").find("ul").html('');
-                            $(".print-documents-error-msg").css('display', 'none');
+                            $(".print-proposalDocuments-error-msg").find("ul").html('');
+                            $(".print-proposalDocuments-error-msg").css('display', 'none');
                             $("#proposalDocumentsSubmit").html('Submit');
                             $("#proposalDocumentsSubmit").attr('disabled', true);
                             $("#proposal_summary").attr('disabled', true);
                             $("#plagiarism_report").attr('disabled', true);
                             $("#final_proposal").attr('disabled', true);
                             $("#proposal-documents-close").css('display', 'none')
-                            $('print-proposalDocuments-success-msg').show();
+                            $('.print-proposalDocuments-success-msg').show();
                             setTimeout(function () {
                                 location.reload(true);
                             }, 2000);
@@ -228,7 +228,7 @@
                             $("#proposalDocumentsReSubmit").html('Submit');
                             $("#proposalDocumentsReSubmit").attr('disabled', true);
                             $("#proposal_summary").attr('disabled', true);
-                            $("#plagiarism_report").attr('disabled', true);
+                            $("#corrections_report").attr('disabled', true);
                             $("#final_proposal").attr('disabled', true);
                             $("#proposalDocumentsReSubmit-close").css('display', 'none')
                             $('print-proposalDocsResubmit-success-msg').show();
@@ -238,6 +238,76 @@
                         } else {
                             $("#proposalDocumentsReSubmit").html('Submit');
                             printErrorMsg(data.error, "resubmit_proposal_documents");
+                        }
+                    }
+                });
+            });
+
+            $("#proposalDocumentsHDCReSubmit").click(function(e) {
+                e.preventDefault();
+                $("#proposalDocumentsHDCReSubmit").html('Processing...');
+
+                var postData = new FormData($('#resubmit_proposal_documents')[0]);
+
+                $.ajax({
+                    url: "{{ route('resubmitHDCProposalDocuments') }}",
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: postData,
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            //$("#fhdcForm")[0].reset();
+                            $(".print-proposalDocsResubmit-error-msg").find("ul").html('');
+                            $(".print-proposalDocsResubmit-error-msg").css('display', 'none');
+                            $("#proposalDocumentsHDCReSubmit").html('Submit');
+                            $("#proposalDocumentsHDCReSubmit").attr('disabled', true);
+                            $("#proposal_summary").attr('disabled', true);
+                            $("#corrections_report").attr('disabled', true);
+                            $("#final_proposal").attr('disabled', true);
+                            $("#proposalDocumentsHDCReSubmit-close").css('display', 'none')
+                            $('print-proposalDocsResubmit-success-msg').show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#proposalDocumentsHDCReSubmit").html('Submit');
+                            printErrorMsg(data.error, "resubmit_proposal_documents");
+                        }
+                    }
+                });
+            });
+
+            $("#thesisDocumentsReSubmit").click(function(e) {
+                e.preventDefault();
+                $("#thesisDocumentsReSubmit").html('Processing...');
+
+                var postData = new FormData($('#resubmit_thesis_documents')[0]);
+
+                $.ajax({
+                    url: "{{ route('resubmitThesisDocuments') }}",
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: postData,
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            //$("#fhdcForm")[0].reset();
+                            $(".print-thesisDocsResubmit-error-msg").find("ul").html('');
+                            $(".print-thesisDocsResubmit-error-msg").css('display', 'none');
+                            $("#thesisDocumentsReSubmit").html('Submit');
+                            $("#thesisDocumentsReSubmit").attr('disabled', true);
+                            $("#thesis_abstract").attr('disabled', true);
+                            $("#intention_to_submit").attr('disabled', true);
+                            $("#final_thesis").attr('disabled', true);
+                            $("#thesisDocumentsReSubmit-close").css('display', 'none')
+                            $('.print-thesisDocsResubmit-success-msg').show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#thesisDocumentsReSubmit").html('Submit');
+                            printErrorMsg(data.error, "resubmit_thesis_documents");
                         }
                     }
                 });
@@ -258,9 +328,15 @@
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
                             //$("#fhdcForm")[0].reset();
+                            $("#thesisDocumentsSubmit").html('Submit');
+                            $('#thesisDocumentsSubmit').attr('disabled', true);
+                            $("#thesisDocumentsClose").css('display', 'none')
                             $(".print-thesis-error-msg").find("ul").html('');
                             $(".print-thesis-error-msg").css('display', 'none');
-                            location.reload();
+                            $('.print-thesis-success-msg').show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
                         } else {
                             $("#thesisDocumentsSubmit").html('Submit');
                             printErrorMsg(data.error, "thesis_documents");
@@ -274,7 +350,8 @@
                 $("#addCompSciMastersSupervisor").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
-                var selected = $('#select_comp_masters_supervisors :selected').val();
+                var selectedSupervisor = $('#select_comp_masters_supervisors :selected').val();
+                var selectedCoSupervisor = $('#select_comp_masters_co_supervisors :selected').val();
                 var student_id = $('#comp_masters_student_id').val();
 
                 $.ajax({
@@ -282,7 +359,8 @@
                     type: 'POST',
                     data: {
                         _token: _token,
-                        selected: selected,
+                        selectedSupervisor: selectedSupervisor,
+                        selectedCoSupervisor: selectedCoSupervisor,
                         student_id: student_id
                     },
                     success: function(data) {
@@ -291,7 +369,7 @@
                             $("#addCompSciMastersSupervisor").css('display', 'none');
                             setTimeout(function () {
                                 location.reload(true);
-                            }, 3000);
+                            }, 2000);
                         } else {
                             $("#addCompSciMastersSupervisor").html('Submit');
                             printErrorMsg(data.error, "addCompMastersSupervisor");
@@ -305,11 +383,9 @@
                 $("#addCompSciMastersCoSupervisor").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
-                var selected = $('#select_comp_masters_co_supervisors :selected').val();
+                var selectedSupervisor = $('#select_comp_masters_co_supervisors :selected').val();
+                var selectedCoSupervisor = $('#select_comp_masters_co_supervisors :selected').val();
                 var student_id = $('#comp_mastersCo_student_id').val();
-
-                alert(selected);
-                alert(student_id);
 
                 $.ajax({
                     url: "{{ route('addCoSupervisor') }}",
@@ -339,7 +415,8 @@
                 $("#addCompSciPhdSupervisor").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
-                var selected = $('#select_comp_phd_supervisors :selected').val();
+                var selectedSupervisor = $('#select_comp_phd_supervisors :selected').val();
+                var selectedCoSupervisor = $('#select_comp_phd_co_supervisors :selected').val();
                 var student_id = $('#comp_phd_student_id').val();
 
                 $.ajax({
@@ -347,16 +424,18 @@
                     type: 'POST',
                     data: {
                         _token: _token,
-                        selected: selected,
+                        selectedSupervisor: selectedSupervisor,
+                        selectedCoSupervisor: selectedCoSupervisor,
                         student_id: student_id
                     },
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
+                            alert('jihbb');
                             $(".print-addCompPhdSupervisor-success-msg").show();
                             $("#addCompSciPhdSupervisor").css('display', 'none');
                             setTimeout(function () {
                                 location.reload(true);
-                            }, 3000);
+                            }, 2000);
                         } else {
                             $("#addCompSciPhdSupervisor").html('Submit');
                             printErrorMsg(data.error, "addCompPhdSupervisor");
@@ -401,15 +480,17 @@
                 $("#addInfoMastersSupervisor").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
-                var selected = $('#select_info_masters_supervisors :selected').val();
+                var selectedSupervisor = $('#select_info_masters_supervisors :selected').val();
                 var student_id = $('#info_masters_student_id').val();
+                var selectedCoSupervisor = $('#select_info_masters_co_supervisors :selected').val();
 
                 $.ajax({
                     url: "{{ route('addSupervisor') }}",
                     type: 'POST',
                     data: {
                         _token: _token,
-                        selected: selected,
+                        selectedSupervisor: selectedSupervisor,
+                        selectedCoSupervisor: selectedCoSupervisor,
                         student_id: student_id
                     },
                     success: function(data) {
@@ -418,7 +499,7 @@
                             $("#addInfoMastersSupervisor").css('display', 'none');
                             setTimeout(function () {
                                 location.reload(true);
-                            }, 3000);
+                            }, 2000);
                         } else {
                             $("#addInfoMastersSupervisor").html('Submit');
                             printErrorMsg(data.error, "addInfoMastersSupervisor");
@@ -463,15 +544,21 @@
                 $("#addInfoPhdSupervisor").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
-                var selected = $('#select_info_phd_supervisors :selected').val();
+                var selectedSupervisor = $('#select_info_phd_supervisors :selected').val();
+                var selectedCoSupervisor = $('#select_info_phd_co_supervisors :selected').val();
                 var student_id = $('#info_phd_student_id').val();
+
+                alert(selectedSupervisor);
+                alert(selectedCoSupervisor);
+                alert(student_id);
 
                 $.ajax({
                     url: "{{ route('addSupervisor') }}",
                     type: 'POST',
                     data: {
                         _token: _token,
-                        selected: selected,
+                        selectedSupervisor: selectedSupervisor,
+                        selectedCoSupervisor: selectedCoSupervisor,
                         student_id: student_id
                     },
                     success: function(data) {
@@ -496,9 +583,6 @@
                 var _token = $("input[name=_token]").val();
                 var selected = $('#select_info_phd_co_supervisors :selected').val();
                 var student_id = $('#info_phdCo_student_id').val();
-
-                alert(selected);
-                alert(student_id);
 
                 $.ajax({
                     url: "{{ route('addCoSupervisor') }}",
@@ -528,16 +612,15 @@
                 $("#editSupervisorSubmit").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
-                var selected = $('#select_editSupervisor :selected').val();
+                var selectedSupervisor = $('#select_editSupervisor :selected').val();
                 var student_id = $('#editSupervisor_student_id').val();
-                alert(selected);
-                alert(student_id);
+   
                 $.ajax({
                     url: "{{ route('addSupervisor') }}",
                     type: 'POST',
                     data: {
                         _token: _token,
-                        selected: selected,
+                        selectedSupervisor: selectedSupervisor,
                         student_id: student_id
                     },
                     success: function(data) {
@@ -546,7 +629,7 @@
                             $("#editSupervisorSubmit").css('display', 'none');
                             setTimeout(function () {
                                 location.reload(true);
-                            }, 3000);
+                            }, 2000);
                         } else {
                             $("#editSupervisorSubmit").html('Submit');
                             printErrorMsg(data.error, "editSupervisor");
@@ -560,16 +643,18 @@
                 $("#assignSupervisorSubmit").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
-                var selected = $('#select_assignSupervisor :selected').val();
+                var selectedSupervisor = $('#select_assignSupervisor :selected').val();
                 var student_id = $('#assignSupervisor_student_id').val();
-                alert(selected);
+
+                alert(selectedSupervisor);
                 alert(student_id);
+     
                 $.ajax({
                     url: "{{ route('addSupervisor') }}",
                     type: 'POST',
                     data: {
                         _token: _token,
-                        selected: selected,
+                        selectedSupervisor: selectedSupervisor,
                         student_id: student_id
                     },
                     success: function(data) {
@@ -594,8 +679,7 @@
                 var _token = $("input[name=_token]").val();
                 var selected = $('#select_editCoSupervisor :selected').val();
                 var student_id = $('#editCoSupervisor_student_id').val();
-                alert(selected);
-                alert(student_id);
+         
                 $.ajax({
                     url: "{{ route('addCoSupervisor') }}",
                     type: 'POST',
@@ -626,8 +710,7 @@
                 var _token = $("input[name=_token]").val();
                 var selected = $('#select_assignCoSupervisor :selected').val();
                 var student_id = $('#assignCoSupervisor_student_id').val();
-                alert(selected);
-                alert(student_id);
+          
                 $.ajax({
                     url: "{{ route('addCoSupervisor') }}",
                     type: 'POST',
@@ -696,25 +779,292 @@
                 $("#proposalDocsApproval").html('Processing...');
 
                 var _token = $("input[name=_token]").val();
-                var comments = $("input[name=approvalComments]").val();
+                var approvalComments = $("textarea[name=approvalComments]").val();
+                var rejectionComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
 
                 $.ajax({
                     url: "{{ route('proposalComments') }}",
                     type: 'POST',
                     data: {
                         _token: _token,
-                        comments: comments
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
                     },
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
-                            $("#proposalDocsApproval").html('Submit');
-                            $("#fhdcForm")[0].reset();
-                            $(".print-fhdc-error-msg").find("ul").html('');
-                            $(".print-fhdc-error-msg").css('display', 'none');
-                            $(".print-fhdc-success-msg").show();
+                            $("#proposalDocsApprovalClose").css('display', 'none');
+                            $("#proposalDocsApproval").css('display', 'none');
+                            $('.approvalComments').prop('disabled', true);
+                            $(".print-proposalDocsApproval-error-msg").find("ul").html('');
+                            $(".print-proposalDocsApproval-error-msg").css('display', 'none');
+                            $(".print-proposalDocsApproval-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
                         } else {
                             $("#proposalDocsApproval").html('Submit');
-                            printErrorMsg(data.error, "fhdc");
+                            printErrorMsg(data.error, "proposalDocsApproval");
+                        }
+                    }
+                });
+            });
+
+            $("#proposalDocsHDCApproval").click(function(e) {
+                e.preventDefault();
+                $("#proposalDocsHDCApproval").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var approvalComments = $("textarea[name=approvalComments]").val();
+                var rejectionComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('proposalResubmissionComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#proposalDocsHDCApprovalClose").css('display', 'none');
+                            $("#proposalDocsHDCApproval").css('display', 'none');
+                            $('.approvalComments').prop('disabled', true);
+                            $(".print-proposalDocsApproval-error-msg").find("ul").html('');
+                            $(".print-proposalDocsApproval-error-msg").css('display', 'none');
+                            $(".print-proposalDocsApproval-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#proposalDocsHDCApproval").html('Submit');
+                            printErrorMsg(data.error, "proposalDocsApproval");
+                        }
+                    }
+                });
+            });
+
+            $("#proposalDocsHODApproval").click(function(e) {
+                e.preventDefault();
+                $("#proposalDocsHODApproval").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var approvalComments = $("textarea[name=approvalComments]").val();
+                var rejectionComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('hod.proposalResubmissionComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#proposalDocsHDCApprovalClose").css('display', 'none');
+                            $("#proposalDocsHDCApproval").css('display', 'none');
+                            $('.approvalComments').prop('disabled', true);
+                            $(".print-proposalDocsApproval-error-msg").find("ul").html('');
+                            $(".print-proposalDocsApproval-error-msg").css('display', 'none');
+                            $(".print-proposalDocsApproval-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#proposalDocsHODApproval").html('Submit');
+                            printErrorMsg(da6ta.error, "proposalDocsApproval");
+                        }
+                    }
+                });
+            });
+
+            $("#thesisDocsApproval").click(function(e) {
+                e.preventDefault();
+                $("#thesisDocsApproval").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var approvalComments = $("textarea[name=approvalComments]").val();
+                var rejectionComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('thesisComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#thesisDocsApprovalClose").css('display', 'none');
+                            $("#thesisDocsApproval").css('display', 'none');
+                            $('.approvalComments').prop('disabled', true);
+                            $(".print-thesisDocsApproval-error-msg").find("ul").html('');
+                            $(".print-thesisDocsApproval-error-msg").css('display', 'none');
+                            $(".print-thesisDocsApproval-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#thesisDocsApproval").html('Submit');
+                            printErrorMsg(data.error, "thesisDocsApproval");
+                        }
+                    }
+                });
+            });
+
+            $("#hodThesisDocsApproval").click(function(e) {
+                e.preventDefault();
+                $("#hodThesisDocsApproval").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var approvalComments = $("textarea[name=approvalComments]").val();
+                var rejectionComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('hod.thesisComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#hodThesisDocsApprovalClose").css('display', 'none');
+                            $("#hodThesisDocsApproval").css('display', 'none');
+                            $('.approvalComments').prop('disabled', true);
+                            $(".print-thesisDocsApproval-error-msg").find("ul").html('');
+                            $(".print-thesisDocsApproval-error-msg").css('display', 'none');
+                            $(".print-thesisDocsApproval-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#hodThesisDocsApproval").html('Submit');
+                            printErrorMsg(data.error, "hodThesisDocsApproval");
+                        }
+                    }
+                });
+            });
+
+            $("#hodThesisDocsRejection").click(function(e) {
+                e.preventDefault();
+                $("#hodThesisDocsRejection").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var rejectionComments = $("textarea[name=rejectionComments]").val();
+                var approvalComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('hod.thesisComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#hodThesisDocsRejectionClose").css('display', 'none');
+                            $("#hodThesisDocsRejection").css('display', 'none');
+                            $('.rejectionComments').prop('disabled', true);
+                            $(".print-thesisDocsRejection-error-msg").find("ul").html('');
+                            $(".print-thesisDocsRejection-error-msg").css('display', 'none');
+                            $(".print-thesisDocsRejection-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#hodThesisDocsRejection").html('Submit');
+                            printErrorMsg(data.error, "hodThesisDocsRejection");
+                        }
+                    }
+                });
+            });
+
+            $("#hdcThesisDocsRejection").click(function(e) {
+                e.preventDefault();
+                $("#hdcThesisDocsRejection").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var rejectionComments = $("textarea[name=rejectionComments]").val();
+                var approvalComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('hdc.thesisComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#hdcThesisDocsRejectionClose").css('display', 'none');
+                            $("#hdcThesisDocsRejection").css('display', 'none');
+                            $('.rejectionComments').prop('disabled', true);
+                            $(".print-thesisDocsRejection-error-msg").find("ul").html('');
+                            $(".print-thesisDocsRejection-error-msg").css('display', 'none');
+                            $(".print-thesisDocsRejection-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#hdcThesisDocsRejection").html('Submit');
+                            printErrorMsg(data.error, "hdcThesisDocsRejection");
+                        }
+                    }
+                });
+            });
+
+            $("#hdcThesisDocsApproval").click(function(e) {
+                e.preventDefault();
+                $("#hdcThesisDocsApproval").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var approvalComments = $("textarea[name=approvalComments]").val();
+                var rejectionComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('hdc.thesisComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#hdcThesisDocsApprovalClose").css('display', 'none');
+                            $("#hdcThesisDocsApproval").css('display', 'none');
+                            $('.approvalComments').prop('disabled', true);
+                            $(".print-thesisDocsApproval-error-msg").find("ul").html('');
+                            $(".print-thesisDocsApproval-error-msg").css('display', 'none');
+                            $(".print-thesisDocsApproval-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#hdcThesisDocsApproval").html('Submit');
+                            printErrorMsg(data.error, "hdcThesisDocsApproval");
                         }
                     }
                 });
@@ -738,7 +1088,9 @@
                     },
                     success: function(data) {
                         if ($.isEmptyObject(data.error)) {
-                            $("#proposalDocsRejection").html('Submit');
+                            $("#proposalDocsRejection").css('display', 'none');
+                            $("#proposalDocsRejectionClose").css('display', 'none');
+                            $('.rejectionComments').prop('disabled', true);
                             $(".print-proposalDocsRejection-error-msg").find("ul").html('');
                             $(".print-proposalDocsRejection-error-msg").css('display', 'none');
                             $(".print-proposalDocsRejection-success-msg").show();
@@ -746,9 +1098,510 @@
                                 location.reload(true);
                             }, 2000);
                         } else {
-                            alert('FAILURE');
                             $("#proposalDocsRejection").html('Submit');
                             printErrorMsg(data.error, "proposalDocsRejection");
+                        }
+                    }
+                });
+            }); //proposalDocsHODRejection
+
+            $("#proposalDocsHDCRejection").click(function(e) {
+                e.preventDefault();
+                $("#proposalDocsHDCRejection").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var rejectionComments = $("textarea[name=rejectionComments]").val();
+                var studentId = $("input[name=rejectionStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('proposalResubmissionComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#proposalDocsHDCRejection").css('display', 'none');
+                            $("#proposalDocsHDCRejectionClose").css('display', 'none');
+                            $('.rejectionComments').prop('disabled', true);
+                            $(".print-proposalDocsRejection-error-msg").find("ul").html('');
+                            $(".print-proposalDocsRejection-error-msg").css('display', 'none');
+                            $(".print-proposalDocsRejection-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#proposalDocsHDCRejection").html('Submit');
+                            printErrorMsg(data.error, "proposalDocsRejection");
+                        }
+                    }
+                });
+            });
+
+            $("#proposalDocsHODRejection").click(function(e) {
+                e.preventDefault();
+                $("#proposalDocsHOCRejection").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var rejectionComments = $("textarea[name=rejectionComments]").val();
+                var studentId = $("input[name=rejectionStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('hod.proposalResubmissionComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#proposalDocsHODRejection").css('display', 'none');
+                            $("#proposalDocsHODRejectionClose").css('display', 'none');
+                            $('.rejectionComments').prop('disabled', true);
+                            $(".print-proposalDocsRejection-error-msg").find("ul").html('');
+                            $(".print-proposalDocsRejection-error-msg").css('display', 'none');
+                            $(".print-proposalDocsRejection-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#proposalDocsHODRejection").html('Submit');
+                            printErrorMsg(data.error, "proposalDocsRejection");
+                        }
+                    }
+                });
+            });
+
+            $("#thesisDocsRejection").click(function(e) {
+                e.preventDefault();
+                $("#thesisDocsRejection").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var rejectionComments = $("textarea[name=rejectionComments]").val();
+                var studentId = $("input[name=rejectionStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('thesisComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#thesisDocsRejection").css('display', 'none');
+                            $("#thesisDocsRejectionClose").css('display', 'none');
+                            $('.rejectionComments').prop('disabled', true);
+                            $(".print-thesisDocsRejection-error-msg").find("ul").html('');
+                            $(".print-thesisDocsRejection-error-msg").css('display', 'none');
+                            $(".print-thesisDocsRejection-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#thesisDocsRejection").html('Submit');
+                            printErrorMsg(data.error, "thesisDocsRejection");
+                        }
+                    }
+                });
+            });
+
+            $("#assignMastersEvaluator").click(function(e) {
+                e.preventDefault();
+                $("#assignMastersEvaluator").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var mastersEvaluatorID = $("select[name=assignMastersEvaluatorSelect]").val();
+                var mastersCoEvaluatorID = $("select[name=assignMastersCoEvaluatorSelect]").val();
+                var studentId = $("input[name=mastersEvaluatorStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('mastersEvaluators') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        mastersEvaluatorID: mastersEvaluatorID,
+                        mastersCoEvaluatorID: mastersCoEvaluatorID,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#assignMastersEvaluator").css('display', 'none');
+                            $("#assignMastersEvaluatorClose").css('display', 'none');
+                            $('#assignMastersEvaluatorSelect').prop('disabled', true);
+                            $('#assignMastersCoEvaluatorSelect').prop('disabled', true);
+                            $(".print-assignMastersEvaluator-error-msg").find("ul").html('');
+                            $(".print-assignMastersEvaluator-error-msg").css('display', 'none');
+                            $(".print-assignMastersEvaluator-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#assignMastersEvaluator").html('Submit');
+                            printErrorMsg(data.error, "assignMastersEvaluator");
+                        }
+                    }
+                });
+            });
+
+            $("#assignPhdEvaluator").click(function(e) {
+                e.preventDefault();
+                $("#assignPhdEvaluator").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var phdEvaluatorID = $("select[name=assignPhdEvaluatorSelect]").val();
+                var phdCoEvaluatorID = $("select[name=assignPhdCoEvaluatorSelect]").val();
+                var studentId = $("input[name=phdEvaluatorStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('phdEvaluators') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        phdEvaluatorID: phdEvaluatorID,
+                        phdCoEvaluatorID: phdCoEvaluatorID,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#assignPhdEvaluator").css('display', 'none');
+                            $("#assignPhdEvaluatorClose").css('display', 'none');
+                            $('#assignPhdEvaluatorSelect').prop('disabled', true);
+                            $('#assignPhdCoEvaluatorSelect').prop('disabled', true);
+                            $(".print-assignPhdEvaluator-error-msg").find("ul").html('');
+                            $(".print-assignPhdEvaluator-error-msg").css('display', 'none');
+                            $(".print-assignPhdEvaluator-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#assignPhdEvaluator").html('Submit');
+                            printErrorMsg(data.error, "assignPhdEvaluator");
+                        }
+                    }
+                });
+            });
+
+            $("#checklistSubmit").click(function(e) {
+                e.preventDefault();
+                $("#checklistSubmit").html('Processing...');
+
+                var postData = new FormData($('#checklistForm')[0]);
+
+                $.ajax({
+                    url: "{{ route('hod.checklist') }}",
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: postData,
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            //$("#fhdcForm")[0].reset();
+                            $(".print-checklist-error-msg").find("ul").html('');
+                            $(".print-checklist-error-msg").css('display', 'none');
+                            $("#checklistSubmit").css('display', 'none');
+                            $("#checklistSubmitClose").css('display', 'none');
+                            $('#checklistSelect').prop('disabled', true);
+                            $('#checklist').prop('disabled', true);
+                            $(".print-checklist-error-msg").find("ul").html('');
+                            $(".print-checklist-error-msg").css('display', 'none');
+                            $(".print-checklist-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#checklistSubmit").html('Submit');
+                            printErrorMsg(data.error, "checklist");
+                        }
+                    }
+                });
+            });
+
+            $("#examinersReportSubmit").click(function(e) {
+                e.preventDefault();
+                $("#examinersReportSubmit").html('Processing...');
+
+                var postData = new FormData($('#examinersForm')[0]);
+
+                $.ajax({
+                    url: "{{ route('hod.examiners_report') }}",
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: postData,
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            //$("#fhdcForm")[0].reset();
+                            $(".print-examiners-error-msg").find("ul").html('');
+                            $(".print-examiners-error-msg").css('display', 'none');
+                            $("#examinersReportSubmit").css('display', 'none');
+                            $("#examinersReportSubmitClose").css('display', 'none');
+                            $('#examiners_report').prop('disabled', true);
+                            $(".print-checklist-error-msg").find("ul").html('');
+                            $(".print-checklist-error-msg").css('display', 'none');
+                            $(".print-checklist-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#examinersReportSubmit").html('Submit');
+                            printErrorMsg(data.error, "examiners_reports");
+                        }
+                    }
+                });
+            });
+
+            $("#hdcApprovalSubmit").click(function(e) {
+                e.preventDefault();
+                $("#hdcApprovalSubmit").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var approvalComments = $("textarea[name=approvalComments]").val();
+                var rejectionComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('hdc.proposalComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#hdcApprovalClose").css('display', 'none');
+                            $("#hdcApprovalSubmit").css('display', 'none');
+                            $('.approvalComments').prop('disabled', true);
+                            $(".print-hdcApproval-error-msg").find("ul").html('');
+                            $(".print-hdcApproval-error-msg").css('display', 'none');
+                            $(".print-hdcApproval-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#hdcApprovalSubmit").html('Submit');
+                            printErrorMsg(data.error, "hdcApproval");
+                        }
+                    }
+                });
+            });
+
+            $("#hdcRejectionSubmit").click(function(e) {
+                e.preventDefault();
+                $("#hdcRejectionSubmit").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var rejectionComments = $("textarea[name=rejectionComments]").val();
+                var approvalComments = "UNDEFINED";
+                var studentId = $("input[name=rejectionStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('hdc.proposalComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#hdcRejectionClose").css('display', 'none');
+                            $("#hdcRejectionSubmit").css('display', 'none');
+                            $('.rejectionComments').prop('disabled', true);
+                            $(".print-hdcRejection-error-msg").find("ul").html('');
+                            $(".print-hdcRejection-error-msg").css('display', 'none');
+                            $(".print-hdcRejection-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#hdcRejectionSubmit").html('Submit');
+                            printErrorMsg(data.error, "hdcRejection");
+                        }
+                    }
+                });
+            });
+
+            $("#thesisCorrectionSubmit").click(function(e) {
+                e.preventDefault();
+                $("#thesisCorrectionSubmit").html('Processing...');
+
+                var postData = new FormData($('#thesis_corrections')[0]);
+
+                $.ajax({
+                    url: "{{ route('uploadThesisCorrection') }}",
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    data: postData,
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            //$("#fhdcForm")[0].reset();
+                            $("#thesisCorrectionSubmit").html('Submit');
+                            $('#thesisCorrectionSubmit').attr('disabled', true);
+                            $("#thesisCorrectionClose").css('display', 'none')
+                            $(".print-thesisCorrections-error-msg").find("ul").html('');
+                            $(".print-thesisCorrections-error-msg").css('display', 'none');
+                            $('.print-thesisCorrections-success-msg').show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#thesisCorrectionSubmit").html('Submit');
+                            printErrorMsg(data.error, "thesisCorrection");
+                        }
+                    }
+                });
+            });
+
+            $("#thesisCorrectionRejection").click(function(e) {
+                e.preventDefault();
+                $("#thesisCorrectionRejection").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var rejectionComments = $("textarea[name=rejectionComments]").val();
+                var studentId = $("input[name=rejectionStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('thesisCorrectionComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#thesisCorrectionRejection").css('display', 'none');
+                            $("#thesisCorrectionRejectionClose").css('display', 'none');
+                            $('.rejectionComments').prop('disabled', true);
+                            $(".print-thesisDocsRejection-error-msg").find("ul").html('');
+                            $(".print-thesisDocsRejection-error-msg").css('display', 'none');
+                            $(".print-thesisDocsRejection-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#thesisCorrectionRejection").html('Submit');
+                            printErrorMsg(data.error, "thesisDocsRejection");
+                        }
+                    }
+                });
+            });
+
+            $("#thesisCorrectionApproval").click(function(e) {
+                e.preventDefault();
+                $("#thesisCorrectionApproval").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var approvalComments = $("textarea[name=approvalComments]").val();
+                var rejectionComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('thesisCorrectionComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#thesisCorrectionApproval").css('display', 'none');
+                            $("#thesisCorrectionApproval").css('display', 'none');
+                            $('.approvalComments').prop('disabled', true);
+                            $(".print-thesisDocsApproval-error-msg").find("ul").html('');
+                            $(".print-thesisDocsApproval-error-msg").css('display', 'none');
+                            $(".print-thesisDocsApproval-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#thesisCorrectionApproval").html('Submit');
+                            printErrorMsg(data.error, "thesisDocsApproval");
+                        }
+                    }
+                });
+            });
+
+            $("#hodThesisResubmissionApproval").click(function(e) {
+                e.preventDefault();
+                $("#hodThesisResubmissionApproval").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var approvalComments = $("textarea[name=approvalComments]").val();
+                var rejectionComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('hod.thesisResubmissionComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#hodThesisResubmissionApprovalClose").css('display', 'none');
+                            $("#hodThesisResubmissionApproval").css('display', 'none');
+                            $('.approvalComments').prop('disabled', true);
+                            $(".print-thesisDocsApproval-error-msg").find("ul").html('');
+                            $(".print-thesisDocsApproval-error-msg").css('display', 'none');
+                            $(".print-thesisDocsApproval-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#hodThesisResubmissionApproval").html('Submit');
+                            printErrorMsg(data.error, "hodThesisDocsApproval");
+                        }
+                    }
+                });
+            });
+
+            $("#hodThesisResubmissionRejection").click(function(e) {
+                e.preventDefault();
+                $("#hodThesisResubmissionRejection").html('Processing...');
+
+                var _token = $("input[name=_token]").val();
+                var rejectionComments = $("textarea[name=rejectionComments]").val();
+                var approvalComments = "UNDEFINED";
+                var studentId = $("input[name=approvalStudentId]").val();
+
+                $.ajax({
+                    url: "{{ route('hod.thesisResubmissionComments') }}",
+                    type: 'POST',
+                    data: {
+                        _token: _token,
+                        approvalComments: approvalComments,
+                        rejectionComments: rejectionComments,
+                        studentId: studentId
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error)) {
+                            $("#hodThesisResubmissionRejectionClose").css('display', 'none');
+                            $("#hodThesisResubmissionRejection").css('display', 'none');
+                            $('.rejectionComments').prop('disabled', true);
+                            $(".print-thesisDocsRejection-error-msg").find("ul").html('');
+                            $(".print-thesisDocsRejection-error-msg").css('display', 'none');
+                            $(".print-thesisDocsRejection-success-msg").show();
+                            setTimeout(function () {
+                                location.reload(true);
+                            }, 2000);
+                        } else {
+                            $("#hodThesisResubmissionRejection").html('Submit');
+                            printErrorMsg(data.error, "hodThesisDocsRejection");
                         }
                     }
                 });
@@ -785,10 +1638,10 @@
                         });
                         break;
                     case "proposal_documents":
-                        $(".print-documents-error-msg").find("ul").html('');
-                        $(".print-documents-error-msg").css('display', 'block');
+                        $(".print-proposalDocuments-error-msg").find("ul").html('');
+                        $(".print-proposalDocuments-error-msg").css('display', 'block');
                         $.each(msg, function(key, value) {
-                            $(".print-documents-error-msg").find("ul").append('<li>' + value + '</li>');
+                            $(".print-proposalDocuments-error-msg").find("ul").append('<li>' + value + '</li>');
                         });
                         break;
                     case "thesis_documents":
@@ -895,6 +1748,125 @@
                             $(".print-proposalDocsResubmit-error-msg").find("ul").append('<li>' + value + '</li>');
                         });
                         break;
+                    case "proposalDocsApproval":
+                        $(".print-proposalDocsApproval-error-msg").find("ul").html('');
+                        $(".print-proposalDocsApproval-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-proposalDocsApproval-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "assignMastersEvaluator":
+                        $(".print-assignMastersEvaluator-error-msg").find("ul").html('');
+                        $(".print-assignMastersEvaluator-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-assignMastersEvaluator-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "assignMastersCoEvaluator":
+                        $(".print-assignMastersCoEvaluator-error-msg").find("ul").html('');
+                        $(".print-assignMastersCoEvaluator-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-assignMastersCoEvaluator-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "assignPhdEvaluator":
+                        $(".print-assignPhdEvaluator-error-msg").find("ul").html('');
+                        $(".print-assignPhdEvaluator-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-assignPhdEvaluator-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "assignPhdCoEvaluator":
+                        $(".print-assignPhdCoEvaluator-error-msg").find("ul").html('');
+                        $(".print-assignPhdCoEvaluator-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-assignPhdCoEvaluator-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "checklist":
+                        $(".print-checklist-error-msg").find("ul").html('');
+                        $(".print-checklist-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-checklist-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                    case "hdcApproval":
+                        $(".print-hdcApproval-error-msg").find("ul").html('');
+                        $(".print-hdcApproval-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-hdcApproval-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "hdcRejection":
+                        $(".print-hdcRejection-error-msg").find("ul").html('');
+                        $(".print-hdcRejection-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-hdcRejection-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "thesisDocsApproval":
+                        $(".print-thesisDocsApproval-error-msg").find("ul").html('');
+                        $(".print-thesisDocsApproval-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-thesisDocsApproval-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "thesisDocsRejection":
+                        $(".print-thesisDocsRejection-error-msg").find("ul").html('');
+                        $(".print-thesisDocsRejection-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-thesisDocsRejection-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "hodThesisDocsApproval":
+                        $(".print-thesisDocsApproval-error-msg").find("ul").html('');
+                        $(".print-thesisDocsApproval-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-thesisDocsApproval-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "hodThesisDocsRejection":
+                        $(".print-thesisDocsRejection-error-msg").find("ul").html('');
+                        $(".print-thesisDocsRejection-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-thesisDocsRejection-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "hdcThesisDocsRejection":
+                        $(".print-thesisDocsRejection-error-msg").find("ul").html('');
+                        $(".print-thesisDocsRejection-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-thesisDocsRejection-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                    case "hdcThesisDocsApproval":
+                        $(".print-thesisDocsApproval-error-msg").find("ul").html('');
+                        $(".print-thesisDocsApproval-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-thesisDocsApproval-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "resubmit_thesis_documents":
+                        $(".print-thesisDocsResubmit-error-msg").find("ul").html('');
+                        $(".print-thesisDocsResubmit-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-thesisDocsResubmit-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    case "thesisCorrection":
+                        $(".print-thesisCorrections-error-msg").find("ul").html('');
+                        $(".print-thesisCorrections-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-thesisCorrections-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    
+                    case "examiners_reports":
+                    $(".print-examiners-error-msg").find("ul").html('');
+                        $(".print-examiners-error-msg").css('display', 'block');
+                        $.each(msg, function(key, value) {
+                            $(".print-examiners-error-msg").find("ul").append('<li>' + value + '</li>');
+                        });
+                        break;
+                    
                     default:
                         break;
                 }

@@ -35,7 +35,7 @@
                     <tbody>
                       @forelse ($students as $student)
                       <tr>
-                        <td>{{ App\Models\User::find($student->user_id)->name }}</td>
+                        <td><a href="{{ route('supervisor.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</td>
                         <td>
                           {{ $student->progress }}
                         </td>
@@ -105,6 +105,83 @@
             </div>
           </div>
         </div>
+
+        @if (!$studentsYourEvaluating->isEmpty())
+        <div class="container-fluid content-row">
+          <div class="row" style="padding-top: 3%;">
+            <div class="col-sm-12">
+              <div class="card shadow p-3 mb-5 bg-white rounded border-left-success">
+                <br>
+                <h5 class="card-title font-weight-bold" style="text-align: center">STUDENTS YOU ARE EVALUATING</h5>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <table class="table table-hover">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col" colspan="2">Masters Students</th>
+                        </tr>
+                      </thead>
+                      <thead class="thead-blue">
+                        <tr>
+                          <th scope="col" style="color: white;">Student</th>
+                          <th scope="col" style="color: white;">Position</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @forelse ($mastersStudentsYourEvaluating as $student)
+                          <tr>
+                            <td> <a href="{{ route('hod.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }} </td>
+                            <td>
+                              @if ($student->evaluator_id == Auth::user()->id)
+                                Evaluator
+                              @elseif ($student->co_evaluator_id == Auth::user()->id)
+                                Co-Evaluator
+                              @endif
+                            </td>
+                          </tr>
+                        @empty
+                          <td colspan="2" style="text-align: center; font-weight: bold">You Are Not Evaluating Any Masters Students</td>
+                        @endforelse
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-sm-6">
+                    <table class="table table-hover">
+                      <thead class="thead-light">
+                        <tr>
+                          <th scope="col" colspan="2">PhD Students</th>
+                        </tr>
+                      </thead>
+                      <thead class="thead-blue">
+                        <tr>
+                          <th scope="col" style="color: white;">Student</th>
+                          <th scope="col" style="color: white;">Position</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @forelse ($phdStudentsYourEvaluating as $student)
+                          <tr>
+                            <td><a href="{{ route('hod.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</td>
+                            <td>
+                              @if ($student->evaluator_id == Auth::user()->id)
+                                Evaluator
+                              @elseif ($student->co_evaluator_id == Auth::user()->id)
+                                Co-Evaluator
+                              @endif
+                            </td>
+                          </tr>
+                        @empty
+                          <td colspan="2" style="text-align: center; font-weight: bold">You Are Not Evaluating Any PhD Students</td>
+                        @endforelse
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        @endif
   
         <div class="container-fluid content-row">
           <div class="row" style="padding-top: 3%;">

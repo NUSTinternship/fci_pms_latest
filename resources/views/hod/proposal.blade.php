@@ -44,25 +44,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Peter Jonas</td>
-                        <td>
-                          <a href="student-proposal.html" type="button" class="btn btn-primary">View</a>
-                        </td>
-                      </tr>
-                      <tr>
-  
-                        <td>Jonas Peter</td>
-                        <td>
-                          <button type="button" class="btn btn-primary">View</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Tangeni Samuel</td>
-                        <td>
-                          <button type="button" class="btn btn-primary">View</button>
-                        </td>
-                      </tr>
+                      @forelse ($mastersProposalStudents as $student)
+                        <tr>
+                          <td> <a href="{{ route('hod.studentProfile', $student->user_id) }}" style="color: black;"> {{ App\Models\User::find($student->user_id)->name }} </a> </td>
+                          <td>
+                            <a href="{{ route('hod.studentProposalProfile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
+                          </td>
+                        </tr>
+                      @empty
+                      <td colspan="2" style="text-align: center; font-weight: bold">No Masters Students Have Reached This Stage Yet</td>
+                      @endforelse
                     </tbody>
                     <thead class="thead-light">
                       <tr>
@@ -70,25 +61,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Peter Jonas</td>
-                        <td>
-                          <button type="button" class="btn btn-primary">View</button>
-                        </td>
-                      </tr>
-                      <tr>
-  
-                        <td>Jonas Peter</td>
-                        <td>
-                          <button type="button" class="btn btn-primary">View</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Tangeni Samuel</td>
-                        <td>
-                          <button type="button" class="btn btn-primary">View</button>
-                        </td>
-                      </tr>
+                      @forelse ($phdProposalStudents as $student)
+                        <tr>
+                          <td> <a href="{{ route('hod.studentProfile', $student->user_id) }}" style="color: black;"> {{ App\Models\User::find($student->user_id)->name }} </a> </td>
+                          <td>
+                            <a href="{{ route('hod.studentProposalProfile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
+                          </td>
+                        </tr>
+                      @empty
+                      <td colspan="2" style="text-align: center; font-weight: bold">No Phd Students Have Reached This Stage Yet</td>
+                      @endforelse
                     </tbody>
                   </table>
                   <hr>

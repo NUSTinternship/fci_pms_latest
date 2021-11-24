@@ -18,7 +18,9 @@ class Student extends Model
         'progress',
         'department',
         'supervisor_id',
-        'co_supervisor'
+        'co_supervisor_id',
+        'evaluator_id',
+        'co_evaluator_id'
     ];
 
     // Defining Relationship Between Student & User

@@ -45,7 +45,7 @@
                     <tbody>
                         @forelse ($allMastersStudents as $student)
                         <tr>
-                            <td><a href="#" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</a></td>
+                            <td><a href="{{ route('supervisor.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</td>
                             <td>
                               {{ $student->progress }}
                             </td>
@@ -62,7 +62,7 @@
                     <tbody>
                         @forelse ($allPhDStudents as $student)
                         <tr>
-                            <td><a href="#" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</a></td>
+                            <td><a href="{{ route('supervisor.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</td>
                             <td>
                               {{ $student->progress }}
                             </td>

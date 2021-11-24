@@ -32,96 +32,87 @@
                           <table class="table table-hover">
                             <thead class="thead-light">
                               <tr>
-                                <th scope="col" colspan="3">Masters Students</th>
+                                <th scope="col" colspan="2">Masters Students</th>
                               </tr>
                             </thead>
                             <thead class="thead-blue">
                               <tr>
                                 <th scope="col" style="color: white;">Student</th>
-                                <th scope="col" style="color: white;">Evaluator</th>
-                                <th scope="col" style="color: white;">Co-Evaluator</th>
+                                <th scope="col" style="color: white;">Evaluators</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Peter Jonas</td>
-                                <td>
-                                  Mr X
-                                </td>
-                                <td>Mr Y</td>
-                              </tr>
-                              <tr>
-                                <td>Jonas Peter</td>
-                                <td>
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignEval">Assign</button>
-                                  <!-- Modal -->
-                                  <div class="modal fade" id="assignEval" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">Assign Evaluator</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
-                                        </div>
-                                        <div class="modal-body">
-                                          <label>Please select an evaluator:</label>
-                                          <select class="form-select" aria-label="Default select example">
-                                            <option selected>Assign</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                          </select>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary">Submit</button>
+                              @forelse ($mastersStudentsNeedingEvaluators as $student)
+                                <tr>
+                                  {{-- <td> {{ App\Models\User::find($student->student_id)->name }} </td> --}}
+                                  <td><a href="{{ route('hod.studentProfile', $student->student_id) }}" style="color: black;"> {{ App\Models\User::find($student->student_id)->name }} </a></td>
+                                  <td>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignEval">Assign</button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="assignEval" tabindex="-1" role="dialog"
+                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Assign Evaluators</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="alert alert-danger print-assignMastersEvaluator-error-msg"
+                                                  role="alert" style="display:none">
+                                                  <strong>
+                                                      <ul></ul>
+                                                  </strong>
+                                              </div>
+                                              <div class="alert alert-success print-assignMastersEvaluator-success-msg"
+                                                  role="alert" style="display:none">
+                                                  <strong>
+                                                      Supervisors Successfully
+                                                      Assigned.
+                                                  </strong>
+                                              </div>
+                                            <form>
+                                              @csrf
+                                              <label>Please select an evaluator:</label>
+                                              <select class="form-select" aria-label="Default select example" id="assignMastersEvaluatorSelect" name="assignMastersEvaluatorSelect">
+                                                @foreach ($evaluators as $evaluator)
+                                                    <option
+                                                        value="{{ $evaluator->id }}">
+                                                        {{ $evaluator->name }}
+                                                    </option>
+                                                @endforeach
+                                              </select>
+                                              <input type="hidden" value="{{ $student->student_id }}" name="mastersEvaluatorStudentId">
+                                              <hr>
+                                              <label>Please select a co-evaluator:</label>
+                                              <select class="form-select" aria-label="Default select example" id="assignMastersCoEvaluatorSelect" name="assignMastersCoEvaluatorSelect">
+                                                    <option
+                                                        value="None">
+                                                        {{ $noCoEvaluator[0] }}
+                                                    </option>
+                                                @foreach ($evaluators as $evaluator)
+                                                    <option
+                                                        value="{{ $evaluator->id }}">
+                                                        {{ $evaluator->name }}
+                                                    </option>
+                                                @endforeach
+                                              </select>
+                                            </form>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" id="assignMastersEvaluatorClose" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" id="assignMastersEvaluator">Submit</button>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignCoEval">Assign</button>
-                                  <!-- Modal -->
-                                  <div class="modal fade" id="assignCoEval" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">Assign Co-Evaluator</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
-                                        </div>
-                                        <div class="modal-body">
-                                          <label>Please select a co-evaluator:</label>
-                                          <select class="form-select" aria-label="Default select example">
-                                            <option selected>N/A</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                          </select>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Tangeni Samuel</td>
-                                <td>
-                                  Mr Y
-                                </td>
-                                <td>
-                                  Mr X
-                                </td>
-                              </tr>
+                                  </td>
+                                </tr>
+                              @empty
+                                <td colspan="2" style="text-align: center; font-weight: bold">No Masters Students Require Evaluation</td>
+                              @endforelse
                             </tbody>
                           </table>
                         </div>
@@ -129,105 +120,163 @@
                           <table class="table table-hover">
                             <thead class="thead-light">
                               <tr>
-                                <th scope="col" colspan="3">PhD Students</th>
+                                <th scope="col" colspan="2">PhD Students</th>
                               </tr>
                             </thead>
                             <thead class="thead-blue">
                               <tr>
                                 <th scope="col" style="color: white;">Student</th>
-                                <th scope="col" style="color: white;">Evaluator</th>
-                                <th scope="col" style="color: white;">Co-Evaluator</th>
+                                <th scope="col" style="color: white;">Evaluators</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Peter Jonas</td>
-                                <td>
-                                  Mr Y
-                                </td>
-                                <td>
-                                  N/A
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Jonas Peter</td>
-                                <td>
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignEval">Assign</button>
-                                  <!-- Modal -->
-                                  <div class="modal fade" id="assignEval" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
-                                        </div>
-                                        <div class="modal-body">
-                                          <label>Please select an evaluator:</label>
-                                          <select class="form-select" aria-label="Default select example">
-                                            <option selected>Assign</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                          </select>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignCoEval">Assign</button>
-                                  <!-- Modal -->
-                                  <div class="modal fade" id="assignCoEval" tabindex="-1" role="dialog"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalLabel">Assign Co-Evaluator</h5>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                          </button>
-                                        </div>
-                                        <div class="modal-body">
-                                          <label>Please select a co-evaluator:</label>
-                                          <select class="form-select" aria-label="Default select example">
-                                            <option selected>N/A</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                          </select>
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary">Save changes</button>
+                              @forelse ($phdStudentsNeedingEvaluators as $student)
+                                <tr>
+                                  <td> <a href="{{ route('hod.studentProfile', $student->student_id) }}" style="color: black;"> {{ App\Models\User::find($student->student_id)->name }} </a> </td>
+                                  <td>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#assignEval">Assign</button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="assignEval" tabindex="-1" role="dialog"
+                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Assign Evaluators</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="alert alert-danger print-assignPhdEvaluator-error-msg"
+                                                  role="alert" style="display:none">
+                                                  <strong>
+                                                      <ul></ul>
+                                                  </strong>
+                                              </div>
+                                              <div class="alert alert-success print-assignPhdEvaluator-success-msg"
+                                                  role="alert" style="display:none">
+                                                  <strong>
+                                                      Supervisors Successfully
+                                                      Assigned.
+                                                  </strong>
+                                              </div>
+                                            <form>
+                                              @csrf
+                                              <label>Please select an evaluator:</label>
+                                              <select class="form-select" aria-label="Default select example" id="assignPhdEvaluatorSelect" name="assignPhdEvaluatorSelect">
+                                                @foreach ($evaluators as $evaluator)
+                                                    <option
+                                                        value="{{ $evaluator->id }}">
+                                                        {{ $evaluator->name }}
+                                                    </option>
+                                                @endforeach
+                                              </select>
+                                              <input type="hidden" name="phdEvaluatorStudentId" value="{{ $student->student_id }}">
+                                              <hr>
+                                              <label>Please select a co-evaluator:</label>
+                                              <select class="form-select" aria-label="Default select example" id="assignPhdCoEvaluatorSelect" name="assignPhdCoEvaluatorSelect">
+                                                <option
+                                                    value="None">
+                                                    {{ $noCoEvaluator[0] }}
+                                                </option>
+                                                @foreach ($evaluators as $evaluator)
+                                                    <option
+                                                        value="{{ $evaluator->id }}">
+                                                        {{ $evaluator->name }}
+                                                    </option>
+                                                @endforeach
+                                              </select>
+                                            </form>
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="assignPhdEvaluatorClose">Close</button>
+                                            <button type="button" class="btn btn-primary" id="assignPhdEvaluator">Submit</button>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>Tangeni Samuel</td>
-                                <td>
-                                  Mr Y
-                                </td>
-                                <td>
-                                  Mr X
-                                </td>
-                              </tr>
+                                  </td>
+                                </tr>
+                              @empty
+                                <td colspan="3" style="text-align: center; font-weight: bold">No PhD Students Require Evaluation</td>
+                              @endforelse
                             </tbody>
                           </table>
                         </div>
                       </div>
                       <div class="text-center">
-                        <a href="all-students.html" type="button" class="btn btn-primary">See All</a>
+                        <a href="{{ route('hod.allStudents') }}" type="button" class="btn btn-primary">See All</a>
                       </div>
+                      @if (!$studentsYourEvaluating->isEmpty())
+                      <hr>
+                      <div class="col-sm-12">
+                        <h5 class="card-title font-weight-bold" style="text-align: center">STUDENTS YOU ARE EVALUATING</h5>
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <table class="table table-hover">
+                              <thead class="thead-light">
+                                <tr>
+                                  <th scope="col" colspan="2">Masters Students</th>
+                                </tr>
+                              </thead>
+                              <thead class="thead-blue">
+                                <tr>
+                                  <th scope="col" style="color: white;">Student</th>
+                                  <th scope="col" style="color: white;">Position</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @forelse ($mastersStudentsYourEvaluating as $student)
+                                  <tr>
+                                    <td> <a href="{{ route('hod.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }} </td>
+                                    <td>
+                                      @if ($student->evaluator_id == Auth::user()->id)
+                                        Evaluator
+                                      @elseif ($student->co_evaluator_id == Auth::user()->id)
+                                        Co-Evaluator
+                                      @endif
+                                    </td>
+                                  </tr>
+                                @empty
+                                  <td colspan="2" style="text-align: center; font-weight: bold">You Are Not Evaluating Any Masters Students</td>
+                                @endforelse
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="col-sm-6">
+                            <table class="table table-hover">
+                              <thead class="thead-light">
+                                <tr>
+                                  <th scope="col" colspan="2">PhD Students</th>
+                                </tr>
+                              </thead>
+                              <thead class="thead-blue">
+                                <tr>
+                                  <th scope="col" style="color: white;">Student</th>
+                                  <th scope="col" style="color: white;">Position</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @forelse ($phdStudentsYourEvaluating as $student)
+                                  <tr>
+                                    <td><a href="{{ route('hod.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</td>
+                                    <td>
+                                      @if ($student->evaluator_id == Auth::user()->id)
+                                        Evaluator
+                                      @elseif ($student->co_evaluator_id == Auth::user()->id)
+                                        Co-Evaluator
+                                      @endif
+                                    </td>
+                                  </tr>
+                                @empty
+                                  <td colspan="2" style="text-align: center; font-weight: bold">You Are Not Evaluating Any PhD Students</td>
+                                @endforelse
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      @endif
                     </div>
                   </div>
                 </div>

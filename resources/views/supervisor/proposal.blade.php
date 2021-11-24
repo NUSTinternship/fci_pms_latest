@@ -43,9 +43,9 @@
                     <tbody>
                       @forelse ($proposalMastersStudents as $student)
                       <tr>
-                        <td>{{ App\Models\User::find($student->user_id)->name }}</td>
+                        <td><a href="{{ route('supervisor.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</td>
                         <td>
-                          <a href="{{ route('studentProfile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
+                          <a href="{{ route('supervisor.proposalProfile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
                         </td>
                       </tr>
                       @empty
@@ -60,9 +60,9 @@
                     <tbody>
                       @forelse ($proposalPhDStudents as $student)
                       <tr>
-                        <td>{{ App\Models\User::find($student->user_id)->name }}</td>
+                        <td><a href="{{ route('supervisor.studentProfile', $student->user_id) }}" style="color: black;">{{ App\Models\User::find($student->user_id)->name }}</td>
                         <td>
-                          <a href="{{ route('student.profile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
+                          <a href="{{ route('supervisor.proposalProfile', $student->user_id) }}" type="button" class="btn btn-primary">View</a>
                         </td>
                       </tr>
                       @empty

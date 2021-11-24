@@ -26,6 +26,12 @@ class DownloadsController extends Controller
             $file_type = 'intention to submit';
         } elseif (Str::contains($file_name, 'finalthesis')) {
             $file_type = 'final thesis';
+        } elseif (Str::contains($file_name, 'checklist')) {
+            $file_type = 'checklist';
+        } elseif (Str::contains($file_name, 'corrections_report')) {
+            $file_type = 'corrections report';
+        } elseif (Str::contains($file_name, 'examiners')) {
+            $file_type = 'examiners report';
         }
 
         switch ($file_type) {
@@ -95,8 +101,39 @@ class DownloadsController extends Controller
                 return abort(404);
                 break;
 
+            case 'checklist':
+                if (Storage::disk('public')->exists("checklists/" . $file_name)) {
+                    $file_path = Storage::disk('public')->path("checklists/" . $file_name);
+                    $content = file_get_contents($file_path);
+                    return response($content)->withHeaders([
+                        'Content-Type' => mime_content_type($file_path)
+                    ]);
+                }
+                return abort(404);
+                break;
+            case 'corrections report':
+                if (Storage::disk('public')->exists("corrections_reports/" . $file_name)) {
+                    $file_path = Storage::disk('public')->path("corrections_reports/" . $file_name);
+                    $content = file_get_contents($file_path);
+                    return response($content)->withHeaders([
+                        'Content-Type' => mime_content_type($file_path)
+                    ]);
+                }
+                return abort(404);
+                break;
+            case 'examiners report':
+                if (Storage::disk('public')->exists("examiners_reports/" . $file_name)) {
+                    $file_path = Storage::disk('public')->path("examiners_reports/" . $file_name);
+                    $content = file_get_contents($file_path);
+                    return response($content)->withHeaders([
+                        'Content-Type' => mime_content_type($file_path)
+                    ]);
+                }
+                return abort(404);
+                break;
+
             default:
-                # code...
+                return abort(404);
                 break;
         }
     }
